@@ -1,10 +1,10 @@
-# [ECMAScript 6 入门]()
+- [ECMAScript 6 入门]()
 
 - [ditto:searchbar]
 
 
 
-## 目录
+<!-- ## 目录 -->
 1. [前言](#README)
 1. [ECMAScript 6简介](#docs/intro)
 1. [let 和 const 命令](#docs/let)
