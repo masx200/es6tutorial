@@ -133,6 +133,7 @@
         });
         // $("#sidebar > ul").addClass("navbar-nav")
         function onhashchange() {
+            $("#my主体").css("padding-top", $("#my导航栏").height());
             if (location.hash === "" || location.hash === "#") {
                 location.hash = "#README"
             }
