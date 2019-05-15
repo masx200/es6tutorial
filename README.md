@@ -2,6 +2,8 @@
 
 优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包
 
+固定导航栏在顶部,给导航栏设置最大高度100%,并自动显示滚动条
+
 https://github.com/masx200/ditto
 
 https://github.com/masx200/es6tutorial

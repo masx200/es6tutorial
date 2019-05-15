@@ -94,6 +94,9 @@ $("#sidebar  li").addClass("nav-item")
 // $("#sidebar >ul>li> a").addClass("nav-link")
 // $("#sidebar >h1> a").addClass("nav-link")
 $("#sidebar  input").addClass("nav-link")
+
+$("#my主体").css("padding-top", $("#my导航栏").height());
+
         }, "text").fail(function () {
             alert("Opps! can't find the sidebar file to display!");
         });
