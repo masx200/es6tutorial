@@ -63,7 +63,7 @@ $(function ($) {
                 init_searchbar();
             }
 
-//由于当作bootstrap导航栏,所以给sidebar中的ul增加class为"navbar-nav"
+            //由于当作bootstrap导航栏,所以给sidebar中的ul增加class为"navbar-nav"
             // $("#sidebar > ul").addClass("navbar-nav")
             // $("#sidebar > h1").addClass("nav-item")
             // $("#sidebar > p").addClass("nav-item")
@@ -80,22 +80,22 @@ $(function ($) {
             // $("#sidebar >h1> a").addClass("nav-link")
             // $("#sidebar >ul>li> input").addClass("nav-link")
             $("#sidebar  ul").addClass("navbar-nav")
-$("#sidebar  h1").addClass("nav-item")
-$("#sidebar  p").addClass("nav-item")
-$("#sidebar a").addClass("nav-link")
-$("#sidebar  h2").addClass("nav-item")
-$("#sidebar  li").addClass("nav-item")
-// $("#sidebar > a").addClass("nav-link")
-// $("#sidebar >ul> li").addClass("nav-item")
-// nav-item navbar-nav nav-link
-$("#sidebar  ol").addClass("navbar-nav")
-$("#sidebar  li").addClass("nav-item")
-// $("#sidebar >ol>li> a").addClass("nav-link")
-// $("#sidebar >ul>li> a").addClass("nav-link")
-// $("#sidebar >h1> a").addClass("nav-link")
-$("#sidebar  input").addClass("nav-link")
+            $("#sidebar  h1").addClass("nav-item")
+            $("#sidebar  p").addClass("nav-item")
+            $("#sidebar a").addClass("nav-link")
+            $("#sidebar  h2").addClass("nav-item")
+            $("#sidebar  li").addClass("nav-item")
+            // $("#sidebar > a").addClass("nav-link")
+            // $("#sidebar >ul> li").addClass("nav-item")
+            // nav-item navbar-nav nav-link
+            $("#sidebar  ol").addClass("navbar-nav")
+            $("#sidebar  li").addClass("nav-item")
+            // $("#sidebar >ol>li> a").addClass("nav-link")
+            // $("#sidebar >ul>li> a").addClass("nav-link")
+            // $("#sidebar >h1> a").addClass("nav-link")
+            $("#sidebar  input").addClass("nav-link")
 
-$("#my主体").css("padding-top", $("#my导航栏").height());
+            $("#my主体").css("padding-top", $("#my导航栏").height());
 
         }, "text").fail(function () {
             alert("Opps! can't find the sidebar file to display!");
@@ -427,6 +427,8 @@ $("#my主体").css("padding-top", $("#my导航栏").height());
         // otherwise get the markdown and render it
         show_loading();
         $.get(path, function (data) {
+            $("#collapsibleNavbar").removeClass("show")
+            $("#my主体").css("padding-top", $("#my导航栏").height());
             compile_into_dom(path, data, function () {
                 // rerender mathjax and reset mathjax equation counter
                 if (MathJax && MathJax.Extension["Tex/AMSmath"]) {
@@ -441,9 +443,9 @@ $("#my主体").css("padding-top", $("#my导航栏").height());
             console.error("Opps! ... File not found!\n5秒后返回主页")
             show_error("Opps! ... File not found!\n5秒后返回主页");
             stop_loading();
-            setTimeout(()=>{
-                location.hash="#"
-            },5000)
+            setTimeout(() => {
+                location.hash = "#"
+            }, 5000)
         });
     }
 
