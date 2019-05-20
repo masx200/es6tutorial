@@ -1,14 +1,13 @@
 {
     "devDependencies": {
-      "cssnano": "^4.1.10",
-      "parcel-bundler": "^1.12.3"
+        "cssnano": "^4.1.10",
+        "parcel-bundler": "^1.12.3"
     },
     "dependencies": {
-      "parcel-bundler": "^1.12.3"
+        "parcel-bundler": "^1.12.3"
     },
     "scripts": {
-          "build": "parcel build index.html --public-url ./ --no-source-maps",
-    "start": "parcel index.html --open --https"
+        "build": "parcel build index.html --public-url ./ --no-source-maps",
+        "start": "parcel index.html --open --no-source-maps"
     }
-  }
-  
+}
