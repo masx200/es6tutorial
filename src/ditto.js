@@ -1,4 +1,4 @@
-$(() => {
+(() => {
   (function($, globalThis) {
     var ditto = {
       content_id: $("#content"),
@@ -462,9 +462,9 @@ $(() => {
         console.error("Opps! ... File not found!\n5秒后返回主页");
         show_error("Opps! ... File not found!\n5秒后返回主页");
         stop_loading();
-        setTimeout(() => {
-          location.hash = "#";
-        }, 5000);
+        // setTimeout(() => {
+        //   location.hash = "#";
+        // }, 5000);
       });
     }
 
@@ -512,7 +512,7 @@ $(() => {
         }
       }
     }
-// console.log(globalThis)
+    // console.log(globalThis)
     globalThis.ditto = ditto;
     if (typeof exports === "object" && typeof module !== "undefined") {
       module.exports = ditto;
@@ -523,4 +523,4 @@ $(() => {
       ("undefined" != typeof WorkerGlobalScope && WorkerGlobalScope) ||
       this
   );
-});
+})();
