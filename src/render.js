@@ -1,3 +1,4 @@
+import ditto from "./ditto.js"
 (() => {
   $(window).one("load", () => {
     $("#my主体").css("padding-top", $("#my导航栏").height());
@@ -22,9 +23,9 @@
       scrollTo(0, 0);
       $("#collapsibleNavbar").removeClass("show");
       $("#my主体").css("padding-top", $("#my导航栏").height());
-      if (location.hash === "" || location.hash === "#") {
-        location.hash = "#README";
-      }
+    //   if (location.hash === "" || location.hash === "#") {
+    //     location.hash = "#README";
+    //   }
     }
     $(window).on("hashchange", onhashchange);
   });
