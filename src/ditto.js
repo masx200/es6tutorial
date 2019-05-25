@@ -409,7 +409,8 @@
 
     function show_loading() {
       ditto.loading_id.show();
-      ditto.content_id.html("");
+       /* 先不删除content当中的内容 */
+    //   ditto.content_id.html("");
       // clear content
 
       // infinite loop until clearInterval() is called on loading
