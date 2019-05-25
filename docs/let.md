@@ -12,8 +12,8 @@ ES6 新增了`let`命令，用来声明变量。它的用法类似于`var`，但
   var b = 1;
 }
 
-a // ReferenceError: a is not defined.
-b // 1
+a; // ReferenceError: a is not defined.
+b; // 1
 ```
 
 上面代码在代码块之中，分别用`let`和`var`声明了两个变量。然后在代码块之外调用这两个变量，结果`let`声明的变量报错，`var`声明的变量返回了正确的值。这表明，`let`声明的变量只在它所在的代码块有效。
@@ -36,7 +36,7 @@ console.log(i);
 ```javascript
 var a = [];
 for (var i = 0; i < 10; i++) {
-  a[i] = function () {
+  a[i] = function() {
     console.log(i);
   };
 }
@@ -50,7 +50,7 @@ a[6](); // 10
 ```javascript
 var a = [];
 for (let i = 0; i < 10; i++) {
-  a[i] = function () {
+  a[i] = function() {
     console.log(i);
   };
 }
@@ -63,7 +63,7 @@ a[6](); // 6
 
 ```javascript
 for (let i = 0; i < 3; i++) {
-  let i = 'abc';
+  let i = "abc";
   console.log(i);
 }
 // abc
@@ -99,7 +99,7 @@ let bar = 2;
 var tmp = 123;
 
 if (true) {
-  tmp = 'abc'; // ReferenceError
+  tmp = "abc"; // ReferenceError
   let tmp;
 }
 ```
@@ -113,7 +113,7 @@ ES6 明确规定，如果区块中存在`let`和`const`命令，这个区块对�
 ```javascript
 if (true) {
   // TDZ开始
-  tmp = 'abc'; // ReferenceError
+  tmp = "abc"; // ReferenceError
   console.log(tmp); // ReferenceError
 
   let tmp; // TDZ结束
@@ -138,7 +138,7 @@ let x;
 作为比较，如果一个变量根本没有被声明，使用`typeof`反而不会报错。
 
 ```javascript
-typeof undeclared_variable // "undefined"
+typeof undeclared_variable; // "undefined"
 ```
 
 上面代码中，`undeclared_variable`是一个不存在的变量名，结果返回“undefined”。所以，在没有`let`之前，`typeof`运算符是百分之百安全的，永远不会报错。现在这一点不成立了。这样的设计是为了让大家养成良好的编程习惯，变量一定要在声明之后使用，否则就报错。
@@ -203,14 +203,14 @@ function func() {
 function func(arg) {
   let arg;
 }
-func() // 报错
+func(); // 报错
 
 function func(arg) {
   {
     let arg;
   }
 }
-func() // 不报错
+func(); // 不报错
 ```
 
 ## 块级作用域
@@ -227,7 +227,7 @@ var tmp = new Date();
 function f() {
   console.log(tmp);
   if (false) {
-    var tmp = 'hello world';
+    var tmp = "hello world";
   }
 }
 
@@ -239,7 +239,7 @@ f(); // undefined
 第二种场景，用来计数的循环变量泄露为全局变量。
 
 ```javascript
-var s = 'hello';
+var s = "hello";
 
 for (var i = 0; i < s.length; i++) {
   console.log(s[i]);
@@ -269,10 +269,18 @@ function f1() {
 ES6 允许块级作用域的任意嵌套。
 
 ```javascript
-{{{{
-  {let insane = 'Hello World'}
-  console.log(insane); // 报错
-}}}};
+{
+  {
+    {
+      {
+        {
+          let insane = "Hello World";
+        }
+        console.log(insane); // 报错
+      }
+    }
+  }
+}
 ```
 
 上面代码使用了一个五层的块级作用域，每一层都是一个单独的作用域。第四层作用域无法读取第五层作用域的内部变量。
@@ -280,10 +288,18 @@ ES6 允许块级作用域的任意嵌套。
 内层作用域可以定义外层作用域的同名变量。
 
 ```javascript
-{{{{
-  let insane = 'Hello World';
-  {let insane = 'Hello World'}
-}}}};
+{
+  {
+    {
+      {
+        let insane = "Hello World";
+        {
+          let insane = "Hello World";
+        }
+      }
+    }
+  }
+}
 ```
 
 块级作用域的出现，实际上使得获得广泛应用的立即执行函数表达式（IIFE）不再必要了。
@@ -317,7 +333,7 @@ if (true) {
 // 情况二
 try {
   function f() {}
-} catch(e) {
+} catch (e) {
   // ...
 }
 ```
@@ -329,46 +345,58 @@ try {
 ES6 引入了块级作用域，明确允许在块级作用域之中声明函数。ES6 规定，块级作用域之中，函数声明语句的行为类似于`let`，在块级作用域之外不可引用。
 
 ```javascript
-function f() { console.log('I am outside!'); }
+function f() {
+  console.log("I am outside!");
+}
 
-(function () {
+(function() {
   if (false) {
     // 重复声明一次函数f
-    function f() { console.log('I am inside!'); }
+    function f() {
+      console.log("I am inside!");
+    }
   }
 
   f();
-}());
+})();
 ```
 
 上面代码在 ES5 中运行，会得到“I am inside!”，因为在`if`内声明的函数`f`会被提升到函数头部，实际运行的代码如下。
 
 ```javascript
 // ES5 环境
-function f() { console.log('I am outside!'); }
+function f() {
+  console.log("I am outside!");
+}
 
-(function () {
-  function f() { console.log('I am inside!'); }
+(function() {
+  function f() {
+    console.log("I am inside!");
+  }
   if (false) {
   }
   f();
-}());
+})();
 ```
 
 ES6 就完全不一样了，理论上会得到“I am outside!”。因为块级作用域内声明的函数类似于`let`，对作用域之外没有影响。但是，如果你真的在 ES6 浏览器中运行一下上面的代码，是会报错的，这是为什么呢？
 
 ```javascript
 // 浏览器的 ES6 环境
-function f() { console.log('I am outside!'); }
+function f() {
+  console.log("I am outside!");
+}
 
-(function () {
+(function() {
   if (false) {
     // 重复声明一次函数f
-    function f() { console.log('I am inside!'); }
+    function f() {
+      console.log("I am inside!");
+    }
   }
 
   f();
-}());
+})();
 // Uncaught TypeError: f is not a function
 ```
 
@@ -386,15 +414,19 @@ function f() { console.log('I am outside!'); }
 
 ```javascript
 // 浏览器的 ES6 环境
-function f() { console.log('I am outside!'); }
-(function () {
+function f() {
+  console.log("I am outside!");
+}
+(function() {
   var f = undefined;
   if (false) {
-    function f() { console.log('I am inside!'); }
+    function f() {
+      console.log("I am inside!");
+    }
   }
 
   f();
-}());
+})();
 // Uncaught TypeError: f is not a function
 ```
 
@@ -403,7 +435,7 @@ function f() { console.log('I am outside!'); }
 ```javascript
 // 块级作用域内部的函数声明语句，建议不要使用
 {
-  let a = 'secret';
+  let a = "secret";
   function f() {
     return a;
   }
@@ -411,8 +443,8 @@ function f() { console.log('I am outside!'); }
 
 // 块级作用域内部，优先使用函数表达式
 {
-  let a = 'secret';
-  let f = function () {
+  let a = "secret";
+  let f = function() {
     return a;
   };
 }
@@ -455,7 +487,7 @@ if (true)
 
 ```javascript
 const PI = 3.1415;
-PI // 3.1415
+PI; // 3.1415
 
 PI = 3;
 // TypeError: Assignment to constant variable.
@@ -479,7 +511,7 @@ if (true) {
   const MAX = 5;
 }
 
-MAX // Uncaught ReferenceError: MAX is not defined
+MAX; // Uncaught ReferenceError: MAX is not defined
 ```
 
 `const`命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。
@@ -513,7 +545,7 @@ const foo = {};
 
 // 为 foo 添加一个属性，可以成功
 foo.prop = 123;
-foo.prop // 123
+foo.prop; // 123
 
 // 将 foo 指向另一个对象，就会报错
 foo = {}; // TypeError: "foo" is read-only
@@ -525,9 +557,9 @@ foo = {}; // TypeError: "foo" is read-only
 
 ```javascript
 const a = [];
-a.push('Hello'); // 可执行
-a.length = 0;    // 可执行
-a = ['Dave'];    // 报错
+a.push("Hello"); // 可执行
+a.length = 0; // 可执行
+a = ["Dave"]; // 报错
 ```
 
 上面代码中，常量`a`是一个数组，这个数组本身是可写的，但是如果将另一个数组赋值给`a`，就会报错。
@@ -547,11 +579,11 @@ foo.prop = 123;
 除了将对象本身冻结，对象的属性也应该冻结。下面是一个将对象彻底冻结的函数。
 
 ```javascript
-var constantize = (obj) => {
+var constantize = obj => {
   Object.freeze(obj);
-  Object.keys(obj).forEach( (key, i) => {
-    if ( typeof obj[key] === 'object' ) {
-      constantize( obj[key] );
+  Object.keys(obj).forEach((key, i) => {
+    if (typeof obj[key] === "object") {
+      constantize(obj[key]);
     }
   });
 };
@@ -567,10 +599,10 @@ ES5 只有两种声明变量的方法：`var`命令和`function`命令。ES6 除
 
 ```javascript
 window.a = 1;
-a // 1
+a; // 1
 
 a = 2;
-window.a // 2
+window.a; // 2
 ```
 
 上面代码中，顶层对象的属性赋值与全局变量的赋值，是同一件事。
@@ -583,10 +615,10 @@ ES6 为了改变这一点，一方面规定，为了保持兼容性，`var`命�
 var a = 1;
 // 如果在 Node 的 REPL 环境，可以写成 global.a
 // 或者采用通用方法，写成 this.a
-window.a // 1
+window.a; // 1
 
 let b = 1;
-window.b // undefined
+window.b; // undefined
 ```
 
 上面代码中，全局变量`a`由`var`命令声明，所以它是顶层对象的属性；全局变量`b`由`let`命令声明，所以它不是顶层对象的属性，返回`undefined`。
@@ -609,24 +641,29 @@ JavaScript 语言存在一个顶层对象，它提供全局环境（即全局作
 
 ```javascript
 // 方法一
-(typeof window !== 'undefined'
-   ? window
-   : (typeof process === 'object' &&
-      typeof require === 'function' &&
-      typeof global === 'object')
-     ? global
-     : this);
+typeof window !== "undefined"
+  ? window
+  : typeof process === "object" &&
+    typeof require === "function" &&
+    typeof global === "object"
+  ? global
+  : this;
 
 // 方法二
-var getGlobal = function () {
-  if (typeof self !== 'undefined') { return self; }
-  if (typeof window !== 'undefined') { return window; }
-  if (typeof global !== 'undefined') { return global; }
-  throw new Error('unable to locate global object');
+var getGlobal = function() {
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw new Error("unable to locate global object");
 };
 ```
 
 现在有一个[提案](https://github.com/tc39/proposal-global)，在语言标准的层面，引入`globalThis`作为顶层对象。也就是说，任何环境下，`globalThis`都是存在的，都可以从它拿到顶层对象，指向全局环境下的`this`。
 
 垫片库[`global-this`](https://github.com/ungap/global-this)模拟了这个提案，可以在所有环境拿到`globalThis`。
-
