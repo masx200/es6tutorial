@@ -4,6 +4,8 @@
 
 固定导航栏在顶部,给导航栏设置最大高度100%,并自动显示滚动条
 
+预先加载sidebar当中的markdwon文件到head的link的prefetch元素,来提升加载速度
+
 https://github.com/masx200/ditto
 
 https://github.com/masx200/es6tutorial
