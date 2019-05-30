@@ -4,7 +4,7 @@ import ditto from "./ditto.js";
   $(window).one("load", () => {
     $("#my主体").css("padding-top", $("#my导航栏").height());
 
-    $(function($) {
+    $(function() {
       // essential settings
       (ditto.index = "README.md"),
         (ditto.sidebar_file = "sidebar.md"),
@@ -29,6 +29,7 @@ import ditto from "./ditto.js";
       //   }
     }
     $(window).on("hashchange", onhashchange);
+    new ClipboardJS(".btn")
   });
 
   // if(location.hash===""  )  {location.hash="#README"}

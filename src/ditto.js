@@ -84,10 +84,8 @@
           // $("#sidebar >h1> a").addClass("nav-link")
           $("#sidebar  input").addClass("nav-link");
 
-          $("#my主体").css(
-            "padding-top",
-            $("#my导航栏").height()
-          ); /* 预先加载sidebar当中的markdwon文件到head的link的prefetch元素,来提升加载速度 */
+          $("#my主体").css("padding-top", $("#my导航栏").height());
+          /* 预先加载sidebar当中的markdwon文件到head的link的prefetch元素,来提升加载速度 */
 
           Array(...$("#sidebar a"))
             .map(e => e.hash)
@@ -409,8 +407,8 @@
 
     function show_loading() {
       ditto.loading_id.show();
-       /* 先不删除content当中的内容 */
-    //   ditto.content_id.html("");
+      /* 先不删除content当中的内容 */
+      //   ditto.content_id.html("");
       // clear content
 
       // infinite loop until clearInterval() is called on loading
@@ -439,7 +437,15 @@
       });
       return data;
     }
-
+    function guid() {
+      return "xxxxxxxxyxxxxyxxxyyxxxyxxxxxxxxxxxx".replace(/[xy]/g, function(
+        c
+      ) {
+        var r = (Math.random() * 16) | 0,
+          v = c == "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
     function page_getter() {
       window.scrollTo(0, 0);
       var path = location.hash.replace("#", "./");
@@ -459,6 +465,8 @@
       // otherwise get the markdown and render it
       show_loading();
       $.get(path, function(data) {
+        /* 设置所有代码段都可以编辑,不知为何,网页所有部分都不能选择文字? */
+
         //加载完主体部分的markdown的回调函数
         $("#collapsibleNavbar").removeClass("show");
         $("#my主体").css("padding-top", $("#my导航栏").height());
@@ -473,6 +481,18 @@
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, content]);
           }
         });
+        /* Uncaught DOMException: Failed to execute 'querySelector' on 'Document': '#1895f0fd862578e8198037b27fe2bb1e0d9' is not a valid selector. */
+        /* 批量设置clipboard的代码复制 */
+        [...jQuery("code.language-javascript.hljs")].forEach(e => {
+          var codecontenguid = "clip" + guid();
+          jQuery(e)
+            .attr("contenteditable", true)
+            .attr("id", codecontenguid)
+            .after(`<button class=" btn btn-outline-primary clipbutton" data-clipboard-target="#${codecontenguid}">复制
+                        </button>`);
+        });
+        //    <img class="clipbuttonimg" src="${jQuery("#clipsvg").attr("src")}" alt="复制到剪贴板">
+        // jQuery();
       }).fail(function() {
         console.error("Opps! ... File not found!\n5秒后返回主页");
         show_error("Opps! ... File not found!\n5秒后返回主页");
