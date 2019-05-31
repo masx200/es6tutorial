@@ -1,14 +1,15 @@
 {
-    "devDependencies": {
-        "cssnano": "^4.1.10",
-        "marked": "^0.6.2",
-        "parcel-bundler": "^1.12.3"
-    },
-    "dependencies": {
-        "parcel-bundler": "^1.12.3"
-    },
-    "scripts": {
-        "build": "parcel build index.html --public-url ./ --no-source-maps --out-dir ../",
-        "start": "parcel index.html --open --no-source-maps"
-    }
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "marked": "^0.6.2",
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {
+    "parcel-bundler": "^1.12.3",
+    "regenerator-runtime": "^0.13.2"
+  },
+  "scripts": {
+    "build": "parcel build index.html --public-url ./ --no-source-maps --out-dir ../",
+    "start": "parcel index.html --open --no-source-maps"
+  }
 }
