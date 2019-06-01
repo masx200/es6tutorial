@@ -40,7 +40,7 @@ import regeneratorRuntime from "regenerator-runtime";
    *
    *   *
    */
-  global.修改当前的网页地址动态加载网页内容不刷新 = windowloadhandler;
+  global.修改当前的网页地址动态加载网页内容不刷新 =   global.修改当前的网页地址动态加载网页内容不刷新||windowloadhandler;
 
   function 同源网址跳转动态加载(url = location.href) {
     url = new URL(url);
