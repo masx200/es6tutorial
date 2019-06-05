@@ -1,4 +1,5 @@
 (() => {
+  "use strict";
   (function($, globalThis) {
     var ditto = {
       content_id: $("#content"),
@@ -446,7 +447,7 @@
         return v.toString(16);
       });
     }
-    function page_getter() {
+    function page_getter(转到主页 = false) {
       window.scrollTo(0, 0);
       var path = location.hash.replace("#", "./");
 
@@ -464,6 +465,14 @@
 
       // otherwise get the markdown and render it
       show_loading();
+      if (转到主页 === false) {
+        // console.log(path)
+      } else {
+        path = "./" + ditto.index;
+
+        // console.log(path)
+        // normalize_paths();
+      }
       $.get(path, function(data) {
         /* 设置所有代码段都可以编辑,不知为何,网页所有部分都不能选择文字? */
 
@@ -489,7 +498,7 @@
             .attr("contenteditable", true)
             .attr("id", codecontenguid)
             .after(`<button class=" btn btn-outline-primary clipbutton" data-clipboard-target="#${codecontenguid}">复制
-                        </button>`);
+                          </button>`);
         });
         //    <img class="clipbuttonimg" src="${jQuery("#clipsvg").attr("src")}" alt="复制到剪贴板">
         // jQuery();
@@ -497,9 +506,10 @@
         console.error("Opps! ... File not found!\n5秒后返回主页");
         show_error("Opps! ... File not found!\n5秒后返回主页");
         stop_loading();
-        // setTimeout(() => {
-        //   location.hash = "#";
-        // }, 5000);
+
+        setTimeout(() => {
+          page_getter(true);
+        }, 5000);
       });
     }
 
