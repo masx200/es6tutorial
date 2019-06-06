@@ -1,10 +1,13 @@
 //由于使用了async函数所以需要regeneratorRuntime
 // import IMPORTCJSAMDUMD from "./IMPORTCJSAMDUMD";
+/* 添加了TextEncoder和TextDecoder的polyfill */
+import "./fast-text-encoding-text.min.js"
 import regeneratorRuntime from "regenerator-runtime";
 // console.log(regeneratorRuntime)
 
 /**点击链接不跳转修改当前的网页地址动态加载网页内容不刷新 */
 (global => {
+  "use strict";
   /**点击链接不跳转修改当前的网页地址动态加载网页内容不刷新 */
   /* 注意不能跨域 */
   /* 注意:对于使用了document.write的网站, 加载会出错,因为脚本都是异步加载的,网页内容会被覆盖
@@ -40,7 +43,8 @@ import regeneratorRuntime from "regenerator-runtime";
    *
    *   *
    */
-  global.修改当前的网页地址动态加载网页内容不刷新 =   global.修改当前的网页地址动态加载网页内容不刷新||windowloadhandler;
+  global.修改当前的网页地址动态加载网页内容不刷新 =
+    global.修改当前的网页地址动态加载网页内容不刷新 || windowloadhandler;
 
   function 同源网址跳转动态加载(url = location.href) {
     url = new URL(url);
@@ -50,7 +54,7 @@ import regeneratorRuntime from "regenerator-runtime";
       (url.origin === location.origin && url.pathname !== location.pathname) ||
       url.search !== location.search
     ) {
-      history.pushState(undefined, undefined, url);
+      history.pushState("", "", url.toString());
       window.dispatchEvent(new PopStateEvent("popstate"));
     }
   }
@@ -122,50 +126,50 @@ import regeneratorRuntime from "regenerator-runtime";
       });*/
 
     document.write = t => {
-        console.warn(
-            "document.write已被禁用，" +
-              "把document.write中的内容生成dom元素放入body之中" +
-              "要写入的内容为：",
-            t
-          );
+      console.warn(
+        "document.write已被禁用，" +
+          "把document.write中的内容生成dom元素放入body之中" +
+          "要写入的内容为：",
+        t
+      );
 
-    //   var jQuery;
-    //   /* 等到使用document.write时再加载jquery */
-    //   IMPORTCJSAMDUMD(
-    //     "https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js",
-    //     "jquery"
-    //   ).then(module => {
-    //     jQuery = module.default;
-    //     // if (jQuery.fn.jquery[0] < 3) {
-    //     //   importjquery();
-    //     // }
+      //   var jQuery;
+      //   /* 等到使用document.write时再加载jquery */
+      //   IMPORTCJSAMDUMD(
+      //     "https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js",
+      //     "jquery"
+      //   ).then(module => {
+      //     jQuery = module.default;
+      //     // if (jQuery.fn.jquery[0] < 3) {
+      //     //   importjquery();
+      //     // }
 
-    //     console.warn(
-    //       "document.write已被禁用，" +
-    //         "把document.write中的内容生成dom元素放入body之中" +
-    //         "要写入的内容为：",
-    //       t
-    //     );
-    //     // var writeelement = document.createElement("div");
-    //     // writeelement.innerHTML = t;
-    //     // document.getElementsByTagName("head")[0].appendChild(writeelement);
-    //     var newelemnet = jQuery(t);
-    //     try {
-    //       newelemnet.attr("data-loadid", loadid);
-    //     } catch (error) {
-    //       console.warn(error);
-    //       return;
-    //     }
+      //     console.warn(
+      //       "document.write已被禁用，" +
+      //         "把document.write中的内容生成dom元素放入body之中" +
+      //         "要写入的内容为：",
+      //       t
+      //     );
+      //     // var writeelement = document.createElement("div");
+      //     // writeelement.innerHTML = t;
+      //     // document.getElementsByTagName("head")[0].appendChild(writeelement);
+      //     var newelemnet = jQuery(t);
+      //     try {
+      //       newelemnet.attr("data-loadid", loadid);
+      //     } catch (error) {
+      //       console.warn(error);
+      //       return;
+      //     }
 
-    //     //   newelemnet = jQuery(Array(...newelemnet).reverse());
-    //     jQuery("body").append(newelemnet);
-    //     console.log("添加元素到body ");
-    //     /*  for (var i of newelemnet) {
-    //           console.log(i.outerHTML);
-    //         } */
-    //     console.log(Array(...newelemnet).map(i => i.outerHTML));
-    //     // console.log("把document.write中的内容生成dom元素放入head之中");
-    //   });
+      //     //   newelemnet = jQuery(Array(...newelemnet).reverse());
+      //     jQuery("body").append(newelemnet);
+      //     console.log("添加元素到body ");
+      //     /*  for (var i of newelemnet) {
+      //           console.log(i.outerHTML);
+      //         } */
+      //     console.log(Array(...newelemnet).map(i => i.outerHTML));
+      //     // console.log("把document.write中的内容生成dom元素放入head之中");
+      //   });
     };
 
     //   function importjquery() {
@@ -271,30 +275,7 @@ import regeneratorRuntime from "regenerator-runtime";
             iframealinkarr.forEach(替换所有a链接的arrayhandler);
           }
         });
-        /*  e.onclick = () => {
-                        // lasthref=location.href
-                        console.log(e.href);
-                
-                        if (location.origin === e.origin) {
-                          if (e.pathname === location.pathname) {
-                            if (e.hash !== location.hash) {
-                              return true;
-                            } else {
-                              return false;
-                            }
-                          } else {
-                            history.pushState(undefined, undefined, e.href);
-                            console.log("执行,history.pushState,成功");
-                            window.onpopstate();
-                            return false;
-                          }
-                
-                          //   return false;
-                        } else {
-                          return true;
-                        }
-                      }; */
-        // return true
+     
         if (替换a链接数组.length > 0) {
           console.log("替换a链接", 替换a链接数组);
         }
@@ -339,7 +320,7 @@ import regeneratorRuntime from "regenerator-runtime";
                   url.pathname !== location.pathname) ||
                 url.search !== location.search
               ) {
-                history.pushState(undefined, undefined, url);
+                history.pushState("", "", url.toString());
                 window.dispatchEvent(new PopStateEvent("popstate"));
               }
 
@@ -359,7 +340,7 @@ import regeneratorRuntime from "regenerator-runtime";
     }
     //   document.onclick();
     function onpopstatehandler() {
-      console.log("事件onpopstate,执行,");
+      //   console.log("事件onpopstate,执行,");
       //    document.firstElementChild.dataset.href = document.firstElementChild.dataset.href;
       console.log(
         "当前的地址栏路径为" + location.pathname,
@@ -533,219 +514,7 @@ import regeneratorRuntime from "regenerator-runtime";
         return ("x" == t ? e : (3 & e) | 8).toString(16);
       });
     }
-    /*  // function fetchhandler(arraybuffer) {
-        //   console.log(arraybuffer);
-        //   var sr, myhtmldata;
-        //   var loadid = guid();
-        //   //   document.charset = "UTF-8";
-        //   /* 把源代码的编码转成unicode */
-    //   //   var sr = text;
-    //   //   console.log(sr);
-    //   sr = new TextDecoder().decode(arraybuffer);
-    //   myhtmldata = new DOMParser().parseFromString(sr, "text/html");
-    //   //   var myhtmldata = new DOMParser().parseFromString(sr, "text/html");
-    //   /*myhtmldata.charset得出的结果不正确
-    //   使用response.headers.get("Content-Type")
-    //   得出"text/html; charset=gbk" */
-    //   //   console.log(myhtmldata.charset);
-    //   var myhtmlcharset;
-    //   if (myhtmlcharset != "UTF-8") {
-    //     console.log("编码不是utf-8,转码成" + myhtmldata.charset);
-    //     sr = new TextDecoder(myhtmldata.charset).decode(arraybuffer);
-    //     myhtmldata = new DOMParser().parseFromString(sr, "text/html");
-    //     myhtmldata.charset = "UTF-8";
-    //   }
-    //   htmldataboject[decodeURI(new URL(myhtmldata.URL).pathname)] = {
-    //     url: myhtmldata.URL,
-    //     text: sr
-    //   };
-    //   console.log("加载过的网页的源代码合集", htmldataboject);
-    //   console.log(myhtmldata);
-    //   document.title = myhtmldata.title;
-    //   // window.myhtmldata = myhtmldata;
-    //   document.getElementsByTagName(
-    //     "body"
-    //   )[0].innerHTML = myhtmldata.getElementsByTagName("body")[0].innerHTML;
-    //   /*  Array.from(document.querySelectorAll("link")).forEach(e => {
-    //     e.parentNode.removeChild(e);
-    //   });
-    //   Array.from(document.querySelectorAll("style")).forEach(e => {
-    //     e.parentNode.removeChild(e);
-    //   });
-    //   Array.from(document.querySelectorAll("meta")).forEach(e => {
-    //     e.parentNode.removeChild(e);
-    //   });
-    //   Array.from(document.querySelectorAll("script")).forEach(e => {
-    //     e.parentNode.removeChild(e);
-    //   }); */
-    //   Array.from(myhtmldata.querySelectorAll("link[rel='stylesheet']")).forEach(
-    //     e => {
-    //       e.dataset.loadid = loadid;
-    //       e.onerror = () => {
-    //         console.log("加载失败" + e.href);
-    //       };
-    //       e.type = "text/css";
-    //       e.href = e.href;
-    //       console.log("添加css元素到head", e.outerHTML);
-    //       document.getElementsByTagName("head")[0].appendChild(e);
-    //     }
-    //   );
 
-    //   Array.from(myhtmldata.querySelectorAll("link")).forEach(e => {
-    //     e.dataset.loadid = loadid;
-
-    //     e.href = e.href;
-    //     console.log("添加元素到head", e.outerHTML);
-    //     document.getElementsByTagName("head")[0].appendChild(e);
-    //   });
-
-    //   Array.from(myhtmldata.querySelectorAll("style")).forEach(e => {
-    //     e.type = "text/css";
-    //     e.dataset.loadid = loadid;
-    //     console.log("添加css元素到head", e.outerHTML);
-    //     document.getElementsByTagName("head")[0].appendChild(e);
-    //   });
-
-    //   Array.from(myhtmldata.querySelectorAll("meta")).forEach(e => {
-    //     e.dataset.loadid = loadid;
-    //     console.log("添加元素到head", e.outerHTML);
-    //     document.getElementsByTagName("head")[0].appendChild(e);
-    //   });
-
-    //   /*    document.getElementsByTagName(
-    //     "body"
-    //   )[0].innerHTML = myhtmldata.getElementsByTagName("body")[0].innerHTML; */
-    //   script完成数量 = 0;
-    //   script总数量 = Array.from(myhtmldata.querySelectorAll("script")).length;
-    //   Array.from(myhtmldata.querySelectorAll("script")).forEach(e => {
-    //     e.type = e.type.toLowerCase();
-    //     if (e.type == "text/javascript" || "" == e.type) {
-    //       e.type = "text/javascript";
-    //       if (e.src != "") {
-    //         e.src = e.src;
-    //         /* 但是如果有些脚本不重复加载,可能网页出错 */
-    //         /* 不要重复加载javascipt文件,否则可能出问题 */
-    //         loadscript(e.src, loadid, script加载完成);
-    //       } else {
-    //         loadscripttext(e.innerHTML, loadid);
-    //         script完成数量++;
-    //       }
-    //     } else {
-    //       /* 不是javascript文件 */
-    //       if (e.src != "") {
-    //         e.src = e.src;
-    //       }
-    //       console.log("添加元素到head", e.outerHTML);
-    //       e.dataset.loadid = loadid;
-    //       script完成数量++;
-    //       document.getElementsByTagName("head")[0].appendChild(e);
-    //     }
-
-    //     //////////////////////////////
-    //     //   console.log("e.type",e.type)
-    //     // /* if (e.src) {
-    //     //   e.src = e.src;
-    //     //   if (e.type == "text/javascript" || "" == e.type) {
-    //     //     loadscript(e.src, loadid, script加载完成);
-    //     //   } else {
-    //     //     console.log("添加元素到head", e);
-    //     //     //   script加载完成();
-    //     //     script完成数量++;
-    //     //     document.getElementsByTagName("head")[0].appendChild(e);
-    //     //   }
-    //     // } else {
-    //     //   // console.log("script-innertext", e.innerText.replace(/\n/g,";"));
-    //     //   /* if (""==e.type) {
-
-    //     //     e.type = "text/javascript";
-    //     //   } */
-    //     //   e.onerror = () => {
-    //     //     console.log("加载失败" + e.src);
-    //     //   };
-    //     //   e.dataset.loadid = loadid;
-    //     //   // e.async = true;
-    //     //   if (e.type == "text/javascript" || "" == e.type) {
-    //     //     e.type = "text/javascript";
-    //     //     loadscripttext(e.innerHTML, loadid);
-    //     //     //   script加载完成();
-    //     //     script完成数量++;
-    //     //     /*  var script = document.createElement("script");
-    //     //         script.onload = script加载完成;
-    //     //         script.innerHTML = e.innerHTML;
-    //     //         script.type = e.type;
-    //     //         script.dataset.loadid = e.dataset.loadid;
-    //     //         console.log(script);
-    //     //         document.getElementsByTagName("head")[0].appendChild(script); */
-    //     //   } else {
-    //     //     console.log("添加元素到head", e);
-    //     //     //   script加载完成();
-    //     //     script完成数量++;
-    //     //     document.getElementsByTagName("head")[0].appendChild(e);
-    //     //   }
-    //     // } */
-    //   });
-    //   /*  Array.from(
-    //     document.getElementsByTagName("body")[0].querySelectorAll("script")
-    //   ).forEach(e => {
-    //     e.parentNode.removeChild(e);
-    //   }); */
-
-    //   Array(
-    //     ...document.querySelectorAll("link"),
-    //     ...document.querySelectorAll("style"),
-    //     ...document.querySelectorAll("meta"),
-    //     ...document.querySelectorAll("script")
-    //   ).forEach(e => {
-    //     if (loadid != e.dataset.loadid) {
-    //       e.parentNode.removeChild(e);
-    //       console.log("删除旧元素", e.outerHTML);
-    //     }
-    //   });
-    //   /* Array.from(document.querySelectorAll("style")).forEach(e => {
-    //     if (!e.dataset.loadid) {
-    //       e.parentNode.removeChild(e);
-    //       console.log("删除旧元素", e);
-    //     }
-    //   });
-    //   Array.from(document.querySelectorAll("meta")).forEach(e => {
-    //     if (!e.dataset.loadid) {
-    //       e.parentNode.removeChild(e);
-    //       console.log("删除旧元素", e);
-    //     }
-    //   });
-    //   Array.from(document.querySelectorAll("script")).forEach(e => {
-    //     if (!e.dataset.loadid) {
-    //       e.parentNode.removeChild(e);
-    //       console.log("删除旧元素", e);
-    //     }
-    //   });*/
-
-    //   // document.charset="UTF-8"
-    //   /*  Array.from(myhtmldata.querySelectorAll("script")).forEach(e => {
-    //         if (e.src) {
-    //           e.src = e.src;
-    //           loadscript(e.src);
-    //         } else {
-    //           if (!e.type) {
-    //             e.type = "text/javascript";
-    //           }
-    //           e.onerror = () => {
-    //             console.log("加载失败" + e.src);
-    //           };
-    //           e.dataset.loadid = loadid;
-    //           e.async = true;
-    //           //   console.log(e.src)
-    //           document.getElementsByTagName("head")[0].appendChild(e);
-    //         }
-    //       }); */
-    //   /* setTimeout(() => {
-    //         try {
-    //           window.dispatchEvent(new Event("load"));
-    //         } catch (error) {
-    //           console.log(error);
-    //         }
-    //       }, 300); */
-    // } */
     var 完成linkstylesheet = "完成linkstylesheet";
     var 数量linkstylesheet = "数量linkstylesheet";
     单个stylesheet加载完成[完成linkstylesheet] = 单个stylesheet加载完成[
@@ -835,7 +604,7 @@ import regeneratorRuntime from "regenerator-runtime";
           url.search == document.firstElementChild.dataset.search
         ) {
           return;
-          //   history.pushState(undefined, undefined, url);
+          
           /* 等到加载成功再pushstate */
         }
 
@@ -848,7 +617,7 @@ import regeneratorRuntime from "regenerator-runtime";
         /* 竟然有的网页甚至还要给html标签加style! */
         // document.firstElementChild.style = "";
         /* 添加顺滑的滚动效果在scrollto的时候用到 */
-        document.firstElementChild.style="scroll-behavior: smooth;"
+        document.firstElementChild.style = "scroll-behavior: smooth;";
         // $("html").css("scroll-behavior", "smooth");
         document.firstElementChild.className = "";
         document.getElementsByTagName("body")[0].style = "";
@@ -900,6 +669,7 @@ import regeneratorRuntime from "regenerator-runtime";
               );
               return;
             }
+            // var htmldatatext = await dataresponse.text();
             try {
               var arraybuffer = await dataresponse.arrayBuffer();
               console.log("html二进制数组", arraybuffer);
@@ -908,7 +678,7 @@ import regeneratorRuntime from "regenerator-runtime";
             } catch (error) {
               console.warn(error);
               console.log("此链接加载失败，打开新页面");
-              //     history.pushState(undefined, undefined, url);
+             
 
               //    location.reload();
               /* 如果直接设置location.href会刷新页面 */
@@ -939,7 +709,7 @@ import regeneratorRuntime from "regenerator-runtime";
 
             if (!datacontenttype.includes("text/html")) {
               console.log("此链接不是网页，打开新页面");
-              //     history.pushState(undefined, undefined, url);
+             
               window.open(url, "_blank");
               history.pushState(
                 undefined,
@@ -965,8 +735,10 @@ import regeneratorRuntime from "regenerator-runtime";
           }
 
           /* fetch加载成功,而且网页类型正确 */
-          //   history.pushState(undefined, undefined, url);
-
+          
+          document.firstElementChild.dataset.hash = url.hash;
+          location.hash = document.firstElementChild.dataset.hash;
+          /* 把location.hash改成url.hash */
           if (
             document.firstElementChild.dataset.search !== location.search ||
             document.firstElementChild.dataset.href !== location.href ||
@@ -1003,15 +775,19 @@ import regeneratorRuntime from "regenerator-runtime";
             try {
               /* 有的网站不在response中返回charset,又不是utf-8,在document中的meta的charset属性获取 
             <meta charset="gbk" >*/
+              try {
+                var charsetelement = Array(
+                  ...new DOMParser()
+                    .parseFromString(
+                      new TextDecoder().decode(arraybuffer),
+                      "text/html"
+                    )
+                    .querySelectorAll("meta[charset]")
+                )[0];
+              } catch (error) {
+                console.warn(error);
+              }
 
-              var charsetelement = Array(
-                ...new DOMParser()
-                  .parseFromString(
-                    new TextDecoder().decode(arraybuffer),
-                    "text/html"
-                  )
-                  .querySelectorAll("meta[charset]")
-              )[0];
               if (typeof charsetelement != "undefined") {
                 myhtmlcharset = charsetelement
                   .getAttribute("charset")
@@ -1028,14 +804,20 @@ import regeneratorRuntime from "regenerator-runtime";
                         <meta http-equiv="Content-Type" content="text/html; charset=gb2312" >
                         */
             try {
-              var charsetelement = Array(
-                ...new DOMParser()
-                  .parseFromString(
-                    new TextDecoder().decode(arraybuffer),
-                    "text/html"
-                  )
-                  .querySelectorAll(`meta[http-equiv="Content-Type"]`)
-              )[0];
+              /* edge浏览器居然不支持TextDecoder! */
+              try {
+                var charsetelement = Array(
+                  ...new DOMParser()
+                    .parseFromString(
+                      new TextDecoder().decode(arraybuffer),
+                      "text/html"
+                    )
+                    .querySelectorAll(`meta[http-equiv="Content-Type"]`)
+                )[0];
+              } catch (error) {
+                console.warn(error);
+              }
+
               if (typeof charsetelement != "undefined") {
                 var dataContentType = charsetelement
                   .getAttribute("content")
@@ -1057,7 +839,12 @@ import regeneratorRuntime from "regenerator-runtime";
           }
 
           loadid = guid();
-          var sr = new TextDecoder(myhtmlcharset).decode(arraybuffer);
+          try {
+            var sr = new TextDecoder(myhtmlcharset).decode(arraybuffer);
+          } catch (error) {
+            console.warn(error);
+          }
+
           var myhtmldata = new DOMParser().parseFromString(sr, "text/html");
           var mynewhtmldataurl = new URL(myhtmldata.URL);
           htmldataboject[
@@ -1327,38 +1114,10 @@ import regeneratorRuntime from "regenerator-runtime";
             });
 
             console.log("删除旧元素", 删除旧元素数组);
-          } /* 提前添加事件监听器,防止添加晚了就接搜不到 */
-          /*  */
-          //   window.addEventListener("allstylesheetload", allstyleloadhandler);
-          //   });
-          //   }, 100);
-
-          //使用async函数
-
-          /*   fetch(url)
-                      .then(r => {
-                        console.log(r);
-                        //   console.log(r,r.text(),r.arrayBuffer());
-                        return r.arrayBuffer();
-                      })
-                      .then(fetchhandler); */
+          }
+          /* 提前添加事件监听器,防止添加晚了就接搜不到 */
         } catch (error) {
           console.warn(error);
-          /* if (url.protocal === "https:") {
-            url.protocal = "http:";
-          } else {
-            url.protocal = "https:";
-          }
-//不需要了,因为已经在a链接的onclick函数中设置过了
-          fetch(url)
-            .then(r => {
-              console.log(r);
-              // console.log(r,r.text(),r.arrayBuffer());
-              return r.arrayBuffer();
-              //   return r.text();
-              //   return { text: r.text(), arraybuffer: r.arrayBuffer() };
-            })
-            .then(fetchhandler); */
         }
       } else {
         console.log(
