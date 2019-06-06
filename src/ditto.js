@@ -475,7 +475,14 @@
       }
       $.get(path, function(data) {
         /* 设置所有代码段都可以编辑,不知为何,网页所有部分都不能选择文字? */
-
+        /*<style>
+ * {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -o-user-select: text;
+        user-select: text;
+      }
+      </style> */
         //加载完主体部分的markdown的回调函数
         $("#collapsibleNavbar").removeClass("show");
         $("#my主体").css("padding-top", $("#my导航栏").height());
@@ -492,10 +499,13 @@
         });
         /* Uncaught DOMException: Failed to execute 'querySelector' on 'Document': '#1895f0fd862578e8198037b27fe2bb1e0d9' is not a valid selector. */
         /* 批量设置clipboard的代码复制 */
-        [...jQuery("code.language-javascript.hljs")].forEach(e => {
+        [
+          ...jQuery("code.language-javascript.hljs"),
+          ...jQuery("code.language-html")
+        ].forEach(e => {
           var codecontenguid = "clip" + guid();
           jQuery(e)
-            .attr("contenteditable", true)
+            // .attr("contenteditable", true)
             .attr("id", codecontenguid)
             .after(`<button class=" btn btn-outline-primary clipbutton" data-clipboard-target="#${codecontenguid}">复制
                           </button>`);
