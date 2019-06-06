@@ -549,11 +549,21 @@
     function router() {
       var hash = location.hash;
 
-      if (hash.slice(1, 7) !== "search") {
+      if (
+        !(
+          hash.slice(2, 8) == "search" ||
+          hash.slice(1, 7) == "search" ||
+          location.hash.includes(`search`)
+        )
+      ) {
         page_getter();
       } else {
         if (ditto.searchbar) {
-          github_search(hash.replace("#search=", ""));
+          var searchdate = location.hash.slice(
+            location.hash.indexOf(`search`) + `search=`.length
+          );
+          //   github_search(hash.replace("#search=", ""));
+          github_search(searchdate);
         }
       }
     }
@@ -563,7 +573,7 @@
       module.exports = ditto;
     }
   })(
-    $,
+    jQuery,
     ("undefined" != typeof window && window) ||
       ("undefined" != typeof WorkerGlobalScope && WorkerGlobalScope) ||
       this

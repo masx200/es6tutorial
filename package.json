@@ -1,0 +1,25 @@
+{
+    "scripts": {
+        "start": "live-server ."
+    },
+    "dependencies": {
+        "live-server": "^1.2.1"
+    },
+    "name": "es6tutorial",
+    "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
+    "version": "1.0.0",
+    "directories": {
+        "doc": "docs"
+    },
+    "devDependencies": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/masx200/es6tutorial.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/masx200/es6tutorial/issues"
+    },
+    "homepage": "https://github.com/masx200/es6tutorial#readme"
+}
