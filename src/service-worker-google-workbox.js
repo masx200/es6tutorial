@@ -18,11 +18,11 @@ workbox.routing.registerRoute(
     new workbox.strategies.NetworkFirst({ cacheName: "js-cache" })
   );
 workbox.routing.registerRoute(
-  new RegExp(".*.html"),
+  new RegExp(".*\.html"),
   new workbox.strategies.NetworkFirst({ cacheName: "html-cache" })
 );
 workbox.routing.registerRoute(
-    new RegExp(".*/"),
+    new RegExp(".*/$"),
     new workbox.strategies.NetworkFirst({ cacheName: "html-cache" })
   );
 workbox.routing.registerRoute(
