@@ -22,6 +22,10 @@ workbox.routing.registerRoute(
   new workbox.strategies.NetworkFirst({ cacheName: "html-cache" })
 );
 workbox.routing.registerRoute(
+    new RegExp(".*/"),
+    new workbox.strategies.NetworkFirst({ cacheName: "html-cache" })
+  );
+workbox.routing.registerRoute(
   // Cache CSS files.
 //   /.*\.css$/,
 new RegExp('.*\.css'),
