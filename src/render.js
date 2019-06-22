@@ -4,12 +4,25 @@ import ditto from "./ditto.js";
 // import sidebarmd from "../sidebar.md";
 (() => {
   $(window).one("load", () => {
+    const clipboard = new ClipboardJS(".btn");
+
+    clipboard.on("success", function(e) {
+      if (!e.text) {
+        console.log("复制内容空");
+      } else {
+        //   console.info("Action:", e.action);
+        //   console.info("Text:", e.text);
+      }
+
+      e.clearSelection();
+    });
+
     $("#my主体").css("padding-top", $("#my导航栏").height());
 
     $(function() {
       // essential settings
-        (ditto.index = "README.md"),
-    //   (ditto.index = READMEmd),
+      (ditto.index = "README.md"),
+        //   (ditto.index = READMEmd),
         (ditto.sidebar_file = "sidebar.md"),
         // (ditto.sidebar_file = sidebarmd),
         // optional settings if you want github search
