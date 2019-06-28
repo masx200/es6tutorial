@@ -1,3 +1,4 @@
+import "./RegisteraServiceWorkerFile.js";
 import "./prefetchmd.js";
 import ditto from "./ditto.js";
 // import READMEmd from "../README.md";
