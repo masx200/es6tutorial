@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "start": "live-server --host=localhost  ."
+        "build": "parcel build ./src/index.html --public-url ./ --no-source-maps --out-dir ./",
+        "start": "parcel ./src/index.html --open "
     },
     "dependencies": {
         "live-server": "^1.2.1"
