@@ -1,7 +1,18 @@
+"use strict";
+import hljs from "./highlight.min.js";
+import marked from "./marked.min";
+import jQuery from "jquery";
+/* eslint-disable no-useless-escape */
+// var MathJax = window.MathJax;
+import MathJax from "./MathJax/index";
+var exports, module;
+var readme加载失败 = false;
 (() => {
   "use strict";
-  (function($, globalThis) {
+  exports = (function($ /* globalThis */) {
     var ditto = {
+      sidebar_file: "sidebar.md",
+      index: "README.md",
       content_id: $("#content"),
       sidebar_id: $("#sidebar"),
 
@@ -20,7 +31,7 @@
 
       // display elements
       sidebar: true,
-      edit_button: true,
+      edit_button: false,
       back_to_top_button: true,
       searchbar: true,
 
@@ -53,7 +64,8 @@
 
       // page router
       router();
-      $(window).on("hashchange", router);
+      window.addEventListener("hashchange", router);
+      // $(window).on("hashchange", router);
     }
 
     function init_sidebar_section() {
@@ -101,7 +113,13 @@
         },
         "text"
       ).fail(function() {
-        alert("Opps! can't find the sidebar file to display!");
+        stop_loading();
+        setTimeout(() => {
+          page_getter(true);
+          // location.hash = "#";
+        }, 5000);
+        console.error("Opps! can't find the sidebar file to display!");
+        throw new Error("load failed");
       });
     }
 
@@ -184,8 +202,8 @@
         var url = matches[i].path;
 
         if (url !== ditto.sidebar_file) {
-          var hash = "#" + url.replace(".md", "");
-          var path = window.location.origin + "/" + hash;
+          // var hash = "#" + url.replace(".md", "");
+          // var path = window.location.origin + "/" + hash;
 
           // html += "<li>";
           html += "<li class='link'>";
@@ -271,7 +289,7 @@
 
     function li_create_linkage(li_tag, header_level) {
       // add custom id and class attributes
-      html_safe_tag = replace_symbols(li_tag.text());
+      var html_safe_tag = replace_symbols(li_tag.text());
       li_tag.attr("id", html_safe_tag);
       li_tag.attr("class", "link");
 
@@ -288,7 +306,7 @@
           );
 
           // highlight the relevant section
-          original_color = header.css("color");
+          var original_color = header.css("color");
           header.animate(
             {
               color: "#ED1C24"
@@ -370,32 +388,33 @@
       return data;
     }
 
-    function normalize_paths() {
-      // images
-      ditto.content_id.find("img").map(function() {
-        var src = $(this)
-          .attr("src")
-          .replace(/^\.\//, "");
-        if (
-          $(this)
-            .attr("src")
-            .slice(0, 5) !== "http"
-        ) {
-          var url = location.hash.replace("#", "");
+    // function normalize_paths() {
+    //   // console.log($(this).attr("src"));
+    //   // images
+    //   ditto.content_id.find("img").map(function() {
+    //     var src = $(this)
+    //       .attr("src")
+    //       .replace(/^\.\//, "");
+    //     if (
+    //       $(this)
+    //         .attr("src")
+    //         .slice(0, 5) !== "http"
+    //     ) {
+    //       var url = location.hash.replace("#", "");
 
-          // split and extract base dir
-          url = url.split("/");
-          var base_dir = url.slice(0, url.length - 1).join("/");
+    //       // split and extract base dir
+    //       url = url.split("/");
+    //       var base_dir = url.slice(0, url.length - 1).join("/");
 
-          // normalize the path (i.e. make it absolute)
-          if (base_dir) {
-            $(this).attr("src", base_dir + "/" + src);
-          } else {
-            $(this).attr("src", src);
-          }
-        }
-      });
-    }
+    //       // normalize the path (i.e. make it absolute)
+    //       if (base_dir) {
+    //         $(this).attr("src", base_dir + "/" + src);
+    //       } else {
+    //         $(this).attr("src", src);
+    //       }
+    //     }
+    //   });
+    // }
 
     function show_error(err_msg) {
       ditto.error_id.html(err_msg);
@@ -429,7 +448,7 @@
         var src = $(this).attr("src");
 
         var base_url = src.split("/");
-        var protocol = base_url[0];
+        //  var protocol = base_url[0];
         var host = base_url[2];
 
         if ($.inArray(host, ignore_list) >= 0) {
@@ -449,21 +468,29 @@
     }
     function page_getter(转到主页 = false) {
       window.scrollTo(0, 0);
-      var path = location.hash.replace("#", "./");
+      // var path = location.hash.replace("#", "./");
 
-      // default page if hash is empty
-      var current_page = location.pathname.split("/").pop();
-      if (current_page === "index.html") {
-        path = location.pathname.replace("index.html", ditto.index);
-        normalize_paths();
-      } else if (path === "") {
-        path = window.location + ditto.index;
-        normalize_paths();
-      } else {
-        path = path + ".md";
-      }
+      // // default page if hash is empty
+      // var current_page = location.pathname.split("/").pop();
+      // if (current_page === "index.html") {
+      //   path = location.pathname.replace("index.html", ditto.index);
+      //   normalize_paths();
+      // } else if (path === "") {
+      //   path = window.location + ditto.index;
+      //   normalize_paths();
+      // } else {
+      //   path = path + ".md";
+      // }
 
       // otherwise get the markdown and render it
+      var a = location.pathname.split("/");
+      a[a.length - 1] = "";
+      var path =
+        location.origin +
+        a.join("/") +
+        (location.hash === ""
+          ? "./" + ditto.index
+          : location.hash.replace("#", "./") + ".md");
       show_loading();
       if (转到主页 === false) {
         // console.log(path)
@@ -499,17 +526,17 @@
         });
         /* Uncaught DOMException: Failed to execute 'querySelector' on 'Document': '#1895f0fd862578e8198037b27fe2bb1e0d9' is not a valid selector. */
         /* 批量设置clipboard的代码复制 */
-        [
-          ...jQuery("code.language-javascript.hljs"),
-          ...jQuery("code.language-html")
-        ].forEach(e => {
-          var codecontenguid = "clip" + guid();
-          jQuery(e)
-            // .attr("contenteditable", true)
-            .attr("id", codecontenguid)
-            .after(`<button class=" btn btn-outline-primary clipbutton" data-clipboard-target="#${codecontenguid}">复制
+        Array.from(jQuery("code.hljs"))
+          // ...jQuery("code.language-javascript.hljs"),
+          // ...jQuery("code.language-html")
+          .forEach(e => {
+            var codecontenguid = "clip" + guid();
+            jQuery(e)
+              // .attr("contenteditable", true)
+              .attr("id", codecontenguid)
+              .after(`<button class="btn btn-outline-primary clipbutton" data-clipboard-target="#${codecontenguid}">复制
                           </button>`);
-        });
+          });
         //    <img class="clipbuttonimg" src="${jQuery("#clipsvg").attr("src")}" alt="复制到剪贴板">
         // jQuery();
       }).fail(function() {
@@ -517,9 +544,16 @@
         show_error("Opps! ... File not found!\n5秒后返回主页");
         stop_loading();
 
-        setTimeout(() => {
-          page_getter(true);
-        }, 5000);
+        if (!readme加载失败) {
+          setTimeout(() => {
+            page_getter(true);
+            // location.hash = "#";
+          }, 5000);
+        }
+        if (path === "./" + ditto.index) {
+          readme加载失败 = true;
+        }
+        throw new Error("load failed");
       });
     }
 
@@ -542,7 +576,7 @@
       stop_loading();
       escape_github_badges(data);
 
-      normalize_paths();
+      // normalize_paths();
       create_page_anchors();
 
       if (ditto.highlight_code) {
@@ -556,9 +590,9 @@
       }
     }
 
-    function router() {
+    function router(e) {
       var hash = location.hash;
-
+      e && console.log(e);
       if (
         !(
           hash.slice(2, 8) == "search" ||
@@ -578,10 +612,13 @@
       }
     }
     // console.log(globalThis)
-    globalThis.ditto = ditto;
+
     if (typeof exports === "object" && typeof module !== "undefined") {
       module.exports = ditto;
+    } else {
+      //   globalThis.ditto = ditto;
     }
+    return ditto;
   })(
     jQuery,
     ("undefined" != typeof window && window) ||
@@ -589,3 +626,4 @@
       this
   );
 })();
+export default exports;

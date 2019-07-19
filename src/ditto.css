@@ -268,12 +268,12 @@ body {
   display: none;
   position: fixed;
 
-  height: 17px;
+  /* height: 17px; */
   top: 45%;
 
-  margin-left: 560px;
+  /* margin-left: 560px; */
 
-  font-size: 14px;
+  /* font-size: 14px; */
   font-weight: bold;
 }
 

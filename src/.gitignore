@@ -1,6 +1,5 @@
 .cache
 node_modules
-.cache
-node_modules
 dist
 .vscode
+*.bak
