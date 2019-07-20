@@ -1,14 +1,14 @@
-try {
-  /* Get Started  |  Workbox  |  Google Developers
-https://developers.google.cn/web/tools/workbox/guides/get-started */
-
-  // Check that service workers are registered
-  if ("serviceWorker" in navigator) {
-    // Use the window load event to keep the page load performant
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("service-worker.js");
-    });
+"use strict";
+(() => {
+  /* 注册google的workbox的serviceworker */
+  if ("production" === process.env.NODE_ENV) {
+    // try {
+    "serviceWorker" in navigator &&
+      window.addEventListener("load", function() {
+        navigator.serviceWorker.register("service-worker.js").catch(() => {});
+      });
+    // } catch (e) {
+    //   /*  */
+    // }
   }
-} catch (error) {
-  //
-}
+})();
