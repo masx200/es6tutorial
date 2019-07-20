@@ -1,4 +1,5 @@
 "use strict";
+import "webpack-react-vue-spa-awesome-config/registerserviceworker.js"
 import "./ditto.css";
 import "./hidewidthless500.css";
 import "./index.css";
