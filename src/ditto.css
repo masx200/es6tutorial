@@ -1,6 +1,12 @@
 @import url(https://cdn.staticfile.org/mui/3.7.1/css/mui.min.css);
-@import url(https://github.githubassets.com/assets/frameworks-a2fba223d5af91496cac70d4ec3624df.css);
-@import url(https://github.githubassets.com/assets/github-6556dfa9be535e551ffffaadfecdad99.css);
+/* @import url(https://github.githubassets.com/assets/frameworks-a2fba223d5af91496cac70d4ec3624df.css);
+@import url(https://github.githubassets.com/assets/github-6556dfa9be535e551ffffaadfecdad99.css); */
+
+
+@import url("https://cdn.jsdelivr.net/gh/masx200/masx200.github.io@4.2.2/src/assetscss/github-6556dfa9be535e551ffffaadfecdad99.min.css");
+@import url("https://cdn.jsdelivr.net/gh/masx200/masx200.github.io@4.2.2/src/assetscss/github-frameworks-a2fba223d5af91496cac70d4ec3624df.min.css");
+
+
 @import url(https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css);
 @import "./github.css";
 p {
