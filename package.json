@@ -1,35 +1,33 @@
 {
-  "scripts": {
-    "start": "webpack-react-vue-spa-awesome-config start",
-    "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@latest/  ",
-      "test": "webpack-react-vue-spa-awesome-config build"
-  },
-  "dependencies": {
-    "bootstrap": "^4.3.1",
-    "eslint": "^6.0.1",
-    "jquery": "^3.4.1",
-    "node-sass": "^4.12.0",
-    "popper.js": "^1.15.0",
-    "webpack": "^4.36.1",
-    "webpack-react-vue-spa-awesome-config": "https://github.com/masx200/webpack-react-vue-spa-awesome-config.git"
-  },
-  "name": "es6tutorial",
-  "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
-  "version": "2.1.0",
-  "directories": {
-    "doc": "docs"
-  },
-  "devDependencies": {
-    "marked": "^0.6.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/masx200/es6tutorial.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/masx200/es6tutorial/issues"
-  },
-  "homepage": "https://github.com/masx200/es6tutorial#readme"
+    "scripts": {
+        "start": "webpack-react-vue-spa-awesome-config start",
+        "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@latest/  ",
+        "test": "webpack-react-vue-spa-awesome-config build"
+    },
+    "dependencies": {
+        "bootstrap": "^4.3.1",
+        "eslint": "^6.0.1",
+        "jquery": "^3.4.1",
+        "node-sass": "^4.12.0",
+        "popper.js": "^1.15.0",
+        "webpack": "^4.36.1",
+        "webpack-react-vue-spa-awesome-config": "https://github.com/masx200/webpack-react-vue-spa-awesome-config.git"
+    },
+    "name": "es6tutorial",
+    "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
+    "version": "2.1.0",
+    "directories": {
+        "doc": "docs"
+    },
+    "devDependencies": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/masx200/es6tutorial.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/masx200/es6tutorial/issues"
+    },
+    "homepage": "https://github.com/masx200/es6tutorial#readme"
 }
