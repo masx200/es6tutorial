@@ -1,7 +1,8 @@
 {
+    "version": "2.1.0",
     "scripts": {
         "start": "webpack-react-vue-spa-awesome-config start",
-        "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@latest/  ",
+        "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@2.1.0/  ",
         "test": "webpack-react-vue-spa-awesome-config build"
     },
     "dependencies": {
@@ -15,7 +16,6 @@
     },
     "name": "es6tutorial",
     "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
-    "version": "2.1.0",
     "directories": {
         "doc": "docs"
     },
