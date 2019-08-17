@@ -1,16 +1,8 @@
-# 基于 ditto 框架，轻量级 markdown 阅读器
+# 轻量级 markdown 阅读器
 
-优化界面展示方式,使用 bootstrap 可折叠的导航栏和响应式布局和 cdn 加载依赖包
+原作者仓库
 
-固定导航栏在顶部,给导航栏设置最大高度 100%,并自动显示滚动条
-
-预先加载 sidebar 当中的 markdwon 文件到 head 的 link 的 prefetch 元素,来提升加载速度
-
-https://github.com/masx200/ditto
-
-https://github.com/masx200/es6tutorial
-
-https://masx200.github.io/es6tutorial/
+http://github.com/ruanyf/es6tutorial/
 
 # ECMAScript 6 入门
 
