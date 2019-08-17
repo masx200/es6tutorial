@@ -27,7 +27,7 @@
 }
 #cebianlan {
   overflow: auto;
-  max-height: 90%;
+  max-height: 93%;
 }
 #mynewsidelan {
   overflow: auto;
@@ -85,6 +85,9 @@ button.btn.btn-outline-primary.clipbutton {
   transition-duration: 0s !important;
   transition-timing-function: linear;
   transition-delay: 0s;
+}
+#content li {
+  text-align: center !important;
 }
 h1,
 h2,
