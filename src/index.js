@@ -1,5 +1,8 @@
-"use strict";
-import "webpack-react-vue-spa-awesome-config/registerserviceworker.js"
+import "webpack-react-vue-spa-awesome-config/ie11babelpolyfill.js";
+("use strict");
+import "./我的侧边栏.css";
+
+import "webpack-react-vue-spa-awesome-config/registerserviceworker.js";
 import "./ditto.css";
 import "./hidewidthless500.css";
 import "./index.css";
@@ -25,6 +28,20 @@ document.getElementById("root").innerHTML = `
         style="padding-right:0;padding-left:0;"
       >
         <div>
+        <a class="navbar-brand navbar-brand mui-btn mui-btn-primary mui-btn-outlined" href="#README" id="title"
+        style="
+    
+    top: 0;
+"
+        >Markdon Reader</a>
+        <button
+        class="mui-btn mui-btn-primary mui-btn-outlined"
+        type="button"
+   id='cebianlantoggle'
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <!--
           <a
             class="navbar-brand navbar-brand mui-btn mui-btn-primary mui-btn-outlined"
             href="https://masx200.github.io/index.html"
@@ -32,6 +49,9 @@ document.getElementById("root").innerHTML = `
             <hr id="hidewidthless500" />
             github主页
           </a>
+          -->
+
+          <!--
           <button
             class="navbar-toggler"
             type="button"
@@ -40,26 +60,60 @@ document.getElementById("root").innerHTML = `
           >
             <span class="navbar-toggler-icon"></span>
           </button>
+          -->
         </div>
-        <ul class="navbar-nav">
+        <!--   <ul class="navbar-nav">
           <li class="nav-item">
-          <a class="nav-link mui-btn mui-btn-primary mui-btn-outlined" href="#README" id="title">ditto</a>
-          </li>
+          <!--
+          <a class="nav-link mui-btn mui-btn-primary mui-btn-outlined" href="#README" id="title"></a>
+          -->
+          <!--   </li>
         </ul>
+        -->
+        <!--
+
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <div id="sidebar" class="navbar-nav"></div>
         </div>
+       
+-->
       </nav>
     </div>
+
+    <div class="container-fluid ">
+    <div id='cebianlan' class="el-container" style="/* height: 500px; */border: 1px solid white;position: fixed;">
+    
+    <aside id="mynewsidelan" class="el-aside" style="
+    /*
+
+    width: 300px;
+    */
+
+    background-color:white;"></aside> </div>
+    </div>
     <div id="my主体" class="container">
+    <div id="loadingparent">
       <div id="loading">
         <h1>
           Loading ...
         </h1>
       </div>
-      <div id="content"></div>
+      </div>
+      <div >
+     
+     
+
+<div id="contentcontainer">
+
+<h5 class="" id='markdownurlsrc'></h5>
+
+ <div id="content"></div>
+
+</div>
+      </div>
       <div id="hide"></div>
-      <div id="back_to_top">top</div>
+      <div style="display: none;"><div id="back_to_top">top</div></div>
+      
 
       <div >
       <h1 id="error"></h1></div>
@@ -98,7 +152,7 @@ import("./render");
 // });
 // });
 
-import("bootstrap");
+// import("bootstrap");
 // .then(m => console.log(m));
 
 // import ClipboardJS from "./clipboard.min.js";
