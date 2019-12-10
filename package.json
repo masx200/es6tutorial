@@ -1,42 +1,43 @@
 {
-    "version": "2.2.0",
-    "scripts": {
-        "start": "webpack-react-vue-spa-awesome-config start",
-        "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@2.2.0/  ",
-        "test": "webpack-react-vue-spa-awesome-config build"
-    },
-    "dependencies": {
-        },
-    "name": "es6tutorial",
-    "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
-    "directories": {
-        "doc": "docs"
-    },
-    "devDependencies": {
-"serialize-javascript":"^2.1.2",
-"terser":"^4.4.2",
-"typescript":"^3.7.3",
-"rollup":"^1.27.9",
-"babel-eslint": "^10.0.2",
-        "eslint": "^6.0.1",
-        "eslint-plugin-vue": "^5.2.3",
-        "vue": "^2.6.10",
-        "bootstrap": "^4.3.1",
-        "jquery": "^3.4.1",
-        "node-sass": "^4.12.0",
-        "popper.js": "^1.15.0",
-        "webpack": "^4.36.1",
-        "webpack-react-vue-spa-awesome-config": "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
-    
-},
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/masx200/es6tutorial.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/masx200/es6tutorial/issues"
-    },
-    "homepage": "https://github.com/masx200/es6tutorial#readme"
+  "version": "2.2.0",
+  "scripts": {
+    "start": "webpack-react-vue-spa-awesome-config start",
+    "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@2.2.0/  ",
+    "test": "webpack-react-vue-spa-awesome-config build"
+  },
+  "dependencies": {},
+  "name": "es6tutorial",
+  "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "terser-webpack-plugin": "^2.2.2",
+    "highlight.js": "^9.16.2",
+    "@types/highlight.js": "^9.12.3",
+    "serialize-javascript": "^2.1.2",
+    "terser": "^4.4.2",
+    "typescript": "^3.7.3",
+    "rollup": "^1.27.9",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.0.1",
+    "eslint-plugin-vue": "^5.2.3",
+    "vue": "^2.6.10",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
+    "webpack": "^4.36.1",
+    "webpack-react-vue-spa-awesome-config": "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masx200/es6tutorial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masx200/es6tutorial/issues"
+  },
+  "homepage": "https://github.com/masx200/es6tutorial#readme"
 }
