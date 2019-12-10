@@ -6,7 +6,18 @@
         "test": "webpack-react-vue-spa-awesome-config build"
     },
     "dependencies": {
-        "babel-eslint": "^10.0.2",
+        },
+    "name": "es6tutorial",
+    "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
+    "directories": {
+        "doc": "docs"
+    },
+    "devDependencies": {
+"serialize-javascript":"^2.1.2",
+"terser":"^4.4.2",
+"typescript":"^3.7.3",
+"rollup":"^1.27.9",
+"babel-eslint": "^10.0.2",
         "eslint": "^6.0.1",
         "eslint-plugin-vue": "^5.2.3",
         "vue": "^2.6.10",
@@ -15,14 +26,9 @@
         "node-sass": "^4.12.0",
         "popper.js": "^1.15.0",
         "webpack": "^4.36.1",
-        "webpack-react-vue-spa-awesome-config": "https://github.com/masx200/webpack-react-vue-spa-awesome-config.git"
-    },
-    "name": "es6tutorial",
-    "description": "优化界面展示方式,使用bootstrap可折叠的导航栏和响应式布局和cdn加载依赖包",
-    "directories": {
-        "doc": "docs"
-    },
-    "devDependencies": {},
+        "webpack-react-vue-spa-awesome-config": "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
+    
+},
     "repository": {
         "type": "git",
         "url": "git+https://github.com/masx200/es6tutorial.git"
