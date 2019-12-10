@@ -1,8 +1,8 @@
 {
-  "version": "2.2.0",
+  "version": "2.2.1",
   "scripts": {
     "start": "webpack-react-vue-spa-awesome-config start",
-    "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@2.2.0/  ",
+    "build": "webpack-react-vue-spa-awesome-config build   --output-public-path=https://cdn.jsdelivr.net/gh/masx200/es6tutorial@2.2.1/  ",
     "test": "webpack-react-vue-spa-awesome-config build"
   },
   "dependencies": {},
@@ -12,6 +12,7 @@
     "doc": "docs"
   },
   "devDependencies": {
+    "markdown-reader": "https://gitee.com/masx200/markdown-reader.git",
     "terser-webpack-plugin": "^2.2.2",
     "highlight.js": "^9.16.2",
     "@types/highlight.js": "^9.12.3",
@@ -28,7 +29,7 @@
     "node-sass": "^4.12.0",
     "popper.js": "^1.15.0",
     "webpack": "^4.36.1",
-    "webpack-react-vue-spa-awesome-config": "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
+    "@masx200/webpack-react-vue-spa-awesome-config": "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
   },
   "repository": {
     "type": "git",

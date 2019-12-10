@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use strict";
-import { ApphomeVm } from "./index";
+import { ApphomeVm } from "./index.bak";
 // console.log("加载render");
 // import ClipboardJS from "./clipboard.min.js";
 

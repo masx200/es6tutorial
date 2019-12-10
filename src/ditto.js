@@ -2,7 +2,7 @@ import jQuery from "jquery";
 import newconfig from "./config";
 import fetchajaxgettext from "./fetchajaxgettext";
 import hljs from "./highlight.min.js";
-import { ApphomeVm } from "./index";
+import { ApphomeVm } from "./index.bak";
 import marked from "./marked.min";
 /* eslint-disable no-useless-escape */
 // var MathJax = window.MathJax;
