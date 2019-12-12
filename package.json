@@ -20,7 +20,7 @@
     "eslint-plugin-vue": "^5.2.3",
     "highlight.js": "^9.16.2",
     "jquery": "^3.4.1",
-    "markdown-reader": "https://gitee.com/masx200/markdown-reader.git",
+    "@masx200/markdown-reader": "https://gitee.com/masx200/markdown-reader.git",
     "memory-fs": "^0.5.0",
     "node-sass": "^4.12.0",
     "popper.js": "^1.15.0",
