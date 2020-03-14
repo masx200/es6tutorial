@@ -971,6 +971,29 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@masx200/markdown-reader@https://gitee.com/masx200/markdown-reader.git":
+  version "2.3.1"
+  uid "1380dca1cb0796ad4f8977de62d7e27d06d0d18c"
+  resolved "https://gitee.com/masx200/markdown-reader.git#1380dca1cb0796ad4f8977de62d7e27d06d0d18c"
+  dependencies:
+    "@masx200/webpack-react-vue-spa-awesome-config" "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
+    "@types/highlight.js" "^9.12.3"
+    babel-eslint "^10.0.2"
+    bootstrap "^4.3.1"
+    eslint "^6.0.1"
+    eslint-plugin-vue "^5.2.3"
+    highlight.js "^9.16.2"
+    jquery "^3.4.1"
+    node-sass "^4.12.0"
+    popper.js "^1.15.0"
+    rollup "^1.27.9"
+    serialize-javascript "^2.1.2"
+    terser "^4.4.2"
+    terser-webpack-plugin "^2.2.2"
+    typescript "^3.7.3"
+    vue "^2.6.10"
+    webpack "^4.36.1"
+
 "@masx200/webpack-react-vue-spa-awesome-config@https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git":
   version "2.5.5"
   resolved "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git#d6e1fd8f8bcb6b3a81875d55f54b4223e8607178"
@@ -1336,9 +1359,9 @@ acorn-jsx@^5.0.0, acorn-jsx@^5.1.0:
   integrity sha1-KUrbcbVzmLBoABXwo4xWPuHbU4Q=
 
 acorn@^6.0.2, acorn@^6.2.1:
-  version "6.4.0"
-  resolved "https://registry.npm.taobao.org/acorn/download/acorn-6.4.0.tgz#b659d2ffbafa24baf5db1cdbb2c94a983ecd2784"
-  integrity sha1-tlnS/7r6JLr12xzbsslKmD7NJ4Q=
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.1.tgz#531e58ba3f51b9dacb9a6646ca4debf5b14ca474"
+  integrity sha512-ZVA9k326Nwrj3Cj9jlh3wGFutC2ZornPNARZwsNYqQYgN0EsV2d53w5RN/co65Ohn4sUAUtb1rSUAOD6XN9idA==
 
 acorn@^7.1.0:
   version "7.1.0"
@@ -5445,28 +5468,6 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
-
-"markdown-reader@https://gitee.com/masx200/markdown-reader.git":
-  version "2.3.1"
-  resolved "https://gitee.com/masx200/markdown-reader.git#848ffb1e28284976e9bc44ae42fac3bf0f3bdcc0"
-  dependencies:
-    "@masx200/webpack-react-vue-spa-awesome-config" "https://gitee.com/masx200/webpack-react-vue-spa-awesome-config.git"
-    "@types/highlight.js" "^9.12.3"
-    babel-eslint "^10.0.2"
-    bootstrap "^4.3.1"
-    eslint "^6.0.1"
-    eslint-plugin-vue "^5.2.3"
-    highlight.js "^9.16.2"
-    jquery "^3.4.1"
-    node-sass "^4.12.0"
-    popper.js "^1.15.0"
-    rollup "^1.27.9"
-    serialize-javascript "^2.1.2"
-    terser "^4.4.2"
-    terser-webpack-plugin "^2.2.2"
-    typescript "^3.7.3"
-    vue "^2.6.10"
-    webpack "^4.36.1"
 
 md5.js@^1.3.4:
   version "1.3.5"
