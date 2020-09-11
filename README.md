@@ -1,5 +1,7 @@
 # 轻量级 markdown 阅读器 浏览器端渲染
 
+https://github.com/masx200/es6tutorial
+
 原作者仓库
 
 http://github.com/ruanyf/es6tutorial/
