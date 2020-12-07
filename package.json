@@ -12,7 +12,7 @@
     "doc": "docs"
   },
   "devDependencies": {
-    "@masx200/webpack-react-vue-spa-awesome-config": "2.7.1",
+    "@masx200/webpack-react-vue-spa-awesome-config": "2.8.0",
     "@types/highlight.js": "^9.12.3",
     "babel-eslint": "^10.0.2",
     "bootstrap": "^4.3.1",
