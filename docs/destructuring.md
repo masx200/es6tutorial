@@ -26,25 +26,25 @@ let [a, b, c] = [1, 2, 3];
 
 ```javascript
 let [foo, [[bar], baz]] = [1, [[2], 3]];
-foo // 1
-bar // 2
-baz // 3
+foo; // 1
+bar; // 2
+baz; // 3
 
-let [ , , third] = ["foo", "bar", "baz"];
-third // "baz"
+let [, , third] = ["foo", "bar", "baz"];
+third; // "baz"
 
 let [x, , y] = [1, 2, 3];
-x // 1
-y // 3
+x; // 1
+y; // 3
 
 let [head, ...tail] = [1, 2, 3, 4];
-head // 1
-tail // [2, 3, 4]
+head; // 1
+tail; // [2, 3, 4]
 
-let [x, y, ...z] = ['a'];
-x // "a"
-y // undefined
-z // []
+let [x, y, ...z] = ["a"];
+x; // "a"
+y; // undefined
+z; // []
 ```
 
 如果解构不成功，变量的值就等于`undefined`。
@@ -60,13 +60,13 @@ let [bar, foo] = [1];
 
 ```javascript
 let [x, y] = [1, 2, 3];
-x // 1
-y // 2
+x; // 1
+y; // 2
 
 let [a, [b], d] = [1, [2, 3], 4];
-a // 1
-b // 2
-d // 4
+a; // 1
+b; // 2
+d; // 4
 ```
 
 上面两个例子，都属于不完全解构，但是可以成功。
@@ -88,24 +88,24 @@ let [foo] = {};
 对于 Set 结构，也可以使用数组的解构赋值。
 
 ```javascript
-let [x, y, z] = new Set(['a', 'b', 'c']);
-x // "a"
+let [x, y, z] = new Set(["a", "b", "c"]);
+x; // "a"
 ```
 
 事实上，只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值。
 
 ```javascript
 function* fibs() {
-  let a = 0;
-  let b = 1;
-  while (true) {
-    yield a;
-    [a, b] = [b, a + b];
-  }
+    let a = 0;
+    let b = 1;
+    while (true) {
+        yield a;
+        [a, b] = [b, a + b];
+    }
 }
 
 let [first, second, third, fourth, fifth, sixth] = fibs();
-sixth // 5
+sixth; // 5
 ```
 
 上面代码中，`fibs`是一个 Generator 函数（参见《Generator 函数》一章），原生具有 Iterator 接口。解构赋值会依次从这个接口获取值。
@@ -116,20 +116,20 @@ sixth // 5
 
 ```javascript
 let [foo = true] = [];
-foo // true
+foo; // true
 
-let [x, y = 'b'] = ['a']; // x='a', y='b'
-let [x, y = 'b'] = ['a', undefined]; // x='a', y='b'
+let [x, y = "b"] = ["a"]; // x='a', y='b'
+let [x, y = "b"] = ["a", undefined]; // x='a', y='b'
 ```
 
 注意，ES6 内部使用严格相等运算符（`===`），判断一个位置是否有值。所以，只有当一个数组成员严格等于`undefined`，默认值才会生效。
 
 ```javascript
 let [x = 1] = [undefined];
-x // 1
+x; // 1
 
 let [x = 1] = [null];
-x // null
+x; // null
 ```
 
 上面代码中，如果一个数组成员是`null`，默认值就不会生效，因为`null`不严格等于`undefined`。
@@ -138,7 +138,7 @@ x // null
 
 ```javascript
 function f() {
-  console.log('aaa');
+    console.log("aaa");
 }
 
 let [x = f()] = [1];
@@ -149,19 +149,19 @@ let [x = f()] = [1];
 ```javascript
 let x;
 if ([1][0] === undefined) {
-  x = f();
+    x = f();
 } else {
-  x = [1][0];
+    x = [1][0];
 }
 ```
 
 默认值可以引用解构赋值的其他变量，但该变量必须已经声明。
 
 ```javascript
-let [x = 1, y = x] = [];     // x=1; y=1
-let [x = 1, y = x] = [2];    // x=2; y=2
+let [x = 1, y = x] = []; // x=1; y=1
+let [x = 1, y = x] = [2]; // x=2; y=2
 let [x = 1, y = x] = [1, 2]; // x=1; y=2
-let [x = y, y = 1] = [];     // ReferenceError: y is not defined
+let [x = y, y = 1] = []; // ReferenceError: y is not defined
 ```
 
 上面最后一个表达式之所以会报错，是因为`x`用`y`做默认值时，`y`还没有声明。
@@ -173,20 +173,20 @@ let [x = y, y = 1] = [];     // ReferenceError: y is not defined
 解构不仅可以用于数组，还可以用于对象。
 
 ```javascript
-let { foo, bar } = { foo: 'aaa', bar: 'bbb' };
-foo // "aaa"
-bar // "bbb"
+let { foo, bar } = { foo: "aaa", bar: "bbb" };
+foo; // "aaa"
+bar; // "bbb"
 ```
 
 对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。
 
 ```javascript
-let { bar, foo } = { foo: 'aaa', bar: 'bbb' };
-foo // "aaa"
-bar // "bbb"
+let { bar, foo } = { foo: "aaa", bar: "bbb" };
+foo; // "aaa"
+bar; // "bbb"
 
-let { baz } = { foo: 'aaa', bar: 'bbb' };
-baz // undefined
+let { baz } = { foo: "aaa", bar: "bbb" };
+baz; // undefined
 ```
 
 上面代码的第一个例子，等号左边的两个变量的次序，与等号右边两个同名属性的次序不一致，但是对取值完全没有影响。第二个例子的变量没有对应的同名属性，导致取不到值，最后等于`undefined`。
@@ -194,8 +194,8 @@ baz // undefined
 如果解构失败，变量的值等于`undefined`。
 
 ```javascript
-let {foo} = {bar: 'baz'};
-foo // undefined
+let { foo } = { bar: "baz" };
+foo; // undefined
 ```
 
 上面代码中，等号右边的对象没有`foo`属性，所以变量`foo`取不到值，所以等于`undefined`。
@@ -208,7 +208,7 @@ let { log, sin, cos } = Math;
 
 // 例二
 const { log } = console;
-log('hello') // hello
+log("hello"); // hello
 ```
 
 上面代码的例一将`Math`对象的对数、正弦、余弦三个方法，赋值到对应的变量上，使用起来就会方便很多。例二将`console.log`赋值到`log`变量。
@@ -216,27 +216,27 @@ log('hello') // hello
 如果变量名与属性名不一致，必须写成下面这样。
 
 ```javascript
-let { foo: baz } = { foo: 'aaa', bar: 'bbb' };
-baz // "aaa"
+let { foo: baz } = { foo: "aaa", bar: "bbb" };
+baz; // "aaa"
 
-let obj = { first: 'hello', last: 'world' };
+let obj = { first: "hello", last: "world" };
 let { first: f, last: l } = obj;
-f // 'hello'
-l // 'world'
+f; // 'hello'
+l; // 'world'
 ```
 
 这实际上说明，对象的解构赋值是下面形式的简写（参见《对象的扩展》一章）。
 
 ```javascript
-let { foo: foo, bar: bar } = { foo: 'aaa', bar: 'bbb' };
+let { foo: foo, bar: bar } = { foo: "aaa", bar: "bbb" };
 ```
 
 也就是说，对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者。
 
 ```javascript
-let { foo: baz } = { foo: 'aaa', bar: 'bbb' };
-baz // "aaa"
-foo // error: foo is not defined
+let { foo: baz } = { foo: "aaa", bar: "bbb" };
+baz; // "aaa"
+foo; // error: foo is not defined
 ```
 
 上面代码中，`foo`是匹配的模式，`baz`才是变量。真正被赋值的是变量`baz`，而不是模式`foo`。
@@ -245,49 +245,54 @@ foo // error: foo is not defined
 
 ```javascript
 let obj = {
-  p: [
-    'Hello',
-    { y: 'World' }
-  ]
+    p: ["Hello", { y: "World" }],
 };
 
-let { p: [x, { y }] } = obj;
-x // "Hello"
-y // "World"
+let {
+    p: [x, { y }],
+} = obj;
+x; // "Hello"
+y; // "World"
 ```
 
 注意，这时`p`是模式，不是变量，因此不会被赋值。如果`p`也要作为变量赋值，可以写成下面这样。
 
 ```javascript
 let obj = {
-  p: [
-    'Hello',
-    { y: 'World' }
-  ]
+    p: ["Hello", { y: "World" }],
 };
 
-let { p, p: [x, { y }] } = obj;
-x // "Hello"
-y // "World"
-p // ["Hello", {y: "World"}]
+let {
+    p,
+    p: [x, { y }],
+} = obj;
+x; // "Hello"
+y; // "World"
+p; // ["Hello", {y: "World"}]
 ```
 
 下面是另一个例子。
 
 ```javascript
 const node = {
-  loc: {
-    start: {
-      line: 1,
-      column: 5
-    }
-  }
+    loc: {
+        start: {
+            line: 1,
+            column: 5,
+        },
+    },
 };
 
-let { loc, loc: { start }, loc: { start: { line }} } = node;
-line // 1
-loc  // Object {start: Object}
-start // Object {line: 1, column: 5}
+let {
+    loc,
+    loc: { start },
+    loc: {
+        start: { line },
+    },
+} = node;
+line; // 1
+loc; // Object {start: Object}
+start; // Object {line: 1, column: 5}
 ```
 
 上面代码有三次解构赋值，分别是对`loc`、`start`、`line`三个属性的解构赋值。注意，最后一次对`line`属性的解构赋值之中，只有`line`是变量，`loc`和`start`都是模式，不是变量。
@@ -300,15 +305,17 @@ let arr = [];
 
 ({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true });
 
-obj // {prop:123}
-arr // [true]
+obj; // {prop:123}
+arr; // [true]
 ```
 
 如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错。
 
 ```javascript
 // 报错
-let {foo: {bar}} = {baz: 'baz'};
+let {
+    foo: { bar },
+} = { baz: "baz" };
 ```
 
 上面代码中，等号左边对象的`foo`属性，对应一个子对象。该子对象的`bar`属性，解构时会报错。原因很简单，因为`foo`这时等于`undefined`，再取子属性就会报错。
@@ -317,11 +324,11 @@ let {foo: {bar}} = {baz: 'baz'};
 
 ```javascript
 const obj1 = {};
-const obj2 = { foo: 'bar' };
+const obj2 = { foo: "bar" };
 Object.setPrototypeOf(obj1, obj2);
 
 const { foo } = obj1;
-foo // "bar"
+foo; // "bar"
 ```
 
 上面代码中，对象`obj1`的原型对象是`obj2`。`foo`属性不是`obj1`自身的属性，而是继承自`obj2`的属性，解构赋值可以取到这个属性。
@@ -331,31 +338,31 @@ foo // "bar"
 对象的解构也可以指定默认值。
 
 ```javascript
-var {x = 3} = {};
-x // 3
+var { x = 3 } = {};
+x; // 3
 
-var {x, y = 5} = {x: 1};
-x // 1
-y // 5
+var { x, y = 5 } = { x: 1 };
+x; // 1
+y; // 5
 
-var {x: y = 3} = {};
-y // 3
+var { x: y = 3 } = {};
+y; // 3
 
-var {x: y = 3} = {x: 5};
-y // 5
+var { x: y = 3 } = { x: 5 };
+y; // 5
 
-var { message: msg = 'Something went wrong' } = {};
-msg // "Something went wrong"
+var { message: msg = "Something went wrong" } = {};
+msg; // "Something went wrong"
 ```
 
 默认值生效的条件是，对象的属性值严格等于`undefined`。
 
 ```javascript
-var {x = 3} = {x: undefined};
-x // 3
+var { x = 3 } = { x: undefined };
+x; // 3
 
-var {x = 3} = {x: null};
-x // null
+var { x = 3 } = { x: null };
+x; // null
 ```
 
 上面代码中，属性`x`等于`null`，因为`null`与`undefined`不严格相等，所以是个有效的赋值，导致默认值`3`不会生效。
@@ -376,7 +383,7 @@ let x;
 ```javascript
 // 正确的写法
 let x;
-({x} = {x: 1});
+({ x } = { x: 1 });
 ```
 
 上面代码将整个解构赋值语句，放在一个圆括号里面，就可以正确执行。关于圆括号与解构赋值的关系，参见下文。
@@ -385,7 +392,7 @@ let x;
 
 ```javascript
 ({} = [true, false]);
-({} = 'abc');
+({} = "abc");
 ({} = []);
 ```
 
@@ -395,9 +402,9 @@ let x;
 
 ```javascript
 let arr = [1, 2, 3];
-let {0 : first, [arr.length - 1] : last} = arr;
-first // 1
-last // 3
+let { 0: first, [arr.length - 1]: last } = arr;
+first; // 1
+last; // 3
 ```
 
 上面代码对数组进行对象解构。数组`arr`的`0`键对应的值是`1`，`[arr.length - 1]`就是`2`键，对应的值是`3`。方括号这种写法，属于“属性名表达式”（参见《对象的扩展》一章）。
@@ -407,19 +414,19 @@ last // 3
 字符串也可以解构赋值。这是因为此时，字符串被转换成了一个类似数组的对象。
 
 ```javascript
-const [a, b, c, d, e] = 'hello';
-a // "h"
-b // "e"
-c // "l"
-d // "l"
-e // "o"
+const [a, b, c, d, e] = "hello";
+a; // "h"
+b; // "e"
+c; // "l"
+d; // "l"
+e; // "o"
 ```
 
 类似数组的对象都有一个`length`属性，因此还可以对这个属性解构赋值。
 
 ```javascript
-let {length : len} = 'hello';
-len // 5
+let { length: len } = "hello";
+len; // 5
 ```
 
 ## 数值和布尔值的解构赋值
@@ -427,11 +434,11 @@ len // 5
 解构赋值时，如果等号右边是数值和布尔值，则会先转为对象。
 
 ```javascript
-let {toString: s} = 123;
-s === Number.prototype.toString // true
+let { toString: s } = 123;
+s === Number.prototype.toString; // true
 
-let {toString: s} = true;
-s === Boolean.prototype.toString // true
+let { toString: s } = true;
+s === Boolean.prototype.toString; // true
 ```
 
 上面代码中，数值和布尔值的包装对象都有`toString`属性，因此变量`s`都能取到值。
@@ -448,8 +455,8 @@ let { prop: y } = null; // TypeError
 函数的参数也可以使用解构赋值。
 
 ```javascript
-function add([x, y]){
-  return x + y;
+function add([x, y]) {
+    return x + y;
 }
 
 add([1, 2]); // 3
@@ -460,19 +467,22 @@ add([1, 2]); // 3
 下面是另一个例子。
 
 ```javascript
-[[1, 2], [3, 4]].map(([a, b]) => a + b);
+[
+    [1, 2],
+    [3, 4],
+].map(([a, b]) => a + b);
 // [ 3, 7 ]
 ```
 
 函数参数的解构也可以使用默认值。
 
 ```javascript
-function move({x = 0, y = 0} = {}) {
-  return [x, y];
+function move({ x = 0, y = 0 } = {}) {
+    return [x, y];
 }
 
-move({x: 3, y: 8}); // [3, 8]
-move({x: 3}); // [3, 0]
+move({ x: 3, y: 8 }); // [3, 8]
+move({ x: 3 }); // [3, 0]
 move({}); // [0, 0]
 move(); // [0, 0]
 ```
@@ -482,12 +492,12 @@ move(); // [0, 0]
 注意，下面的写法会得到不一样的结果。
 
 ```javascript
-function move({x, y} = { x: 0, y: 0 }) {
-  return [x, y];
+function move({ x, y } = { x: 0, y: 0 }) {
+    return [x, y];
 }
 
-move({x: 3, y: 8}); // [3, 8]
-move({x: 3}); // [3, undefined]
+move({ x: 3, y: 8 }); // [3, 8]
+move({ x: 3 }); // [3, undefined]
 move({}); // [undefined, undefined]
 move(); // [0, 0]
 ```
@@ -497,7 +507,7 @@ move(); // [0, 0]
 `undefined`就会触发函数参数的默认值。
 
 ```javascript
-[1, undefined, 3].map((x = 'yes') => x);
+[1, undefined, 3].map((x = "yes") => x);
 // [ 1, 'yes', 3 ]
 ```
 
@@ -562,9 +572,9 @@ function f([z,(x)]) { return x; }
 可以使用圆括号的情况只有一种：赋值语句的非模式部分，可以使用圆括号。
 
 ```javascript
-[(b)] = [3]; // 正确
-({ p: (d) } = {}); // 正确
-[(parseInt.prop)] = [3]; // 正确
+[b] = [3]; // 正确
+({ p: d } = {}); // 正确
+[parseInt.prop] = [3]; // 正确
 ```
 
 上面三行语句都可以正确执行，因为首先它们都是赋值语句，而不是声明语句；其次它们的圆括号都不属于模式的一部分。第一行语句中，模式是取数组的第一个成员，跟圆括号无关；第二行语句中，模式是`p`，而不是`d`；第三行语句与第一行语句的性质一致。
@@ -592,17 +602,17 @@ let y = 2;
 // 返回一个数组
 
 function example() {
-  return [1, 2, 3];
+    return [1, 2, 3];
 }
 let [a, b, c] = example();
 
 // 返回一个对象
 
 function example() {
-  return {
-    foo: 1,
-    bar: 2
-  };
+    return {
+        foo: 1,
+        bar: 2,
+    };
 }
 let { foo, bar } = example();
 ```
@@ -627,9 +637,9 @@ f({z: 3, y: 2, x: 1});
 
 ```javascript
 let jsonData = {
-  id: 42,
-  status: "OK",
-  data: [867, 5309]
+    id: 42,
+    status: "OK",
+    data: [867, 5309],
 };
 
 let { id, status, data: number } = jsonData;
@@ -643,16 +653,19 @@ console.log(id, status, number);
 **（5）函数参数的默认值**
 
 ```javascript
-jQuery.ajax = function (url, {
-  async = true,
-  beforeSend = function () {},
-  cache = true,
-  complete = function () {},
-  crossDomain = false,
-  global = true,
-  // ... more config
-} = {}) {
-  // ... do stuff
+jQuery.ajax = function (
+    url,
+    {
+        async = true,
+        beforeSend = function () {},
+        cache = true,
+        complete = function () {},
+        crossDomain = false,
+        global = true,
+        // ... more config
+    } = {}
+) {
+    // ... do stuff
 };
 ```
 
@@ -664,11 +677,11 @@ jQuery.ajax = function (url, {
 
 ```javascript
 const map = new Map();
-map.set('first', 'hello');
-map.set('second', 'world');
+map.set("first", "hello");
+map.set("second", "world");
 
 for (let [key, value] of map) {
-  console.log(key + " is " + value);
+    console.log(key + " is " + value);
 }
 // first is hello
 // second is world
@@ -679,12 +692,12 @@ for (let [key, value] of map) {
 ```javascript
 // 获取键名
 for (let [key] of map) {
-  // ...
+    // ...
 }
 
 // 获取键值
-for (let [,value] of map) {
-  // ...
+for (let [, value] of map) {
+    // ...
 }
 ```
 

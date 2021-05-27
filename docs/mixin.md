@@ -10,14 +10,14 @@ JavaScript 语言没有采用 Interface 的方案，而是通过代理（delegat
 
 ```javascript
 var Enumerable_first = function () {
-  this.first = function () {
-    return this[0];
-  };
+    this.first = function () {
+        return this[0];
+    };
 };
 
 var list = ["foo", "bar", "baz"];
 Enumerable_first.call(list); // explicit delegation
-list.first() // "foo"
+list.first(); // "foo"
 ```
 
 上面代码中，`list`是一个数组，本身并没有`first`方法。通过`call`方法，可以把`Enumerable_first`里面的方法，绑定到`list`，从而`list`就具有`first`方法。这就叫做“代理”（delegation），`list`对象代理了`Enumerable_first`的`first`方法。
@@ -36,12 +36,12 @@ Mixin 就是一个正常的类，不仅定义了接口，还定义了接口的�
 
 ```javascript
 function vowels(string) {
-  return /[aeiou]/i.test(this.value);
+    return /[aeiou]/i.test(this.value);
 }
 
-var obj = { value: 'hello' };
-_.mixin(obj, {vowels: vowels})
-obj.vowels() // true
+var obj = { value: "hello" };
+_.mixin(obj, { vowels: vowels });
+obj.vowels(); // true
 ```
 
 上面代码通过 Lodash 库的`_.mixin`方法，让`obj`对象继承了`vowels`方法。
@@ -50,25 +50,25 @@ Underscore 的类似方法是`_.extend`。
 
 ```javascript
 var Person = function (fName, lName) {
-  this.firstName = fName;
-  this.lastName = lName;
-}
+    this.firstName = fName;
+    this.lastName = lName;
+};
 
-var sam = new Person('Sam', 'Lowry');
+var sam = new Person("Sam", "Lowry");
 
 var NameMixin = {
-  fullName: function () {
-    return this.firstName + ' ' + this.lastName;
-  },
-  rename: function(first, last) {
-    this.firstName = first;
-    this.lastName = last;
-    return this;
-  }
+    fullName: function () {
+        return this.firstName + " " + this.lastName;
+    },
+    rename: function (first, last) {
+        this.firstName = first;
+        this.lastName = last;
+        return this;
+    },
 };
 _.extend(Person.prototype, NameMixin);
-sam.rename('Samwise', 'Gamgee');
-sam.fullName() // "Samwise Gamgee"
+sam.rename("Samwise", "Gamgee");
+sam.fullName(); // "Samwise Gamgee"
 ```
 
 上面代码通过`_.extend`方法，在`sam`对象上面（准确说是它的原型对象`Person.prototype`上面），混入了`NameMixin`类。
@@ -77,12 +77,12 @@ sam.fullName() // "Samwise Gamgee"
 
 ```javascript
 function extend(destination, source) {
-  for (var k in source) {
-    if (source.hasOwnProperty(k)) {
-      destination[k] = source[k];
+    for (var k in source) {
+        if (source.hasOwnProperty(k)) {
+            destination[k] = source[k];
+        }
     }
-  }
-  return destination;
+    return destination;
 }
 ```
 
@@ -92,5 +92,5 @@ function extend(destination, source) {
 
 Trait 是另外一种多重继承的解决方案。它与 Mixin 很相似，但是有一些细微的差别。
 
-- Mixin 可以包含状态（state），Trait 不包含，即 Trait 里面的方法都是互不相干，可以线性包含的。比如，`Trait1`包含方法`A`和`B`，`Trait2`继承了`Trait1`，同时还包含一个自己的方法`C`，实际上就等同于直接包含方法`A`、`B`、`C`。
-- 对于同名方法的碰撞，Mixin 包含了解决规则，Trait 则是报错。
+-   Mixin 可以包含状态（state），Trait 不包含，即 Trait 里面的方法都是互不相干，可以线性包含的。比如，`Trait1`包含方法`A`和`B`，`Trait2`继承了`Trait1`，同时还包含一个自己的方法`C`，实际上就等同于直接包含方法`A`、`B`、`C`。
+-   对于同名方法的碰撞，Mixin 包含了解决规则，Trait 则是报错。

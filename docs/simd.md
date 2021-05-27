@@ -17,7 +17,7 @@ c[0] = a[0] + b[0];
 c[1] = a[1] + b[1];
 c[2] = a[2] + b[2];
 c[3] = a[3] + b[3];
-c // Array[6, 8, 10, 12]
+c; // Array[6, 8, 10, 12]
 ```
 
 上面代码中，数组`a`和`b`的对应成员相加，结果放入数组`c`。它的运算模式是依次处理每个数组成员，一共有四个数组成员，所以需要运算 4 次。
@@ -49,27 +49,27 @@ v + w = 〈v1, …, vn〉+ 〈w1, …, wn〉
 
 SIMD 提供 12 种数据类型，总长度都是 128 个二进制位。
 
-- Float32x4：四个 32 位浮点数
-- Float64x2：两个 64 位浮点数
-- Int32x4：四个 32 位整数
-- Int16x8：八个 16 位整数
-- Int8x16：十六个 8 位整数
-- Uint32x4：四个无符号的 32 位整数
-- Uint16x8：八个无符号的 16 位整数
-- Uint8x16：十六个无符号的 8 位整数
-- Bool32x4：四个 32 位布尔值
-- Bool16x8：八个 16 位布尔值
-- Bool8x16：十六个 8 位布尔值
-- Bool64x2：两个 64 位布尔值
+-   Float32x4：四个 32 位浮点数
+-   Float64x2：两个 64 位浮点数
+-   Int32x4：四个 32 位整数
+-   Int16x8：八个 16 位整数
+-   Int8x16：十六个 8 位整数
+-   Uint32x4：四个无符号的 32 位整数
+-   Uint16x8：八个无符号的 16 位整数
+-   Uint8x16：十六个无符号的 8 位整数
+-   Bool32x4：四个 32 位布尔值
+-   Bool16x8：八个 16 位布尔值
+-   Bool8x16：十六个 8 位布尔值
+-   Bool64x2：两个 64 位布尔值
 
 每种数据类型被`x`符号分隔成两部分，后面的部分表示通道数，前面的部分表示每个通道的宽度和类型。比如，`Float32x4`就表示这个值有 4 个通道，每个通道是一个 32 位浮点数。
 
 每个通道之中，可以放置四种数据。
 
-- 浮点数（float，比如 1.0）
-- 带符号的整数（Int，比如-1）
-- 无符号的整数（Uint，比如 1）
-- 布尔值（Bool，包含`true`和`false`两种值）
+-   浮点数（float，比如 1.0）
+-   带符号的整数（Int，比如-1）
+-   无符号的整数（Uint，比如 1）
+-   布尔值（Bool，包含`true`和`false`两种值）
 
 每种 SIMD 的数据类型都是一个函数方法，可以传入参数，生成对应的值。
 
@@ -96,7 +96,7 @@ var v = new SIMD.Float32x4(0, 1, 2, 3);
 
 ```javascript
 var a = SIMD.Float32x4(-1, -2, 0, NaN);
-SIMD.Float32x4.abs(a)
+SIMD.Float32x4.abs(a);
 // Float32x4[1, 2, 0, NaN]
 ```
 
@@ -104,11 +104,11 @@ SIMD.Float32x4.abs(a)
 
 ```javascript
 var a = SIMD.Float32x4(-1, -2, 3, 0);
-SIMD.Float32x4.neg(a)
+SIMD.Float32x4.neg(a);
 // Float32x4[1, 2, -3, -0]
 
 var b = SIMD.Float64x2(NaN, Infinity);
-SIMD.Float64x2.neg(b)
+SIMD.Float64x2.neg(b);
 // Float64x2[NaN, -Infinity]
 ```
 
@@ -149,7 +149,7 @@ SIMD.Int16x8.addSaturate(c, d);
 ```javascript
 var a = SIMD.Float32x4(-1, -2, 3, 4);
 var b = SIMD.Float32x4(3, 3, 3, 3);
-SIMD.Float32x4.sub(a, b)
+SIMD.Float32x4.sub(a, b);
 // Float32x4[-4, -5, 0, 1]
 ```
 
@@ -158,12 +158,12 @@ SIMD.Float32x4.sub(a, b)
 ```javascript
 var a = SIMD.Uint16x8(5, 1, 1, 1, 1, 1, 1, 1);
 var b = SIMD.Uint16x8(10, 1, 1, 1, 1, 1, 1, 1);
-SIMD.Uint16x8.subSaturate(a, b)
+SIMD.Uint16x8.subSaturate(a, b);
 // Uint16x8[0, 0, 0, 0, 0, 0, 0, 0]
 
 var c = SIMD.Int16x8(-100, 0, 0, 0, 0, 0, 0, 0);
 var d = SIMD.Int16x8(32767, 0, 0, 0, 0, 0, 0, 0);
-SIMD.Int16x8.subSaturate(c, d)
+SIMD.Int16x8.subSaturate(c, d);
 // Int16x8[-32768, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
@@ -176,7 +176,7 @@ SIMD.Int16x8.subSaturate(c, d)
 ```javascript
 var a = SIMD.Float32x4(-1, -2, 3, 4);
 var b = SIMD.Float32x4(3, 3, 3, 3);
-SIMD.Float32x4.mul(a, b)
+SIMD.Float32x4.mul(a, b);
 // Float32x4[-3, -6, 9, 12]
 ```
 
@@ -185,7 +185,7 @@ SIMD.Float32x4.mul(a, b)
 ```javascript
 var a = SIMD.Float32x4(2, 2, 2, 2);
 var b = SIMD.Float32x4(4, 4, 4, 4);
-SIMD.Float32x4.div(a, b)
+SIMD.Float32x4.div(a, b);
 // Float32x4[0.5, 0.5, 0.5, 0.5]
 ```
 
@@ -193,7 +193,7 @@ SIMD.Float32x4.div(a, b)
 
 ```javascript
 var b = SIMD.Float64x2(4, 8);
-SIMD.Float64x2.sqrt(b)
+SIMD.Float64x2.sqrt(b);
 // Float64x2[2, 2.8284271247461903]
 ```
 
@@ -211,7 +211,7 @@ SIMD.Float32x4.reciprocalApproximation(a);
 
 ```javascript
 var a = SIMD.Float32x4(1, 2, 3, 4);
-SIMD.Float32x4.reciprocalSqrtApproximation(a)
+SIMD.Float32x4.reciprocalSqrtApproximation(a);
 // Float32x4[1, 0.7071067690849304, 0.5773502588272095, 0.5]
 ```
 
@@ -271,9 +271,9 @@ var a = SIMD.Float32x4(1, 2, 3, 9);
 SIMD.Float32x4.check(a);
 // Float32x4[1, 2, 3, 9]
 
-SIMD.Float32x4.check([1,2,3,4]) // 报错
-SIMD.Int32x4.check(a) // 报错
-SIMD.Int32x4.check('hello world') // 报错
+SIMD.Float32x4.check([1, 2, 3, 4]); // 报错
+SIMD.Int32x4.check(a); // 报错
+SIMD.Int32x4.check("hello world"); // 报错
 ```
 
 ### SIMD.%type%.extractLane()，SIMD.%type%.replaceLane()
@@ -282,14 +282,14 @@ SIMD.Int32x4.check('hello world') // 报错
 
 ```javascript
 var t = SIMD.Float32x4(1, 2, 3, 4);
-SIMD.Float32x4.extractLane(t, 2) // 3
+SIMD.Float32x4.extractLane(t, 2); // 3
 ```
 
 `replaceLane`方法用于替换指定通道的值，并返回一个新的 SIMD 值。它接受三个参数，分别是原来的 SIMD 值、通道编号和新的通道值。
 
 ```javascript
 var t = SIMD.Float32x4(1, 2, 3, 4);
-SIMD.Float32x4.replaceLane(t, 2, 42)
+SIMD.Float32x4.replaceLane(t, 2, 42);
 // Float32x4[1, 2, 42, 4]
 ```
 
@@ -298,11 +298,11 @@ SIMD.Float32x4.replaceLane(t, 2, 42)
 `load`方法用于从二进制数组读入数据，生成一个新的 SIMD 值。
 
 ```javascript
-var a = new Int32Array([1,2,3,4,5,6,7,8]);
+var a = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
 SIMD.Int32x4.load(a, 0);
 // Int32x4[1, 2, 3, 4]
 
-var b = new Int32Array([1,2,3,4,5,6,7,8]);
+var b = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
 SIMD.Int32x4.load(a, 2);
 // Int32x4[3, 4, 5, 6]
 ```
@@ -313,13 +313,13 @@ SIMD.Int32x4.load(a, 2);
 
 ```javascript
 // 格式
-SIMD.Int32x4.load(tarray, index)
-SIMD.Int32x4.load1(tarray, index)
-SIMD.Int32x4.load2(tarray, index)
-SIMD.Int32x4.load3(tarray, index)
+SIMD.Int32x4.load(tarray, index);
+SIMD.Int32x4.load1(tarray, index);
+SIMD.Int32x4.load2(tarray, index);
+SIMD.Int32x4.load3(tarray, index);
 
 // 实例
-var a = new Int32Array([1,2,3,4,5,6,7,8]);
+var a = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
 SIMD.Int32x4.load1(a, 0);
 // Int32x4[1, 0, 0, 0]
 SIMD.Int32x4.load2(a, 0);
@@ -335,12 +335,12 @@ SIMD.Int32x4.load3(a, 0);
 ```javascript
 var t1 = new Int32Array(8);
 var v1 = SIMD.Int32x4(1, 2, 3, 4);
-SIMD.Int32x4.store(t1, 0, v1)
+SIMD.Int32x4.store(t1, 0, v1);
 // Int32Array[1, 2, 3, 4, 0, 0, 0, 0]
 
 var t2 = new Int32Array(8);
 var v2 = SIMD.Int32x4(1, 2, 3, 4);
-SIMD.Int32x4.store(t2, 2, v2)
+SIMD.Int32x4.store(t2, 2, v2);
 // Int32Array[0, 0, 1, 2, 3, 4, 0, 0]
 ```
 
@@ -420,10 +420,10 @@ SIMD.Float32x4.shuffle(a, b, 1, 5, 7, 2);
 var a = SIMD.Float32x4(1, 2, 3, 9);
 var b = SIMD.Float32x4(1, 4, 7, 9);
 
-SIMD.Float32x4.equal(a,b)
+SIMD.Float32x4.equal(a, b);
 // Bool32x4[true, false, false, true]
 
-SIMD.Float32x4.notEqual(a,b);
+SIMD.Float32x4.notEqual(a, b);
 // Bool32x4[false, true, true, false]
 ```
 
@@ -435,10 +435,10 @@ SIMD.Float32x4.notEqual(a,b);
 var a = SIMD.Float32x4(1, 6, 3, 11);
 var b = SIMD.Float32x4(1, 4, 7, 9);
 
-SIMD.Float32x4.greaterThan(a, b)
+SIMD.Float32x4.greaterThan(a, b);
 // Bool32x4[false, true, false, true]
 
-SIMD.Float32x4.greaterThanOrEqual(a, b)
+SIMD.Float32x4.greaterThanOrEqual(a, b);
 // Bool32x4[true, true, false, true]
 ```
 
@@ -450,10 +450,10 @@ SIMD.Float32x4.greaterThanOrEqual(a, b)
 var a = SIMD.Float32x4(1, 2, 3, 11);
 var b = SIMD.Float32x4(1, 4, 7, 9);
 
-SIMD.Float32x4.lessThan(a, b)
+SIMD.Float32x4.lessThan(a, b);
 // Bool32x4[false, true, true, false]
 
-SIMD.Float32x4.lessThanOrEqual(a, b)
+SIMD.Float32x4.lessThanOrEqual(a, b);
 // Bool32x4[true, true, true, false]
 ```
 
@@ -479,7 +479,7 @@ SIMD.Float32x4.select(mask, a, b);
 var a = SIMD.Float32x4(0, 12, 3, 4);
 var b = SIMD.Float32x4(0, 6, 7, 50);
 
-var mask = SIMD.Float32x4.lessThan(a,b);
+var mask = SIMD.Float32x4.lessThan(a, b);
 // Bool32x4[false, false, true, true]
 
 var result = SIMD.Float32x4.select(mask, a, b);
@@ -515,11 +515,11 @@ SIMD.Bool32x4.anyTrue(b); // true
 这两个方法通常与比较运算符结合使用。
 
 ```javascript
-var ax4    = SIMD.Float32x4(1.0, 2.0, 3.0, 4.0);
-var bx4    = SIMD.Float32x4(0.0, 6.0, 7.0, 8.0);
-var ix4    = SIMD.Float32x4.lessThan(ax4, bx4);
-var b1     = SIMD.Int32x4.allTrue(ix4); // false
-var b2     = SIMD.Int32x4.anyTrue(ix4); // true
+var ax4 = SIMD.Float32x4(1.0, 2.0, 3.0, 4.0);
+var bx4 = SIMD.Float32x4(0.0, 6.0, 7.0, 8.0);
+var ix4 = SIMD.Float32x4.lessThan(ax4, bx4);
+var b1 = SIMD.Int32x4.allTrue(ix4); // false
+var b2 = SIMD.Int32x4.anyTrue(ix4); // true
 ```
 
 ### SIMD.%type%.min()，SIMD.%type%.minNum()
@@ -536,7 +536,7 @@ SIMD.Float32x4.min(a, b);
 如果有一个通道的值是`NaN`，则会优先返回`NaN`。
 
 ```javascript
-var c = SIMD.Float64x2(NaN, Infinity)
+var c = SIMD.Float64x2(NaN, Infinity);
 var d = SIMD.Float64x2(1337, 42);
 SIMD.Float64x2.min(c, d);
 // Float64x2[NaN, 42]
@@ -567,18 +567,18 @@ SIMD.Float32x4.max(a, b);
 如果有一个通道的值是`NaN`，则会优先返回`NaN`。
 
 ```javascript
-var c = SIMD.Float64x2(NaN, Infinity)
+var c = SIMD.Float64x2(NaN, Infinity);
 var d = SIMD.Float64x2(1337, 42);
-SIMD.Float64x2.max(c, d)
+SIMD.Float64x2.max(c, d);
 // Float64x2[NaN, Infinity]
 ```
 
 `maxNum`方法与`max`的作用一模一样，唯一的区别是如果有一个通道的值是`NaN`，则会优先返回另一个通道的值。
 
 ```javascript
-var c = SIMD.Float64x2(NaN, Infinity)
+var c = SIMD.Float64x2(NaN, Infinity);
 var d = SIMD.Float64x2(1337, 42);
-SIMD.Float64x2.maxNum(c, d)
+SIMD.Float64x2.maxNum(c, d);
 // Float64x2[1337, Infinity]
 ```
 
@@ -591,7 +591,7 @@ SIMD.Float64x2.maxNum(c, d)
 ```javascript
 var a = SIMD.Int32x4(1, 2, 4, 8);
 var b = SIMD.Int32x4(5, 5, 5, 5);
-SIMD.Int32x4.and(a, b)
+SIMD.Int32x4.and(a, b);
 // Int32x4[1, 0, 4, 0]
 ```
 
@@ -602,7 +602,7 @@ SIMD.Int32x4.and(a, b)
 ```javascript
 var a = SIMD.Int32x4(1, 2, 4, 8);
 var b = SIMD.Int32x4(5, 5, 5, 5);
-SIMD.Int32x4.or(a, b)
+SIMD.Int32x4.or(a, b);
 // Int32x4[5, 7, 5, 13]
 ```
 
@@ -611,7 +611,7 @@ SIMD.Int32x4.or(a, b)
 ```javascript
 var a = SIMD.Int32x4(1, 2, 4, 8);
 var b = SIMD.Int32x4(5, 5, 5, 5);
-SIMD.Int32x4.xor(a, b)
+SIMD.Int32x4.xor(a, b);
 // Int32x4[4, 7, 1, 13]
 ```
 
@@ -619,7 +619,7 @@ SIMD.Int32x4.xor(a, b)
 
 ```javascript
 var a = SIMD.Int32x4(1, 2, 4, 8);
-SIMD.Int32x4.not(a)
+SIMD.Int32x4.not(a);
 // Int32x4[-2, -3, -5, -9]
 ```
 
@@ -629,17 +629,17 @@ SIMD.Int32x4.not(a)
 
 SIMD 提供以下方法，用来将一种数据类型转为另一种数据类型。
 
-- `SIMD.%type%.fromFloat32x4()`
-- `SIMD.%type%.fromFloat32x4Bits()`
-- `SIMD.%type%.fromFloat64x2Bits()`
-- `SIMD.%type%.fromInt32x4()`
-- `SIMD.%type%.fromInt32x4Bits()`
-- `SIMD.%type%.fromInt16x8Bits()`
-- `SIMD.%type%.fromInt8x16Bits()`
-- `SIMD.%type%.fromUint32x4()`
-- `SIMD.%type%.fromUint32x4Bits()`
-- `SIMD.%type%.fromUint16x8Bits()`
-- `SIMD.%type%.fromUint8x16Bits()`
+-   `SIMD.%type%.fromFloat32x4()`
+-   `SIMD.%type%.fromFloat32x4Bits()`
+-   `SIMD.%type%.fromFloat64x2Bits()`
+-   `SIMD.%type%.fromInt32x4()`
+-   `SIMD.%type%.fromInt32x4Bits()`
+-   `SIMD.%type%.fromInt16x8Bits()`
+-   `SIMD.%type%.fromInt8x16Bits()`
+-   `SIMD.%type%.fromUint32x4()`
+-   `SIMD.%type%.fromUint32x4Bits()`
+-   `SIMD.%type%.fromUint16x8Bits()`
+-   `SIMD.%type%.fromUint8x16Bits()`
 
 带有`Bits`后缀的方法，会原封不动地将二进制位拷贝到新的数据类型；不带后缀的方法，则会进行数据类型转换。
 
@@ -674,7 +674,7 @@ SIMD.Int16x8.fromFloat32x4Bits(t);
 
 ```javascript
 var a = SIMD.Float32x4(11, 22, 33, 44);
-a.toString() // "SIMD.Float32x4(11, 22, 33, 44)"
+a.toString(); // "SIMD.Float32x4(11, 22, 33, 44)"
 ```
 
 ## 实例：求平均值
@@ -683,12 +683,12 @@ a.toString() // "SIMD.Float32x4(11, 22, 33, 44)"
 
 ```javascript
 function average(list) {
-  var n = list.length;
-  var sum = 0.0;
-  for (var i = 0; i < n; i++) {
-    sum += list[i];
-  }
-  return sum / n;
+    var n = list.length;
+    var sum = 0.0;
+    for (var i = 0; i < n; i++) {
+        sum += list[i];
+    }
+    return sum / n;
 }
 ```
 
@@ -696,19 +696,17 @@ function average(list) {
 
 ```javascript
 function average(list) {
-  var n = list.length;
-  var sum = SIMD.Float32x4.splat(0.0);
-  for (var i = 0; i < n; i += 4) {
-    sum = SIMD.Float32x4.add(
-      sum,
-      SIMD.Float32x4.load(list, i)
-    );
-  }
-  var total = SIMD.Float32x4.extractLane(sum, 0) +
-              SIMD.Float32x4.extractLane(sum, 1) +
-              SIMD.Float32x4.extractLane(sum, 2) +
-              SIMD.Float32x4.extractLane(sum, 3);
-  return total / n;
+    var n = list.length;
+    var sum = SIMD.Float32x4.splat(0.0);
+    for (var i = 0; i < n; i += 4) {
+        sum = SIMD.Float32x4.add(sum, SIMD.Float32x4.load(list, i));
+    }
+    var total =
+        SIMD.Float32x4.extractLane(sum, 0) +
+        SIMD.Float32x4.extractLane(sum, 1) +
+        SIMD.Float32x4.extractLane(sum, 2) +
+        SIMD.Float32x4.extractLane(sum, 3);
+    return total / n;
 }
 ```
 

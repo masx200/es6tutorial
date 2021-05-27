@@ -8,13 +8,13 @@ ES6 之前，不能直接为函数的参数指定默认值，只能采用变通�
 
 ```javascript
 function log(x, y) {
-  y = y || 'World';
-  console.log(x, y);
+    y = y || "World";
+    console.log(x, y);
 }
 
-log('Hello') // Hello World
-log('Hello', 'China') // Hello China
-log('Hello', '') // Hello World
+log("Hello"); // Hello World
+log("Hello", "China"); // Hello China
+log("Hello", ""); // Hello World
 ```
 
 上面代码检查函数`log`的参数`y`有没有赋值，如果没有，则指定默认值为`World`。这种写法的缺点在于，如果参数`y`赋值了，但是对应的布尔值为`false`，则该赋值不起作用。就像上面代码的最后一行，参数`y`等于空字符，结果被改为默认值。
@@ -22,33 +22,33 @@ log('Hello', '') // Hello World
 为了避免这个问题，通常需要先判断一下参数`y`是否被赋值，如果没有，再等于默认值。
 
 ```javascript
-if (typeof y === 'undefined') {
-  y = 'World';
+if (typeof y === "undefined") {
+    y = "World";
 }
 ```
 
 ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。
 
 ```javascript
-function log(x, y = 'World') {
-  console.log(x, y);
+function log(x, y = "World") {
+    console.log(x, y);
 }
 
-log('Hello') // Hello World
-log('Hello', 'China') // Hello China
-log('Hello', '') // Hello
+log("Hello"); // Hello World
+log("Hello", "China"); // Hello China
+log("Hello", ""); // Hello
 ```
 
 可以看到，ES6 的写法比 ES5 简洁许多，而且非常自然。下面是另一个例子。
 
 ```javascript
 function Point(x = 0, y = 0) {
-  this.x = x;
-  this.y = y;
+    this.x = x;
+    this.y = y;
 }
 
 const p = new Point();
-p // { x: 0, y: 0 }
+p; // { x: 0, y: 0 }
 ```
 
 除了简洁，ES6 的写法还有两个好处：首先，阅读代码的人，可以立刻意识到哪些参数是可以省略的，不用查看函数体或文档；其次，有利于将来的代码优化，即使未来的版本在对外接口中，彻底拿掉这个参数，也不会导致以前的代码无法运行。
@@ -57,8 +57,8 @@ p // { x: 0, y: 0 }
 
 ```javascript
 function foo(x = 5) {
-  let x = 1; // error
-  const x = 2; // error
+    let x = 1; // error
+    const x = 2; // error
 }
 ```
 
@@ -69,12 +69,12 @@ function foo(x = 5) {
 ```javascript
 // 不报错
 function foo(x, x, y) {
-  // ...
+    // ...
 }
 
 // 报错
 function foo(x, x, y = 1) {
-  // ...
+    // ...
 }
 // SyntaxError: Duplicate parameter name not allowed in this context
 ```
@@ -84,13 +84,13 @@ function foo(x, x, y = 1) {
 ```javascript
 let x = 99;
 function foo(p = x + 1) {
-  console.log(p);
+    console.log(p);
 }
 
-foo() // 100
+foo(); // 100
 
 x = 100;
-foo() // 101
+foo(); // 101
 ```
 
 上面代码中，参数`p`的默认值是`x + 1`。这时，每次调用函数`foo`，都会重新计算`x + 1`，而不是默认`p`等于 100。
@@ -100,24 +100,24 @@ foo() // 101
 参数默认值可以与解构赋值的默认值，结合起来使用。
 
 ```javascript
-function foo({x, y = 5}) {
-  console.log(x, y);
+function foo({ x, y = 5 }) {
+    console.log(x, y);
 }
 
-foo({}) // undefined 5
-foo({x: 1}) // 1 5
-foo({x: 1, y: 2}) // 1 2
-foo() // TypeError: Cannot read property 'x' of undefined
+foo({}); // undefined 5
+foo({ x: 1 }); // 1 5
+foo({ x: 1, y: 2 }); // 1 2
+foo(); // TypeError: Cannot read property 'x' of undefined
 ```
 
 上面代码只使用了对象的解构赋值默认值，没有使用函数参数的默认值。只有当函数`foo`的参数是一个对象时，变量`x`和`y`才会通过解构赋值生成。如果函数`foo`调用时没提供参数，变量`x`和`y`就不会生成，从而报错。通过提供函数参数的默认值，就可以避免这种情况。
 
 ```javascript
-function foo({x, y = 5} = {}) {
-  console.log(x, y);
+function foo({ x, y = 5 } = {}) {
+    console.log(x, y);
 }
 
-foo() // undefined 5
+foo(); // undefined 5
 ```
 
 上面代码指定，如果没有提供参数，函数`foo`的参数默认为一个空对象。
@@ -125,25 +125,25 @@ foo() // undefined 5
 下面是另一个解构赋值默认值的例子。
 
 ```javascript
-function fetch(url, { body = '', method = 'GET', headers = {} }) {
-  console.log(method);
+function fetch(url, { body = "", method = "GET", headers = {} }) {
+    console.log(method);
 }
 
-fetch('http://example.com', {})
+fetch("http://example.com", {});
 // "GET"
 
-fetch('http://example.com')
+fetch("http://example.com");
 // 报错
 ```
 
 上面代码中，如果函数`fetch`的第二个参数是一个对象，就可以为它的三个属性设置默认值。这种写法不能省略第二个参数，如果结合函数参数的默认值，就可以省略第二个参数。这时，就出现了双重默认值。
 
 ```javascript
-function fetch(url, { body = '', method = 'GET', headers = {} } = {}) {
-  console.log(method);
+function fetch(url, { body = "", method = "GET", headers = {} } = {}) {
+    console.log(method);
 }
 
-fetch('http://example.com')
+fetch("http://example.com");
 // "GET"
 ```
 
@@ -153,13 +153,13 @@ fetch('http://example.com')
 
 ```javascript
 // 写法一
-function m1({x = 0, y = 0} = {}) {
-  return [x, y];
+function m1({ x = 0, y = 0 } = {}) {
+    return [x, y];
 }
 
 // 写法二
-function m2({x, y} = { x: 0, y: 0 }) {
-  return [x, y];
+function m2({ x, y } = { x: 0, y: 0 }) {
+    return [x, y];
 }
 ```
 
@@ -167,23 +167,23 @@ function m2({x, y} = { x: 0, y: 0 }) {
 
 ```javascript
 // 函数没有参数的情况
-m1() // [0, 0]
-m2() // [0, 0]
+m1(); // [0, 0]
+m2(); // [0, 0]
 
 // x 和 y 都有值的情况
-m1({x: 3, y: 8}) // [3, 8]
-m2({x: 3, y: 8}) // [3, 8]
+m1({ x: 3, y: 8 }); // [3, 8]
+m2({ x: 3, y: 8 }); // [3, 8]
 
 // x 有值，y 无值的情况
-m1({x: 3}) // [3, 0]
-m2({x: 3}) // [3, undefined]
+m1({ x: 3 }); // [3, 0]
+m2({ x: 3 }); // [3, undefined]
 
 // x 和 y 都无值的情况
-m1({}) // [0, 0];
-m2({}) // [undefined, undefined]
+m1({}); // [0, 0];
+m2({}); // [undefined, undefined]
 
-m1({z: 3}) // [0, 0]
-m2({z: 3}) // [undefined, undefined]
+m1({ z: 3 }); // [0, 0]
+m2({ z: 3 }); // [undefined, undefined]
 ```
 
 ### 参数默认值的位置
@@ -197,7 +197,7 @@ function f(x = 1, y) {
 }
 
 f() // [1, undefined]
-f(2) // [2, undefined])
+f(2) // [2, undefined]
 f(, 1) // 报错
 f(undefined, 1) // [1, 1]
 
@@ -218,10 +218,10 @@ f(1, undefined, 2) // [1, 5, 2]
 
 ```javascript
 function foo(x = 5, y = 6) {
-  console.log(x, y);
+    console.log(x, y);
 }
 
-foo(undefined, null)
+foo(undefined, null);
 // 5 null
 ```
 
@@ -232,9 +232,15 @@ foo(undefined, null)
 指定了默认值以后，函数的`length`属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，`length`属性将失真。
 
 ```javascript
-(function (a) {}).length // 1
-(function (a = 5) {}).length // 0
-(function (a, b, c = 5) {}).length // 2
+(function (a) {}
+    .length(
+        // 1
+        function (a = 5) {}
+    )
+    .length(
+        // 0
+        function (a, b, c = 5) {}
+    ).length); // 2
 ```
 
 上面代码中，`length`属性的返回值，等于函数的参数个数减去指定了默认值的参数个数。比如，上面最后一个函数，定义了 3 个参数，其中有一个参数`c`指定了默认值，因此`length`属性等于`3`减去`1`，最后得到`2`。
@@ -242,14 +248,16 @@ foo(undefined, null)
 这是因为`length`属性的含义是，该函数预期传入的参数个数。某个参数指定默认值以后，预期传入的参数个数就不包括这个参数了。同理，后文的 rest 参数也不会计入`length`属性。
 
 ```javascript
-(function(...args) {}).length // 0
+(function (...args) {}.length); // 0
 ```
 
 如果设置了默认值的参数不是尾参数，那么`length`属性也不再计入后面的参数了。
 
 ```javascript
-(function (a = 0, b, c) {}).length // 0
-(function (a, b = 1, c) {}).length // 1
+(function (a = 0, b, c) {}.length(
+    // 0
+    function (a, b = 1, c) {}
+).length); // 1
 ```
 
 ### 作用域
@@ -260,10 +268,10 @@ foo(undefined, null)
 var x = 1;
 
 function f(x, y = x) {
-  console.log(y);
+    console.log(y);
 }
 
-f(2) // 2
+f(2); // 2
 ```
 
 上面代码中，参数`y`的默认值等于变量`x`。调用函数`f`时，参数形成一个单独的作用域。在这个作用域里面，默认值变量`x`指向第一个参数`x`，而不是全局变量`x`，所以输出是`2`。
@@ -274,11 +282,11 @@ f(2) // 2
 let x = 1;
 
 function f(y = x) {
-  let x = 2;
-  console.log(y);
+    let x = 2;
+    console.log(y);
 }
 
-f() // 1
+f(); // 1
 ```
 
 上面代码中，函数`f`调用时，参数`y = x`形成一个单独的作用域。这个作用域里面，变量`x`本身没有定义，所以指向外层的全局变量`x`。函数调用时，函数体内部的局部变量`x`影响不到默认值变量`x`。
@@ -287,11 +295,11 @@ f() // 1
 
 ```javascript
 function f(y = x) {
-  let x = 2;
-  console.log(y);
+    let x = 2;
+    console.log(y);
 }
 
-f() // ReferenceError: x is not defined
+f(); // ReferenceError: x is not defined
 ```
 
 下面这样写，也会报错。
@@ -300,10 +308,10 @@ f() // ReferenceError: x is not defined
 var x = 1;
 
 function foo(x = x) {
-  // ...
+    // ...
 }
 
-foo() // ReferenceError: x is not defined
+foo(); // ReferenceError: x is not defined
 ```
 
 上面代码中，参数`x = x`形成一个单独作用域。实际执行的是`let x = x`，由于暂时性死区的原因，这行代码会报错”x 未定义“。
@@ -311,11 +319,11 @@ foo() // ReferenceError: x is not defined
 如果参数的默认值是一个函数，该函数的作用域也遵守这个规则。请看下面的例子。
 
 ```javascript
-let foo = 'outer';
+let foo = "outer";
 
 function bar(func = () => foo) {
-  let foo = 'inner';
-  console.log(func());
+    let foo = "inner";
+    console.log(func());
 }
 
 bar(); // outer
@@ -327,11 +335,11 @@ bar(); // outer
 
 ```javascript
 function bar(func = () => foo) {
-  let foo = 'inner';
-  console.log(func());
+    let foo = "inner";
+    console.log(func());
 }
 
-bar() // ReferenceError: foo is not defined
+bar(); // ReferenceError: foo is not defined
 ```
 
 上面代码中，匿名函数里面的`foo`指向函数外层，但是函数外层并没有声明变量`foo`，所以就报错了。
@@ -340,14 +348,19 @@ bar() // ReferenceError: foo is not defined
 
 ```javascript
 var x = 1;
-function foo(x, y = function() { x = 2; }) {
-  var x = 3;
-  y();
-  console.log(x);
+function foo(
+    x,
+    y = function () {
+        x = 2;
+    }
+) {
+    var x = 3;
+    y();
+    console.log(x);
 }
 
-foo() // 3
-x // 1
+foo(); // 3
+x; // 1
 ```
 
 上面代码中，函数`foo`的参数形成一个单独作用域。这个作用域里面，首先声明了变量`x`，然后声明了变量`y`，`y`的默认值是一个匿名函数。这个匿名函数内部的变量`x`，指向同一个作用域的第一个参数`x`。函数`foo`内部又声明了一个内部变量`x`，该变量与第一个参数`x`由于不是同一个作用域，所以不是同一个变量，因此执行`y`后，内部变量`x`和外部全局变量`x`的值都没变。
@@ -356,14 +369,19 @@ x // 1
 
 ```javascript
 var x = 1;
-function foo(x, y = function() { x = 2; }) {
-  x = 3;
-  y();
-  console.log(x);
+function foo(
+    x,
+    y = function () {
+        x = 2;
+    }
+) {
+    x = 3;
+    y();
+    console.log(x);
 }
 
-foo() // 2
-x // 1
+foo(); // 2
+x; // 1
 ```
 
 ### 应用
@@ -372,14 +390,14 @@ x // 1
 
 ```javascript
 function throwIfMissing() {
-  throw new Error('Missing parameter');
+    throw new Error("Missing parameter");
 }
 
 function foo(mustBeProvided = throwIfMissing()) {
-  return mustBeProvided;
+    return mustBeProvided;
 }
 
-foo()
+foo();
 // Error: Missing parameter
 ```
 
@@ -399,16 +417,16 @@ ES6 引入 rest 参数（形式为`...变量名`），用于获取函数的多�
 
 ```javascript
 function add(...values) {
-  let sum = 0;
+    let sum = 0;
 
-  for (var val of values) {
-    sum += val;
-  }
+    for (var val of values) {
+        sum += val;
+    }
 
-  return sum;
+    return sum;
 }
 
-add(2, 5, 3) // 10
+add(2, 5, 3); // 10
 ```
 
 上面代码的`add`函数是一个求和函数，利用 rest 参数，可以向该函数传入任意数目的参数。
@@ -418,7 +436,7 @@ add(2, 5, 3) // 10
 ```javascript
 // arguments变量的写法
 function sortNumbers() {
-  return Array.prototype.slice.call(arguments).sort();
+    return Array.prototype.slice.call(arguments).sort();
 }
 
 // rest参数的写法
@@ -431,14 +449,14 @@ const sortNumbers = (...numbers) => numbers.sort();
 
 ```javascript
 function push(array, ...items) {
-  items.forEach(function(item) {
-    array.push(item);
-    console.log(item);
-  });
+    items.forEach(function (item) {
+        array.push(item);
+        console.log(item);
+    });
 }
 
 var a = [];
-push(a, 1, 2, 3)
+push(a, 1, 2, 3);
 ```
 
 注意，rest 参数之后不能再有其他参数（即只能是最后一个参数），否则会报错。
@@ -453,9 +471,15 @@ function f(a, ...b, c) {
 函数的`length`属性，不包括 rest 参数。
 
 ```javascript
-(function(a) {}).length  // 1
-(function(...a) {}).length  // 0
-(function(a, ...b) {}).length  // 1
+(function (a) {}
+    .length(
+        // 1
+        function (...a) {}
+    )
+    .length(
+        // 0
+        function (a, ...b) {}
+    ).length); // 1
 ```
 
 ## 严格模式
@@ -464,8 +488,8 @@ function f(a, ...b, c) {
 
 ```javascript
 function doSomething(a, b) {
-  'use strict';
-  // code
+    "use strict";
+    // code
 }
 ```
 
@@ -516,10 +540,10 @@ function doSomething(value = 070) {
 两种方法可以规避这种限制。第一种是设定全局性的严格模式，这是合法的。
 
 ```javascript
-'use strict';
+"use strict";
 
 function doSomething(a, b = a) {
-  // code
+    // code
 }
 ```
 
@@ -527,11 +551,11 @@ function doSomething(a, b = a) {
 
 ```javascript
 const doSomething = (function () {
-  'use strict';
-  return function(value = 42) {
-    return value;
-  };
-}());
+    "use strict";
+    return function (value = 42) {
+        return value;
+    };
+})();
 ```
 
 ## name 属性
@@ -540,7 +564,7 @@ const doSomething = (function () {
 
 ```javascript
 function foo() {}
-foo.name // "foo"
+foo.name; // "foo"
 ```
 
 这个属性早就被浏览器广泛支持，但是直到 ES6，才将其写入了标准。
@@ -551,10 +575,10 @@ foo.name // "foo"
 var f = function () {};
 
 // ES5
-f.name // ""
+f.name; // ""
 
 // ES6
-f.name // "f"
+f.name; // "f"
 ```
 
 上面代码中，变量`f`等于一个匿名函数，ES5 和 ES6 的`name`属性返回的值不一样。
@@ -565,25 +589,30 @@ f.name // "f"
 const bar = function baz() {};
 
 // ES5
-bar.name // "baz"
+bar.name; // "baz"
 
 // ES6
-bar.name // "baz"
+bar.name; // "baz"
 ```
 
 `Function`构造函数返回的函数实例，`name`属性的值为`anonymous`。
 
 ```javascript
-(new Function).name // "anonymous"
+new Function().name; // "anonymous"
 ```
 
 `bind`返回的函数，`name`属性值会加上`bound`前缀。
 
 ```javascript
-function foo() {};
-foo.bind({}).name // "bound foo"
+function foo() {}
+foo
+    .bind({})
+    .name(
+        // "bound foo"
 
-(function(){}).bind({}).name // "bound "
+        function () {}
+    )
+    .bind({}).name; // "bound "
 ```
 
 ## 箭头函数
@@ -593,11 +622,11 @@ foo.bind({}).name // "bound foo"
 ES6 允许使用“箭头”（`=>`）定义函数。
 
 ```javascript
-var f = v => v;
+var f = (v) => v;
 
 // 等同于
 var f = function (v) {
-  return v;
+    return v;
 };
 ```
 
@@ -606,19 +635,23 @@ var f = function (v) {
 ```javascript
 var f = () => 5;
 // 等同于
-var f = function () { return 5 };
+var f = function () {
+    return 5;
+};
 
 var sum = (num1, num2) => num1 + num2;
 // 等同于
-var sum = function(num1, num2) {
-  return num1 + num2;
+var sum = function (num1, num2) {
+    return num1 + num2;
 };
 ```
 
 如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用`return`语句返回。
 
 ```javascript
-var sum = (num1, num2) => { return num1 + num2; }
+var sum = (num1, num2) => {
+    return num1 + num2;
+};
 ```
 
 由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错。
@@ -634,8 +667,10 @@ let getTempItem = id => ({ id: id, name: "Temp" });
 下面是一种特殊情况，虽然可以运行，但会得到错误的结果。
 
 ```javascript
-let foo = () => { a: 1 };
-foo() // undefined
+let foo = () => {
+    a: 1;
+};
+foo(); // undefined
 ```
 
 上面代码中，原始意图是返回一个对象`{ a: 1 }`，但是由于引擎认为大括号是代码块，所以执行了一行语句`a: 1`。这时，`a`可以被解释为语句的标签，因此实际执行的语句是`1;`，然后函数就结束了，没有返回值。
@@ -649,19 +684,19 @@ let fn = () => void doesNotReturn();
 箭头函数可以与变量解构结合使用。
 
 ```javascript
-const full = ({ first, last }) => first + ' ' + last;
+const full = ({ first, last }) => first + " " + last;
 
 // 等同于
 function full(person) {
-  return person.first + ' ' + person.last;
+    return person.first + " " + person.last;
 }
 ```
 
 箭头函数使得表达更加简洁。
 
 ```javascript
-const isEven = n => n % 2 === 0;
-const square = n => n * n;
+const isEven = (n) => n % 2 === 0;
+const square = (n) => n * n;
 ```
 
 上面代码只用了两行，就定义了两个简单的工具函数。如果不用箭头函数，可能就要占用多行，而且还不如现在这样写醒目。
@@ -669,21 +704,21 @@ const square = n => n * n;
 箭头函数的一个用处是简化回调函数。
 
 ```javascript
-// 正常函数写法
-[1,2,3].map(function (x) {
-  return x * x;
+// 普通函数写法
+[1, 2, 3].map(function (x) {
+    return x * x;
 });
 
 // 箭头函数写法
-[1,2,3].map(x => x * x);
+[1, 2, 3].map((x) => x * x);
 ```
 
 另一个例子是
 
 ```javascript
-// 正常函数写法
+// 普通函数写法
 var result = values.sort(function (a, b) {
-  return a - b;
+    return a - b;
 });
 
 // 箭头函数写法
@@ -695,12 +730,12 @@ var result = values.sort((a, b) => a - b);
 ```javascript
 const numbers = (...nums) => nums;
 
-numbers(1, 2, 3, 4, 5)
+numbers(1, 2, 3, 4, 5);
 // [1,2,3,4,5]
 
 const headAndTail = (head, ...tail) => [head, tail];
 
-headAndTail(1, 2, 3, 4, 5)
+headAndTail(1, 2, 3, 4, 5);
 // [1,[2,3,4,5]]
 ```
 
@@ -708,21 +743,21 @@ headAndTail(1, 2, 3, 4, 5)
 
 箭头函数有几个使用注意点。
 
-（1）函数体内的`this`对象，就是定义时所在的对象，而不是使用时所在的对象。
+（1）箭头函数没有自己的`this`对象（详见下文）。
 
-（2）不可以当作构造函数，也就是说，不可以使用`new`命令，否则会抛出一个错误。
+（2）不可以当作构造函数，也就是说，不可以对箭头函数使用`new`命令，否则会抛出一个错误。
 
 （3）不可以使用`arguments`对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
 
 （4）不可以使用`yield`命令，因此箭头函数不能用作 Generator 函数。
 
-上面四点中，第一点尤其值得注意。`this`对象的指向是可变的，但是在箭头函数中，它是固定的。
+上面四点中，最重要的是第一点。对于普通函数来说，内部的`this`指向函数运行时所在的对象，但是这一点对箭头函数不成立。它没有自己的`this`对象，内部的`this`就是定义时上层作用域中的`this`。也就是说，箭头函数内部的`this`指向是固定的，相比之下，普通函数的`this`指向是可变的。
 
 ```javascript
 function foo() {
-  setTimeout(() => {
-    console.log('id:', this.id);
-  }, 100);
+    setTimeout(() => {
+        console.log("id:", this.id);
+    }, 100);
 }
 
 var id = 21;
@@ -731,107 +766,110 @@ foo.call({ id: 42 });
 // id: 42
 ```
 
-上面代码中，`setTimeout`的参数是一个箭头函数，这个箭头函数的定义生效是在`foo`函数生成时，而它的真正执行要等到 100 毫秒后。如果是普通函数，执行时`this`应该指向全局对象`window`，这时应该输出`21`。但是，箭头函数导致`this`总是指向函数定义生效时所在的对象（本例是`{id: 42}`），所以输出的是`42`。
+上面代码中，`setTimeout()`的参数是一个箭头函数，这个箭头函数的定义生效是在`foo`函数生成时，而它的真正执行要等到 100 毫秒后。如果是普通函数，执行时`this`应该指向全局对象`window`，这时应该输出`21`。但是，箭头函数导致`this`总是指向函数定义生效时所在的对象（本例是`{id: 42}`），所以打印出来的是`42`。
 
-箭头函数可以让`setTimeout`里面的`this`，绑定定义时所在的作用域，而不是指向运行时所在的作用域。下面是另一个例子。
+下面例子是回调函数分别为箭头函数和普通函数，对比它们内部的`this`指向。
 
 ```javascript
 function Timer() {
-  this.s1 = 0;
-  this.s2 = 0;
-  // 箭头函数
-  setInterval(() => this.s1++, 1000);
-  // 普通函数
-  setInterval(function () {
-    this.s2++;
-  }, 1000);
+    this.s1 = 0;
+    this.s2 = 0;
+    // 箭头函数
+    setInterval(() => this.s1++, 1000);
+    // 普通函数
+    setInterval(function () {
+        this.s2++;
+    }, 1000);
 }
 
 var timer = new Timer();
 
-setTimeout(() => console.log('s1: ', timer.s1), 3100);
-setTimeout(() => console.log('s2: ', timer.s2), 3100);
+setTimeout(() => console.log("s1: ", timer.s1), 3100);
+setTimeout(() => console.log("s2: ", timer.s2), 3100);
 // s1: 3
 // s2: 0
 ```
 
 上面代码中，`Timer`函数内部设置了两个定时器，分别使用了箭头函数和普通函数。前者的`this`绑定定义时所在的作用域（即`Timer`函数），后者的`this`指向运行时所在的作用域（即全局对象）。所以，3100 毫秒之后，`timer.s1`被更新了 3 次，而`timer.s2`一次都没更新。
 
-箭头函数可以让`this`指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM 事件的回调函数封装在一个对象里面。
+箭头函数实际上可以让`this`指向固定化，绑定`this`使得它不再可变，这种特性很有利于封装回调函数。下面是一个例子，DOM 事件的回调函数封装在一个对象里面。
 
 ```javascript
 var handler = {
-  id: '123456',
+    id: "123456",
 
-  init: function() {
-    document.addEventListener('click',
-      event => this.doSomething(event.type), false);
-  },
+    init: function () {
+        document.addEventListener(
+            "click",
+            (event) => this.doSomething(event.type),
+            false
+        );
+    },
 
-  doSomething: function(type) {
-    console.log('Handling ' + type  + ' for ' + this.id);
-  }
+    doSomething: function (type) {
+        console.log("Handling " + type + " for " + this.id);
+    },
 };
 ```
 
-上面代码的`init`方法中，使用了箭头函数，这导致这个箭头函数里面的`this`，总是指向`handler`对象。否则，回调函数运行时，`this.doSomething`这一行会报错，因为此时`this`指向`document`对象。
+上面代码的`init()`方法中，使用了箭头函数，这导致这个箭头函数里面的`this`，总是指向`handler`对象。如果回调函数是普通函数，那么运行`this.doSomething()`这一行会报错，因为此时`this`指向`document`对象。
 
-`this`指向的固定化，并不是因为箭头函数内部有绑定`this`的机制，实际原因是箭头函数根本没有自己的`this`，导致内部的`this`就是外层代码块的`this`。正是因为它没有`this`，所以也就不能用作构造函数。
+总之，箭头函数根本没有自己的`this`，导致内部的`this`就是外层代码块的`this`。正是因为它没有`this`，所以也就不能用作构造函数。
 
-所以，箭头函数转成 ES5 的代码如下。
+下面是 Babel 转箭头函数产生的 ES5 代码，就能清楚地说明`this`的指向。
 
 ```javascript
 // ES6
 function foo() {
-  setTimeout(() => {
-    console.log('id:', this.id);
-  }, 100);
+    setTimeout(() => {
+        console.log("id:", this.id);
+    }, 100);
 }
 
 // ES5
 function foo() {
-  var _this = this;
+    var _this = this;
 
-  setTimeout(function () {
-    console.log('id:', _this.id);
-  }, 100);
+    setTimeout(function () {
+        console.log("id:", _this.id);
+    }, 100);
 }
 ```
 
 上面代码中，转换后的 ES5 版本清楚地说明了，箭头函数里面根本没有自己的`this`，而是引用外层的`this`。
 
-请问下面的代码之中有几个`this`？
+请问下面的代码之中，`this`的指向有几个？
 
 ```javascript
 function foo() {
-  return () => {
     return () => {
-      return () => {
-        console.log('id:', this.id);
-      };
+        return () => {
+            return () => {
+                console.log("id:", this.id);
+            };
+        };
     };
-  };
 }
 
-var f = foo.call({id: 1});
+var f = foo.call({ id: 1 });
 
-var t1 = f.call({id: 2})()(); // id: 1
-var t2 = f().call({id: 3})(); // id: 1
-var t3 = f()().call({id: 4}); // id: 1
+var t1 = f.call({ id: 2 })()(); // id: 1
+var t2 = f().call({ id: 3 })(); // id: 1
+var t3 = f()().call({ id: 4 }); // id: 1
 ```
 
-上面代码之中，只有一个`this`，就是函数`foo`的`this`，所以`t1`、`t2`、`t3`都输出同样的结果。因为所有的内层函数都是箭头函数，都没有自己的`this`，它们的`this`其实都是最外层`foo`函数的`this`。
+答案是`this`的指向只有一个，就是函数`foo`的`this`，这是因为所有的内层函数都是箭头函数，都没有自己的`this`，它们的`this`其实都是最外层`foo`函数的`this`。所以不管怎么嵌套，`t1`、`t2`、`t3`都输出同样的结果。如果这个例子的所有内层函数都写成普通函数，那么每个函数的`this`都指向运行时所在的不同对象。
 
 除了`this`，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：`arguments`、`super`、`new.target`。
 
 ```javascript
 function foo() {
-  setTimeout(() => {
-    console.log('args:', arguments);
-  }, 100);
+    setTimeout(() => {
+        console.log("args:", arguments);
+    }, 100);
 }
 
-foo(2, 4, 6, 8)
+foo(2, 4, 6, 8);
 // args: [2, 4, 6, 8]
 ```
 
@@ -840,11 +878,9 @@ foo(2, 4, 6, 8)
 另外，由于箭头函数没有自己的`this`，所以当然也就不能用`call()`、`apply()`、`bind()`这些方法去改变`this`的指向。
 
 ```javascript
-(function() {
-  return [
-    (() => this.x).bind({ x: 'inner' })()
-  ];
-}).call({ x: 'outer' });
+(function () {
+    return [(() => this.x).bind({ x: "inner" })()];
+}.call({ x: "outer" }));
 // ['outer']
 ```
 
@@ -860,21 +896,50 @@ foo(2, 4, 6, 8)
 
 ```javascript
 const cat = {
-  lives: 9,
-  jumps: () => {
-    this.lives--;
-  }
-}
+    lives: 9,
+    jumps: () => {
+        this.lives--;
+    },
+};
 ```
 
 上面代码中，`cat.jumps()`方法是一个箭头函数，这是错误的。调用`cat.jumps()`时，如果是普通函数，该方法内部的`this`指向`cat`；如果写成上面那样的箭头函数，使得`this`指向全局对象，因此不会得到预期结果。这是因为对象不构成单独的作用域，导致`jumps`箭头函数定义时的作用域就是全局作用域。
 
+再看一个例子。
+
+```javascript
+globalThis.s = 21;
+
+const obj = {
+    s: 42,
+    m: () => console.log(this.s),
+};
+
+obj.m(); // 21
+```
+
+上面例子中，`obj.m()`使用箭头函数定义。JavaScript 引擎的处理方法是，先在全局空间生成这个箭头函数，然后赋值给`obj.m`，这导致箭头函数内部的`this`指向全局对象，所以`obj.m()`输出的是全局空间的`21`，而不是对象内部的`42`。上面的代码实际上等同于下面的代码。
+
+```javascript
+globalThis.s = 21;
+globalThis.m = () => console.log(this.s);
+
+const obj = {
+    s: 42,
+    m: globalThis.m,
+};
+
+obj.m(); // 21
+```
+
+由于上面这个原因，对象的属性建议使用传统的写法定义，不要用箭头函数定义。
+
 第二个场合是需要动态`this`的时候，也不应使用箭头函数。
 
 ```javascript
-var button = document.getElementById('press');
-button.addEventListener('click', () => {
-  this.classList.toggle('on');
+var button = document.getElementById("press");
+button.addEventListener("click", () => {
+    this.classList.toggle("on");
 });
 ```
 
@@ -888,12 +953,16 @@ button.addEventListener('click', () => {
 
 ```javascript
 function insert(value) {
-  return {into: function (array) {
-    return {after: function (afterValue) {
-      array.splice(array.indexOf(afterValue) + 1, 0, value);
-      return array;
-    }};
-  }};
+    return {
+        into: function (array) {
+            return {
+                after: function (afterValue) {
+                    array.splice(array.indexOf(afterValue) + 1, 0, value);
+                    return array;
+                },
+            };
+        },
+    };
 }
 
 insert(2).into([1, 3]).after(1); //[1, 2, 3]
@@ -902,10 +971,14 @@ insert(2).into([1, 3]).after(1); //[1, 2, 3]
 上面这个函数，可以使用箭头函数改写。
 
 ```javascript
-let insert = (value) => ({into: (array) => ({after: (afterValue) => {
-  array.splice(array.indexOf(afterValue) + 1, 0, value);
-  return array;
-}})});
+let insert = (value) => ({
+    into: (array) => ({
+        after: (afterValue) => {
+            array.splice(array.indexOf(afterValue) + 1, 0, value);
+            return array;
+        },
+    }),
+});
 
 insert(2).into([1, 3]).after(1); //[1, 2, 3]
 ```
@@ -913,24 +986,26 @@ insert(2).into([1, 3]).after(1); //[1, 2, 3]
 下面是一个部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入。
 
 ```javascript
-const pipeline = (...funcs) =>
-  val => funcs.reduce((a, b) => b(a), val);
+const pipeline =
+    (...funcs) =>
+    (val) =>
+        funcs.reduce((a, b) => b(a), val);
 
-const plus1 = a => a + 1;
-const mult2 = a => a * 2;
+const plus1 = (a) => a + 1;
+const mult2 = (a) => a * 2;
 const addThenMult = pipeline(plus1, mult2);
 
-addThenMult(5)
+addThenMult(5);
 // 12
 ```
 
 如果觉得上面的写法可读性比较差，也可以采用下面的写法。
 
 ```javascript
-const plus1 = a => a + 1;
-const mult2 = a => a * 2;
+const plus1 = (a) => a + 1;
+const mult2 = (a) => a * 2;
 
-mult2(plus1(5))
+mult2(plus1(5));
 // 12
 ```
 
@@ -954,8 +1029,8 @@ var fix = f => (x => f(v => x(x)(v)))
 尾调用（Tail Call）是函数式编程的一个重要概念，本身非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。
 
 ```javascript
-function f(x){
-  return g(x);
+function f(x) {
+    return g(x);
 }
 ```
 
@@ -965,28 +1040,28 @@ function f(x){
 
 ```javascript
 // 情况一
-function f(x){
-  let y = g(x);
-  return y;
+function f(x) {
+    let y = g(x);
+    return y;
 }
 
 // 情况二
-function f(x){
-  return g(x) + 1;
+function f(x) {
+    return g(x) + 1;
 }
 
 // 情况三
-function f(x){
-  g(x);
+function f(x) {
+    g(x);
 }
 ```
 
 上面代码中，情况一是调用函数`g`之后，还有赋值操作，所以不属于尾调用，即使语义完全一样。情况二也属于调用后还有操作，即使写在一行内。情况三等同于下面的代码。
 
 ```javascript
-function f(x){
-  g(x);
-  return undefined;
+function f(x) {
+    g(x);
+    return undefined;
 }
 ```
 
@@ -994,10 +1069,10 @@ function f(x){
 
 ```javascript
 function f(x) {
-  if (x > 0) {
-    return m(x)
-  }
-  return n(x);
+    if (x > 0) {
+        return m(x);
+    }
+    return n(x);
 }
 ```
 
@@ -1013,15 +1088,15 @@ function f(x) {
 
 ```javascript
 function f() {
-  let m = 1;
-  let n = 2;
-  return g(m + n);
+    let m = 1;
+    let n = 2;
+    return g(m + n);
 }
 f();
 
 // 等同于
 function f() {
-  return g(3);
+    return g(3);
 }
 f();
 
@@ -1036,16 +1111,18 @@ g(3);
 注意，只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”。
 
 ```javascript
-function addOne(a){
-  var one = 1;
-  function inner(b){
-    return b + one;
-  }
-  return inner(a);
+function addOne(a) {
+    var one = 1;
+    function inner(b) {
+        return b + one;
+    }
+    return inner(a);
 }
 ```
 
 上面的函数不会进行尾调用优化，因为内层函数`inner`用到了外层函数`addOne`的内部变量`one`。
+
+注意，目前只有 Safari 浏览器支持尾调用优化，Chrome 和 Firefox 都不支持。
 
 ### 尾递归
 
@@ -1055,11 +1132,11 @@ function addOne(a){
 
 ```javascript
 function factorial(n) {
-  if (n === 1) return 1;
-  return n * factorial(n - 1);
+    if (n === 1) return 1;
+    return n * factorial(n - 1);
 }
 
-factorial(5) // 120
+factorial(5); // 120
 ```
 
 上面代码是一个阶乘函数，计算`n`的阶乘，最多需要保存`n`个调用记录，复杂度 O(n) 。
@@ -1068,11 +1145,11 @@ factorial(5) // 120
 
 ```javascript
 function factorial(n, total) {
-  if (n === 1) return total;
-  return factorial(n - 1, n * total);
+    if (n === 1) return total;
+    return factorial(n - 1, n * total);
 }
 
-factorial(5, 1) // 120
+factorial(5, 1); // 120
 ```
 
 还有一个比较著名的例子，就是计算 Fibonacci 数列，也能充分说明尾递归优化的重要性。
@@ -1080,29 +1157,33 @@ factorial(5, 1) // 120
 非尾递归的 Fibonacci 数列实现如下。
 
 ```javascript
-function Fibonacci (n) {
-  if ( n <= 1 ) {return 1};
+function Fibonacci(n) {
+    if (n <= 1) {
+        return 1;
+    }
 
-  return Fibonacci(n - 1) + Fibonacci(n - 2);
+    return Fibonacci(n - 1) + Fibonacci(n - 2);
 }
 
-Fibonacci(10) // 89
-Fibonacci(100) // 超时
-Fibonacci(500) // 超时
+Fibonacci(10); // 89
+Fibonacci(100); // 超时
+Fibonacci(500); // 超时
 ```
 
 尾递归优化过的 Fibonacci 数列实现如下。
 
 ```javascript
-function Fibonacci2 (n , ac1 = 1 , ac2 = 1) {
-  if( n <= 1 ) {return ac2};
+function Fibonacci2(n, ac1 = 1, ac2 = 1) {
+    if (n <= 1) {
+        return ac2;
+    }
 
-  return Fibonacci2 (n - 1, ac2, ac1 + ac2);
+    return Fibonacci2(n - 1, ac2, ac1 + ac2);
 }
 
-Fibonacci2(100) // 573147844013817200000
-Fibonacci2(1000) // 7.0330367711422765e+208
-Fibonacci2(10000) // Infinity
+Fibonacci2(100); // 573147844013817200000
+Fibonacci2(1000); // 7.0330367711422765e+208
+Fibonacci2(10000); // Infinity
 ```
 
 由此可见，“尾调用优化”对递归操作意义重大，所以一些函数式编程语言将其写入了语言规格。ES6 亦是如此，第一次明确规定，所有 ECMAScript 的实现，都必须部署“尾调用优化”。这就是说，ES6 中只要使用尾递归，就不会发生栈溢出（或者层层递归造成的超时），相对节省内存。
@@ -1115,15 +1196,15 @@ Fibonacci2(10000) // Infinity
 
 ```javascript
 function tailFactorial(n, total) {
-  if (n === 1) return total;
-  return tailFactorial(n - 1, n * total);
+    if (n === 1) return total;
+    return tailFactorial(n - 1, n * total);
 }
 
 function factorial(n) {
-  return tailFactorial(n, 1);
+    return tailFactorial(n, 1);
 }
 
-factorial(5) // 120
+factorial(5); // 120
 ```
 
 上面代码通过一个正常形式的阶乘函数`factorial`，调用尾递归函数`tailFactorial`，看起来就正常多了。
@@ -1132,19 +1213,19 @@ factorial(5) // 120
 
 ```javascript
 function currying(fn, n) {
-  return function (m) {
-    return fn.call(this, m, n);
-  };
+    return function (m) {
+        return fn.call(this, m, n);
+    };
 }
 
 function tailFactorial(n, total) {
-  if (n === 1) return total;
-  return tailFactorial(n - 1, n * total);
+    if (n === 1) return total;
+    return tailFactorial(n - 1, n * total);
 }
 
 const factorial = currying(tailFactorial, 1);
 
-factorial(5) // 120
+factorial(5); // 120
 ```
 
 上面代码通过柯里化，将尾递归函数`tailFactorial`变为只接受一个参数的`factorial`。
@@ -1153,11 +1234,11 @@ factorial(5) // 120
 
 ```javascript
 function factorial(n, total = 1) {
-  if (n === 1) return total;
-  return factorial(n - 1, n * total);
+    if (n === 1) return total;
+    return factorial(n - 1, n * total);
 }
 
-factorial(5) // 120
+factorial(5); // 120
 ```
 
 上面代码中，参数`total`有默认值`1`，所以调用时不用提供这个值。
@@ -1170,16 +1251,16 @@ ES6 的尾调用优化只在严格模式下开启，正常模式是无效的。
 
 这是因为在正常模式下，函数内部有两个变量，可以跟踪函数的调用栈。
 
-- `func.arguments`：返回调用时函数的参数。
-- `func.caller`：返回调用当前函数的那个函数。
+-   `func.arguments`：返回调用时函数的参数。
+-   `func.caller`：返回调用当前函数的那个函数。
 
 尾调用优化发生时，函数的调用栈会改写，因此上面两个变量就会失真。严格模式禁用这两个变量，所以尾调用模式仅在严格模式下生效。
 
 ```javascript
 function restricted() {
-  'use strict';
-  restricted.caller;    // 报错
-  restricted.arguments; // 报错
+    "use strict";
+    restricted.caller; // 报错
+    restricted.arguments; // 报错
 }
 restricted();
 ```
@@ -1194,14 +1275,14 @@ restricted();
 
 ```javascript
 function sum(x, y) {
-  if (y > 0) {
-    return sum(x + 1, y - 1);
-  } else {
-    return x;
-  }
+    if (y > 0) {
+        return sum(x + 1, y - 1);
+    } else {
+        return x;
+    }
 }
 
-sum(1, 100000)
+sum(1, 100000);
 // Uncaught RangeError: Maximum call stack size exceeded(…)
 ```
 
@@ -1211,10 +1292,10 @@ sum(1, 100000)
 
 ```javascript
 function trampoline(f) {
-  while (f && f instanceof Function) {
-    f = f();
-  }
-  return f;
+    while (f && f instanceof Function) {
+        f = f();
+    }
+    return f;
 }
 ```
 
@@ -1224,11 +1305,11 @@ function trampoline(f) {
 
 ```javascript
 function sum(x, y) {
-  if (y > 0) {
-    return sum.bind(null, x + 1, y - 1);
-  } else {
-    return x;
-  }
+    if (y > 0) {
+        return sum.bind(null, x + 1, y - 1);
+    } else {
+        return x;
+    }
 }
 ```
 
@@ -1237,7 +1318,7 @@ function sum(x, y) {
 现在，使用蹦床函数执行`sum`，就不会发生调用栈溢出。
 
 ```javascript
-trampoline(sum(1, 100000))
+trampoline(sum(1, 100000));
 // 100001
 ```
 
@@ -1245,33 +1326,32 @@ trampoline(sum(1, 100000))
 
 ```javascript
 function tco(f) {
-  var value;
-  var active = false;
-  var accumulated = [];
+    var value;
+    var active = false;
+    var accumulated = [];
 
-  return function accumulator() {
-    accumulated.push(arguments);
-    if (!active) {
-      active = true;
-      while (accumulated.length) {
-        value = f.apply(this, accumulated.shift());
-      }
-      active = false;
-      return value;
-    }
-  };
+    return function accumulator() {
+        accumulated.push(arguments);
+        if (!active) {
+            active = true;
+            while (accumulated.length) {
+                value = f.apply(this, accumulated.shift());
+            }
+            active = false;
+            return value;
+        }
+    };
 }
 
-var sum = tco(function(x, y) {
-  if (y > 0) {
-    return sum(x + 1, y - 1)
-  }
-  else {
-    return x
-  }
+var sum = tco(function (x, y) {
+    if (y > 0) {
+        return sum(x + 1, y - 1);
+    } else {
+        return x;
+    }
 });
 
-sum(1, 100000)
+sum(1, 100000);
 // 100001
 ```
 
@@ -1284,15 +1364,11 @@ ES2017 [允许](https://github.com/jeffmo/es-trailing-function-commas)函数的�
 此前，函数定义和调用时，都不允许最后一个参数后面出现逗号。
 
 ```javascript
-function clownsEverywhere(
-  param1,
-  param2
-) { /* ... */ }
+function clownsEverywhere(param1, param2) {
+    /* ... */
+}
 
-clownsEverywhere(
-  'foo',
-  'bar'
-);
+clownsEverywhere("foo", "bar");
 ```
 
 上面代码中，如果在`param2`或`bar`后面加一个逗号，就会报错。
@@ -1300,15 +1376,59 @@ clownsEverywhere(
 如果像上面这样，将参数写成多行（即每个参数占据一行），以后修改代码的时候，想为函数`clownsEverywhere`添加第三个参数，或者调整参数的次序，就势必要在原来最后一个参数后面添加一个逗号。这对于版本管理系统来说，就会显示添加逗号的那一行也发生了变动。这看上去有点冗余，因此新的语法允许定义和调用时，尾部直接有一个逗号。
 
 ```javascript
-function clownsEverywhere(
-  param1,
-  param2,
-) { /* ... */ }
+function clownsEverywhere(param1, param2) {
+    /* ... */
+}
 
-clownsEverywhere(
-  'foo',
-  'bar',
-);
+clownsEverywhere("foo", "bar");
 ```
 
 这样的规定也使得，函数参数与数组和对象的尾逗号规则，保持一致了。
+
+## Function.prototype.toString()
+
+[ES2019](https://github.com/tc39/Function-prototype-toString-revision) 对函数实例的`toString()`方法做出了修改。
+
+`toString()`方法返回函数代码本身，以前会省略注释和空格。
+
+```javascript
+function /* foo comment */ foo() {}
+
+foo.toString();
+// function foo() {}
+```
+
+上面代码中，函数`foo`的原始代码包含注释，函数名`foo`和圆括号之间有空格，但是`toString()`方法都把它们省略了。
+
+修改后的`toString()`方法，明确要求返回一模一样的原始代码。
+
+```javascript
+function /* foo comment */ foo() {}
+
+foo.toString();
+// "function /* foo comment */ foo () {}"
+```
+
+## catch 命令的参数省略
+
+JavaScript 语言的`try...catch`结构，以前明确要求`catch`命令后面必须跟参数，接受`try`代码块抛出的错误对象。
+
+```javascript
+try {
+    // ...
+} catch (err) {
+    // 处理错误
+}
+```
+
+上面代码中，`catch`命令后面带有参数`err`。
+
+很多时候，`catch`代码块可能用不到这个参数。但是，为了保证语法正确，还是必须写。[ES2019](https://github.com/tc39/proposal-optional-catch-binding) 做出了改变，允许`catch`语句省略参数。
+
+```javascript
+try {
+    // ...
+} catch {
+    // ...
+}
+```

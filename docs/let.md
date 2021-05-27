@@ -8,8 +8,8 @@ ES6 新增了`let`命令，用来声明变量。它的用法类似于`var`，但
 
 ```javascript
 {
-  let a = 10;
-  var b = 1;
+    let a = 10;
+    var b = 1;
 }
 
 a; // ReferenceError: a is not defined.
@@ -22,7 +22,7 @@ b; // 1
 
 ```javascript
 for (let i = 0; i < 10; i++) {
-  // ...
+    // ...
 }
 
 console.log(i);
@@ -36,9 +36,9 @@ console.log(i);
 ```javascript
 var a = [];
 for (var i = 0; i < 10; i++) {
-  a[i] = function() {
-    console.log(i);
-  };
+    a[i] = function () {
+        console.log(i);
+    };
 }
 a[6](); // 10
 ```
@@ -50,9 +50,9 @@ a[6](); // 10
 ```javascript
 var a = [];
 for (let i = 0; i < 10; i++) {
-  a[i] = function() {
-    console.log(i);
-  };
+    a[i] = function () {
+        console.log(i);
+    };
 }
 a[6](); // 6
 ```
@@ -63,8 +63,8 @@ a[6](); // 6
 
 ```javascript
 for (let i = 0; i < 3; i++) {
-  let i = "abc";
-  console.log(i);
+    let i = "abc";
+    console.log(i);
 }
 // abc
 // abc
@@ -99,8 +99,8 @@ let bar = 2;
 var tmp = 123;
 
 if (true) {
-  tmp = "abc"; // ReferenceError
-  let tmp;
+    tmp = "abc"; // ReferenceError
+    let tmp;
 }
 ```
 
@@ -112,15 +112,15 @@ ES6 明确规定，如果区块中存在`let`和`const`命令，这个区块对�
 
 ```javascript
 if (true) {
-  // TDZ开始
-  tmp = "abc"; // ReferenceError
-  console.log(tmp); // ReferenceError
+    // TDZ开始
+    tmp = "abc"; // ReferenceError
+    console.log(tmp); // ReferenceError
 
-  let tmp; // TDZ结束
-  console.log(tmp); // undefined
+    let tmp; // TDZ结束
+    console.log(tmp); // undefined
 
-  tmp = 123;
-  console.log(tmp); // 123
+    tmp = 123;
+    console.log(tmp); // 123
 }
 ```
 
@@ -147,7 +147,7 @@ typeof undeclared_variable; // "undefined"
 
 ```javascript
 function bar(x = y, y = 2) {
-  return [x, y];
+    return [x, y];
 }
 
 bar(); // 报错
@@ -157,7 +157,7 @@ bar(); // 报错
 
 ```javascript
 function bar(x = 2, y = x) {
-  return [x, y];
+    return [x, y];
 }
 bar(); // [2, 2]
 ```
@@ -186,14 +186,14 @@ ES6 规定暂时性死区和`let`、`const`语句不出现变量提升，主要�
 ```javascript
 // 报错
 function func() {
-  let a = 10;
-  var a = 1;
+    let a = 10;
+    var a = 1;
 }
 
 // 报错
 function func() {
-  let a = 10;
-  let a = 1;
+    let a = 10;
+    let a = 1;
 }
 ```
 
@@ -201,14 +201,14 @@ function func() {
 
 ```javascript
 function func(arg) {
-  let arg;
+    let arg;
 }
 func(); // 报错
 
 function func(arg) {
-  {
-    let arg;
-  }
+    {
+        let arg;
+    }
 }
 func(); // 不报错
 ```
@@ -225,10 +225,10 @@ ES5 只有全局作用域和函数作用域，没有块级作用域，这带来�
 var tmp = new Date();
 
 function f() {
-  console.log(tmp);
-  if (false) {
-    var tmp = "hello world";
-  }
+    console.log(tmp);
+    if (false) {
+        var tmp = "hello world";
+    }
 }
 
 f(); // undefined
@@ -242,7 +242,7 @@ f(); // undefined
 var s = "hello";
 
 for (var i = 0; i < s.length; i++) {
-  console.log(s[i]);
+    console.log(s[i]);
 }
 
 console.log(i); // 5
@@ -256,11 +256,11 @@ console.log(i); // 5
 
 ```javascript
 function f1() {
-  let n = 5;
-  if (true) {
-    let n = 10;
-  }
-  console.log(n); // 5
+    let n = 5;
+    if (true) {
+        let n = 10;
+    }
+    console.log(n); // 5
 }
 ```
 
@@ -268,18 +268,18 @@ function f1() {
 
 ES6 允许块级作用域的任意嵌套。
 
-```
+```javascript
 {
-  {
     {
-      {
         {
-          let insane = "Hello World";
+            {
+                {
+                    let insane = "Hello World";
+                }
+                console.log(insane); // 报错
+            }
         }
-        console.log(insane); // 报错
-      }
     }
-  }
 }
 ```
 
@@ -287,22 +287,22 @@ ES6 允许块级作用域的任意嵌套。
 
 内层作用域可以定义外层作用域的同名变量。
 
-```
+```javascript
 {
-  {
     {
-      {
-        let insane = "Hello World";
         {
-          let insane = "Hello World";
+            {
+                let insane = "Hello World";
+                {
+                    let insane = "Hello World";
+                }
+            }
         }
-      }
     }
-  }
 }
 ```
 
-块级作用域的出现，实际上使得获得广泛应用的立即执行函数表达式（IIFE）不再必要了。
+块级作用域的出现，实际上使得获得广泛应用的匿名立即执行函数表达式（匿名 IIFE）不再必要了。
 
 ```javascript
 // IIFE 写法
@@ -327,14 +327,14 @@ ES5 规定，函数只能在顶层作用域和函数作用域之中声明，不�
 ```javascript
 // 情况一
 if (true) {
-  function f() {}
+    function f() {}
 }
 
 // 情况二
 try {
-  function f() {}
+    function f() {}
 } catch (e) {
-  // ...
+    // ...
 }
 ```
 
@@ -346,18 +346,18 @@ ES6 引入了块级作用域，明确允许在块级作用域之中声明函数�
 
 ```javascript
 function f() {
-  console.log("I am outside!");
+    console.log("I am outside!");
 }
 
-(function() {
-  if (false) {
-    // 重复声明一次函数f
-    function f() {
-      console.log("I am inside!");
+(function () {
+    if (false) {
+        // 重复声明一次函数f
+        function f() {
+            console.log("I am inside!");
+        }
     }
-  }
 
-  f();
+    f();
 })();
 ```
 
@@ -366,16 +366,16 @@ function f() {
 ```javascript
 // ES5 环境
 function f() {
-  console.log("I am outside!");
+    console.log("I am outside!");
 }
 
-(function() {
-  function f() {
-    console.log("I am inside!");
-  }
-  if (false) {
-  }
-  f();
+(function () {
+    function f() {
+        console.log("I am inside!");
+    }
+    if (false) {
+    }
+    f();
 })();
 ```
 
@@ -384,18 +384,18 @@ ES6 就完全不一样了，理论上会得到“I am outside!”。因为块级
 ```javascript
 // 浏览器的 ES6 环境
 function f() {
-  console.log("I am outside!");
+    console.log("I am outside!");
 }
 
-(function() {
-  if (false) {
-    // 重复声明一次函数f
-    function f() {
-      console.log("I am inside!");
+(function () {
+    if (false) {
+        // 重复声明一次函数f
+        function f() {
+            console.log("I am inside!");
+        }
     }
-  }
 
-  f();
+    f();
 })();
 // Uncaught TypeError: f is not a function
 ```
@@ -404,9 +404,9 @@ function f() {
 
 原来，如果改变了块级作用域内声明的函数的处理规则，显然会对老代码产生很大影响。为了减轻因此产生的不兼容问题，ES6 在[附录 B](http://www.ecma-international.org/ecma-262/6.0/index.html#sec-block-level-function-declarations-web-legacy-compatibility-semantics)里面规定，浏览器的实现可以不遵守上面的规定，有自己的[行为方式](http://stackoverflow.com/questions/31419897/what-are-the-precise-semantics-of-block-level-functions-in-es6)。
 
-- 允许在块级作用域内声明函数。
-- 函数声明类似于`var`，即会提升到全局作用域或函数作用域的头部。
-- 同时，函数声明还会提升到所在的块级作用域的头部。
+-   允许在块级作用域内声明函数。
+-   函数声明类似于`var`，即会提升到全局作用域或函数作用域的头部。
+-   同时，函数声明还会提升到所在的块级作用域的头部。
 
 注意，上面三条规则只对 ES6 的浏览器实现有效，其他环境的实现不用遵守，还是将块级作用域的函数声明当作`let`处理。
 
@@ -415,17 +415,17 @@ function f() {
 ```javascript
 // 浏览器的 ES6 环境
 function f() {
-  console.log("I am outside!");
+    console.log("I am outside!");
 }
-(function() {
-  var f = undefined;
-  if (false) {
-    function f() {
-      console.log("I am inside!");
+(function () {
+    var f = undefined;
+    if (false) {
+        function f() {
+            console.log("I am inside!");
+        }
     }
-  }
 
-  f();
+    f();
 })();
 // Uncaught TypeError: f is not a function
 ```
@@ -435,18 +435,18 @@ function f() {
 ```javascript
 // 块级作用域内部的函数声明语句，建议不要使用
 {
-  let a = "secret";
-  function f() {
-    return a;
-  }
+    let a = "secret";
+    function f() {
+        return a;
+    }
 }
 
 // 块级作用域内部，优先使用函数表达式
 {
-  let a = "secret";
-  let f = function() {
-    return a;
-  };
+    let a = "secret";
+    let f = function () {
+        return a;
+    };
 }
 ```
 
@@ -508,7 +508,7 @@ const foo;
 
 ```javascript
 if (true) {
-  const MAX = 5;
+    const MAX = 5;
 }
 
 MAX; // Uncaught ReferenceError: MAX is not defined
@@ -518,8 +518,8 @@ MAX; // Uncaught ReferenceError: MAX is not defined
 
 ```javascript
 if (true) {
-  console.log(MAX); // ReferenceError
-  const MAX = 5;
+    console.log(MAX); // ReferenceError
+    const MAX = 5;
 }
 ```
 
@@ -579,13 +579,13 @@ foo.prop = 123;
 除了将对象本身冻结，对象的属性也应该冻结。下面是一个将对象彻底冻结的函数。
 
 ```javascript
-var constantize = obj => {
-  Object.freeze(obj);
-  Object.keys(obj).forEach((key, i) => {
-    if (typeof obj[key] === "object") {
-      constantize(obj[key]);
-    }
-  });
+var constantize = (obj) => {
+    Object.freeze(obj);
+    Object.keys(obj).forEach((key, i) => {
+        if (typeof obj[key] === "object") {
+            constantize(obj[key]);
+        }
+    });
 };
 ```
 
@@ -627,43 +627,43 @@ window.b; // undefined
 
 JavaScript 语言存在一个顶层对象，它提供全局环境（即全局作用域），所有代码都是在这个环境中运行。但是，顶层对象在各种实现里面是不统一的。
 
-- 浏览器里面，顶层对象是`window`，但 Node 和 Web Worker 没有`window`。
-- 浏览器和 Web Worker 里面，`self`也指向顶层对象，但是 Node 没有`self`。
-- Node 里面，顶层对象是`global`，但其他环境都不支持。
+-   浏览器里面，顶层对象是`window`，但 Node 和 Web Worker 没有`window`。
+-   浏览器和 Web Worker 里面，`self`也指向顶层对象，但是 Node 没有`self`。
+-   Node 里面，顶层对象是`global`，但其他环境都不支持。
 
-同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用`this`变量，但是有局限性。
+同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用`this`关键字，但是有局限性。
 
-- 全局环境中，`this`会返回顶层对象。但是，Node 模块和 ES6 模块中，`this`返回的是当前模块。
-- 函数里面的`this`，如果函数不是作为对象的方法运行，而是单纯作为函数运行，`this`会指向顶层对象。但是，严格模式下，这时`this`会返回`undefined`。
-- 不管是严格模式，还是普通模式，`new Function('return this')()`，总是会返回全局对象。但是，如果浏览器用了 CSP（Content Security Policy，内容安全策略），那么`eval`、`new Function`这些方法都可能无法使用。
+-   全局环境中，`this`会返回顶层对象。但是，Node.js 模块中`this`返回的是当前模块，ES6 模块中`this`返回的是`undefined`。
+-   函数里面的`this`，如果函数不是作为对象的方法运行，而是单纯作为函数运行，`this`会指向顶层对象。但是，严格模式下，这时`this`会返回`undefined`。
+-   不管是严格模式，还是普通模式，`new Function('return this')()`，总是会返回全局对象。但是，如果浏览器用了 CSP（Content Security Policy，内容安全策略），那么`eval`、`new Function`这些方法都可能无法使用。
 
 综上所述，很难找到一种方法，可以在所有情况下，都取到顶层对象。下面是两种勉强可以使用的方法。
 
 ```javascript
 // 方法一
 typeof window !== "undefined"
-  ? window
-  : typeof process === "object" &&
-    typeof require === "function" &&
-    typeof global === "object"
-  ? global
-  : this;
+    ? window
+    : typeof process === "object" &&
+      typeof require === "function" &&
+      typeof global === "object"
+    ? global
+    : this;
 
 // 方法二
-var getGlobal = function() {
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw new Error("unable to locate global object");
+var getGlobal = function () {
+    if (typeof self !== "undefined") {
+        return self;
+    }
+    if (typeof window !== "undefined") {
+        return window;
+    }
+    if (typeof global !== "undefined") {
+        return global;
+    }
+    throw new Error("unable to locate global object");
 };
 ```
 
-现在有一个[提案](https://github.com/tc39/proposal-global)，在语言标准的层面，引入`globalThis`作为顶层对象。也就是说，任何环境下，`globalThis`都是存在的，都可以从它拿到顶层对象，指向全局环境下的`this`。
+[ES2020](https://github.com/tc39/proposal-global) 在语言标准的层面，引入`globalThis`作为顶层对象。也就是说，任何环境下，`globalThis`都是存在的，都可以从它拿到顶层对象，指向全局环境下的`this`。
 
 垫片库[`global-this`](https://github.com/ungap/global-this)模拟了这个提案，可以在所有环境拿到`globalThis`。

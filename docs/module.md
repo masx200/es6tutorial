@@ -10,10 +10,10 @@ ES6 模块的设计思想是尽量的静态化，使得编译时就能确定模�
 
 ```javascript
 // CommonJS模块
-let { stat, exists, readFile } = require('fs');
+let { stat, exists, readfile } = require("fs");
 
 // 等同于
-let _fs = require('fs');
+let _fs = require("fs");
 let stat = _fs.stat;
 let exists = _fs.exists;
 let readfile = _fs.readfile;
@@ -25,7 +25,7 @@ ES6 模块不是对象，而是通过`export`命令显式指定输出的代码�
 
 ```javascript
 // ES6模块
-import { stat, exists, readFile } from 'fs';
+import { stat, exists, readFile } from "fs";
 ```
 
 上面代码的实质是从`fs`模块加载 3 个方法，其他方法不加载。这种加载称为“编译时加载”或者静态加载，即 ES6 可以在编译时就完成模块加载，效率要比 CommonJS 模块的加载方式高。当然，这也导致了没法引用 ES6 模块本身，因为它不是对象。
@@ -34,9 +34,9 @@ import { stat, exists, readFile } from 'fs';
 
 除了静态加载带来的各种好处，ES6 模块还有以下好处。
 
-- 不再需要`UMD`模块格式了，将来服务器和浏览器都会支持 ES6 模块格式。目前，通过各种工具库，其实已经做到了这一点。
-- 将来浏览器的新 API 就能用模块格式提供，不再必须做成全局变量或者`navigator`对象的属性。
-- 不再需要对象作为命名空间（比如`Math`对象），未来这些功能可以通过模块提供。
+-   不再需要`UMD`模块格式了，将来服务器和浏览器都会支持 ES6 模块格式。目前，通过各种工具库，其实已经做到了这一点。
+-   将来浏览器的新 API 就能用模块格式提供，不再必须做成全局变量或者`navigator`对象的属性。
+-   不再需要对象作为命名空间（比如`Math`对象），未来这些功能可以通过模块提供。
 
 本章介绍 ES6 模块的语法，下一章介绍如何在浏览器和 Node 之中，加载 ES6 模块。
 
@@ -46,21 +46,21 @@ ES6 的模块自动采用严格模式，不管你有没有在模块头部加上`
 
 严格模式主要有以下限制。
 
-- 变量必须声明后再使用
-- 函数的参数不能有同名属性，否则报错
-- 不能使用`with`语句
-- 不能对只读属性赋值，否则报错
-- 不能使用前缀 0 表示八进制数，否则报错
-- 不能删除不可删除的属性，否则报错
-- 不能删除变量`delete prop`，会报错，只能删除属性`delete global[prop]`
-- `eval`不会在它的外层作用域引入变量
-- `eval`和`arguments`不能被重新赋值
-- `arguments`不会自动反映函数参数的变化
-- 不能使用`arguments.callee`
-- 不能使用`arguments.caller`
-- 禁止`this`指向全局对象
-- 不能使用`fn.caller`和`fn.arguments`获取函数调用的堆栈
-- 增加了保留字（比如`protected`、`static`和`interface`）
+-   变量必须声明后再使用
+-   函数的参数不能有同名属性，否则报错
+-   不能使用`with`语句
+-   不能对只读属性赋值，否则报错
+-   不能使用前缀 0 表示八进制数，否则报错
+-   不能删除不可删除的属性，否则报错
+-   不能删除变量`delete prop`，会报错，只能删除属性`delete global[prop]`
+-   `eval`不会在它的外层作用域引入变量
+-   `eval`和`arguments`不能被重新赋值
+-   `arguments`不会自动反映函数参数的变化
+-   不能使用`arguments.callee`
+-   不能使用`arguments.caller`
+-   禁止`this`指向全局对象
+-   不能使用`fn.caller`和`fn.arguments`获取函数调用的堆栈
+-   增加了保留字（比如`protected`、`static`和`interface`）
 
 上面这些限制，模块都必须遵守。由于严格模式是 ES5 引入的，不属于 ES6，所以请参阅相关 ES5 书籍，本书不再详细介绍了。
 
@@ -74,8 +74,8 @@ ES6 的模块自动采用严格模式，不管你有没有在模块头部加上`
 
 ```javascript
 // profile.js
-export var firstName = 'Michael';
-export var lastName = 'Jackson';
+export var firstName = "Michael";
+export var lastName = "Jackson";
 export var year = 1958;
 ```
 
@@ -85,11 +85,11 @@ export var year = 1958;
 
 ```javascript
 // profile.js
-var firstName = 'Michael';
-var lastName = 'Jackson';
+var firstName = "Michael";
+var lastName = "Jackson";
 var year = 1958;
 
-export {firstName, lastName, year};
+export { firstName, lastName, year };
 ```
 
 上面代码在`export`命令后面，使用大括号指定所要输出的一组变量。它与前一种写法（直接放置在`var`语句前）是等价的，但是应该优先考虑使用这种写法。因为这样就可以在脚本尾部，一眼看清楚输出了哪些变量。
@@ -98,8 +98,8 @@ export {firstName, lastName, year};
 
 ```javascript
 export function multiply(x, y) {
-  return x * y;
-};
+    return x * y;
+}
 ```
 
 上面代码对外输出一个函数`multiply`。
@@ -138,11 +138,11 @@ export var m = 1;
 
 // 写法二
 var m = 1;
-export {m};
+export { m };
 
 // 写法三
 var n = 1;
-export {n as m};
+export { n as m };
 ```
 
 上面三种写法都是正确的，规定了对外的接口`m`。其他脚本可以通过这个接口，取到值`1`。它们的实质是，在接口名与模块内部变量之间，建立了一一对应的关系。
@@ -165,8 +165,8 @@ export {f};
 另外，`export`语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。
 
 ```javascript
-export var foo = 'bar';
-setTimeout(() => foo = 'baz', 500);
+export var foo = "bar";
+setTimeout(() => (foo = "baz"), 500);
 ```
 
 上面代码输出变量`foo`，值为`bar`，500 毫秒之后变成`baz`。
@@ -177,9 +177,9 @@ setTimeout(() => foo = 'baz', 500);
 
 ```javascript
 function foo() {
-  export default 'bar' // SyntaxError
+    export default "bar"; // SyntaxError
 }
-foo()
+foo();
 ```
 
 上面代码中，`export`语句放在函数之中，结果报错。
@@ -190,10 +190,10 @@ foo()
 
 ```javascript
 // main.js
-import {firstName, lastName, year} from './profile.js';
+import { firstName, lastName, year } from "./profile.js";
 
 function setName(element) {
-  element.textContent = firstName + ' ' + lastName;
+    element.textContent = firstName + " " + lastName;
 }
 ```
 
@@ -202,13 +202,13 @@ function setName(element) {
 如果想为输入的变量重新取一个名字，`import`命令要使用`as`关键字，将输入的变量重命名。
 
 ```javascript
-import { lastName as surname } from './profile.js';
+import { lastName as surname } from "./profile.js";
 ```
 
 `import`命令输入的变量都是只读的，因为它的本质是输入接口。也就是说，不允许在加载模块的脚本里面，改写接口。
 
 ```javascript
-import {a} from './xxx.js'
+import { a } from "./xxx.js";
 
 a = {}; // Syntax Error : 'a' is read-only;
 ```
@@ -216,17 +216,17 @@ a = {}; // Syntax Error : 'a' is read-only;
 上面代码中，脚本加载了变量`a`，对其重新赋值就会报错，因为`a`是一个只读的接口。但是，如果`a`是一个对象，改写`a`的属性是允许的。
 
 ```javascript
-import {a} from './xxx.js'
+import { a } from "./xxx.js";
 
-a.foo = 'hello'; // 合法操作
+a.foo = "hello"; // 合法操作
 ```
 
-上面代码中，`a`的属性可以成功改写，并且其他模块也可以读到改写后的值。不过，这种写法很难查错，建议凡是输入的变量，都当作完全只读，轻易不要改变它的属性。
+上面代码中，`a`的属性可以成功改写，并且其他模块也可以读到改写后的值。不过，这种写法很难查错，建议凡是输入的变量，都当作完全只读，不要轻易改变它的属性。
 
-`import`后面的`from`指定模块文件的位置，可以是相对路径，也可以是绝对路径，`.js`后缀可以省略。如果只是模块名，不带有路径，那么必须有配置文件，告诉 JavaScript 引擎该模块的位置。
+`import`后面的`from`指定模块文件的位置，可以是相对路径，也可以是绝对路径。如果不带有路径，只是一个模块名，那么必须有配置文件，告诉 JavaScript 引擎该模块的位置。
 
 ```javascript
-import {myMethod} from 'util';
+import { myMethod } from "util";
 ```
 
 上面代码中，`util`是模块文件名，由于不带有路径，必须通过配置，告诉引擎怎么取到这个模块。
@@ -236,7 +236,7 @@ import {myMethod} from 'util';
 ```javascript
 foo();
 
-import { foo } from 'my_module';
+import { foo } from "my_module";
 ```
 
 上面的代码不会报错，因为`import`的执行早于`foo`的调用。这种行为的本质是，`import`命令是编译阶段执行的，在代码运行之前。
@@ -264,7 +264,7 @@ if (x === 1) {
 最后，`import`语句会执行所加载的模块，因此可以有下面的写法。
 
 ```javascript
-import 'lodash';
+import "lodash";
 ```
 
 上面代码仅仅执行`lodash`模块，但是不输入任何值。
@@ -272,28 +272,28 @@ import 'lodash';
 如果多次重复执行同一句`import`语句，那么只会执行一次，而不会执行多次。
 
 ```javascript
-import 'lodash';
-import 'lodash';
+import "lodash";
+import "lodash";
 ```
 
 上面代码加载了两次`lodash`，但是只会执行一次。
 
 ```javascript
-import { foo } from 'my_module';
-import { bar } from 'my_module';
+import { foo } from "my_module";
+import { bar } from "my_module";
 
 // 等同于
-import { foo, bar } from 'my_module';
+import { foo, bar } from "my_module";
 ```
 
-上面代码中，虽然`foo`和`bar`在两个语句中加载，但是它们对应的是同一个`my_module`实例。也就是说，`import`语句是 Singleton 模式。
+上面代码中，虽然`foo`和`bar`在两个语句中加载，但是它们对应的是同一个`my_module`模块。也就是说，`import`语句是 Singleton 模式。
 
 目前阶段，通过 Babel 转码，CommonJS 模块的`require`命令和 ES6 模块的`import`命令，可以写在同一个模块里面，但是最好不要这样做。因为`import`在静态解析阶段执行，所以它是一个模块之中最早执行的。下面的代码可能不会得到预期结果。
 
 ```javascript
-require('core-js/modules/es6.symbol');
-require('core-js/modules/es6.promise');
-import React from 'React';
+require("core-js/modules/es6.symbol");
+require("core-js/modules/es6.promise");
+import React from "React";
 ```
 
 ## 模块的整体加载
@@ -306,11 +306,11 @@ import React from 'React';
 // circle.js
 
 export function area(radius) {
-  return Math.PI * radius * radius;
+    return Math.PI * radius * radius;
 }
 
 export function circumference(radius) {
-  return 2 * Math.PI * radius;
+    return 2 * Math.PI * radius;
 }
 ```
 
@@ -319,28 +319,28 @@ export function circumference(radius) {
 ```javascript
 // main.js
 
-import { area, circumference } from './circle';
+import { area, circumference } from "./circle";
 
-console.log('圆面积：' + area(4));
-console.log('圆周长：' + circumference(14));
+console.log("圆面积：" + area(4));
+console.log("圆周长：" + circumference(14));
 ```
 
 上面写法是逐一指定要加载的方法，整体加载的写法如下。
 
 ```javascript
-import * as circle from './circle';
+import * as circle from "./circle";
 
-console.log('圆面积：' + circle.area(4));
-console.log('圆周长：' + circle.circumference(14));
+console.log("圆面积：" + circle.area(4));
+console.log("圆周长：" + circle.circumference(14));
 ```
 
 注意，模块整体加载所在的那个对象（上例是`circle`），应该是可以静态分析的，所以不允许运行时改变。下面的写法都是不允许的。
 
 ```javascript
-import * as circle from './circle';
+import * as circle from "./circle";
 
 // 下面两行都是不允许的
-circle.foo = 'hello';
+circle.foo = "hello";
 circle.area = function () {};
 ```
 
@@ -353,7 +353,7 @@ circle.area = function () {};
 ```javascript
 // export-default.js
 export default function () {
-  console.log('foo');
+    console.log("foo");
 }
 ```
 
@@ -363,7 +363,7 @@ export default function () {
 
 ```javascript
 // import-default.js
-import customName from './export-default';
+import customName from "./export-default";
 customName(); // 'foo'
 ```
 
@@ -392,37 +392,39 @@ export default foo;
 
 ```javascript
 // 第一组
-export default function crc32() { // 输出
-  // ...
+export default function crc32() {
+    // 输出
+    // ...
 }
 
-import crc32 from 'crc32'; // 输入
+import crc32 from "crc32"; // 输入
 
 // 第二组
-export function crc32() { // 输出
-  // ...
-};
+export function crc32() {
+    // 输出
+    // ...
+}
 
-import {crc32} from 'crc32'; // 输入
+import { crc32 } from "crc32"; // 输入
 ```
 
 上面代码的两组写法，第一组是使用`export default`时，对应的`import`语句不需要使用大括号；第二组是不使用`export default`时，对应的`import`语句需要使用大括号。
 
-`export default`命令用于指定模块的默认输出。显然，一个模块只能有一个默认输出，因此`export default`命令只能使用一次。所以，import命令后面才不用加大括号，因为只可能唯一对应`export default`命令。
+`export default`命令用于指定模块的默认输出。显然，一个模块只能有一个默认输出，因此`export default`命令只能使用一次。所以，import 命令后面才不用加大括号，因为只可能唯一对应`export default`命令。
 
 本质上，`export default`就是输出一个叫做`default`的变量或方法，然后系统允许你为它取任意名字。所以，下面的写法是有效的。
 
 ```javascript
 // modules.js
 function add(x, y) {
-  return x * y;
+    return x * y;
 }
-export {add as default};
+export { add as default };
 // 等同于
 // export default add;
 
 // app.js
-import { default as foo } from 'modules';
+import { default as foo } from "modules";
 // 等同于
 // import foo from 'modules';
 ```
@@ -458,24 +460,24 @@ export 42;
 有了`export default`命令，输入模块时就非常直观了，以输入 lodash 模块为例。
 
 ```javascript
-import _ from 'lodash';
+import _ from "lodash";
 ```
 
 如果想在一条`import`语句中，同时输入默认方法和其他接口，可以写成下面这样。
 
 ```javascript
-import _, { each, forEach } from 'lodash';
+import _, { each, forEach } from "lodash";
 ```
 
 对应上面代码的`export`语句如下。
 
 ```javascript
 export default function (obj) {
-  // ···
+    // ···
 }
 
 export function each(obj, iterator, context) {
-  // ···
+    // ···
 }
 
 export { each as forEach };
@@ -499,10 +501,10 @@ let o = new MyClass();
 如果在一个模块之中，先输入后输出同一个模块，`import`语句可以与`export`语句写在一起。
 
 ```javascript
-export { foo, bar } from 'my_module';
+export { foo, bar } from "my_module";
 
 // 可以简单理解为
-import { foo, bar } from 'my_module';
+import { foo, bar } from "my_module";
 export { foo, bar };
 ```
 
@@ -512,16 +514,16 @@ export { foo, bar };
 
 ```javascript
 // 接口改名
-export { foo as myFoo } from 'my_module';
+export { foo as myFoo } from "my_module";
 
 // 整体输出
-export * from 'my_module';
+export * from "my_module";
 ```
 
 默认接口的写法如下。
 
 ```javascript
-export { default } from 'foo';
+export { default } from "foo";
 ```
 
 具名接口改为默认接口的写法如下。
@@ -537,23 +539,23 @@ export default es6;
 同样地，默认接口也可以改名为具名接口。
 
 ```javascript
-export { default as es6 } from './someModule';
+export { default as es6 } from "./someModule";
 ```
 
-下面三种`import`语句，没有对应的复合写法。
+ES2020 之前，有一种`import`语句，没有对应的复合写法。
 
 ```javascript
 import * as someIdentifier from "someModule";
-import someIdentifier from "someModule";
-import someIdentifier, { namedIdentifier } from "someModule";
 ```
 
-为了做到形式的对称，现在有[提案](https://github.com/leebyron/ecmascript-export-default-from)，提出补上这三种复合写法。
+[ES2020](https://github.com/tc39/proposal-export-ns-from)补上了这个写法。
 
 ```javascript
-export * as someIdentifier from "someModule";
-export someIdentifier from "someModule";
-export someIdentifier, { namedIdentifier } from "someModule";
+export * as ns from "mod";
+
+// 等同于
+import * as ns from "mod";
+export { ns };
 ```
 
 ## 模块的继承
@@ -565,10 +567,10 @@ export someIdentifier, { namedIdentifier } from "someModule";
 ```javascript
 // circleplus.js
 
-export * from 'circle';
+export * from "circle";
 export var e = 2.71828182846;
-export default function(x) {
-  return Math.exp(x);
+export default function (x) {
+    return Math.exp(x);
 }
 ```
 
@@ -579,7 +581,7 @@ export default function(x) {
 ```javascript
 // circleplus.js
 
-export { area as circleArea } from 'circle';
+export { area as circleArea } from "circle";
 ```
 
 上面代码表示，只输出`circle`模块的`area`方法，且将其改名为`circleArea`。
@@ -589,8 +591,8 @@ export { area as circleArea } from 'circle';
 ```javascript
 // main.js
 
-import * as math from 'circleplus';
-import exp from 'circleplus';
+import * as math from "circleplus";
+import exp from "circleplus";
 console.log(exp(math.e));
 ```
 
@@ -607,12 +609,12 @@ export const B = 3;
 export const C = 4;
 
 // test1.js 模块
-import * as constants from './constants';
+import * as constants from "./constants";
 console.log(constants.A); // 1
 console.log(constants.B); // 3
 
 // test2.js 模块
-import {A, B} from './constants';
+import { A, B } from "./constants";
 console.log(A); // 1
 console.log(B); // 3
 ```
@@ -622,28 +624,28 @@ console.log(B); // 3
 ```javascript
 // constants/db.js
 export const db = {
-  url: 'http://my.couchdbserver.local:5984',
-  admin_username: 'admin',
-  admin_password: 'admin password'
+    url: "http://my.couchdbserver.local:5984",
+    admin_username: "admin",
+    admin_password: "admin password",
 };
 
 // constants/user.js
-export const users = ['root', 'admin', 'staff', 'ceo', 'chief', 'moderator'];
+export const users = ["root", "admin", "staff", "ceo", "chief", "moderator"];
 ```
 
 然后，将这些文件输出的常量，合并在`index.js`里面。
 
 ```javascript
 // constants/index.js
-export {db} from './db';
-export {users} from './users';
+export { db } from "./db";
+export { users } from "./users";
 ```
 
 使用的时候，直接加载`index.js`就可以了。
 
 ```javascript
 // script.js
-import {db, users} from './constants/index';
+import { db, users } from "./constants/index";
 ```
 
 ## import()
@@ -655,7 +657,7 @@ import {db, users} from './constants/index';
 ```javascript
 // 报错
 if (x === 2) {
-  import MyModual from './myModual';
+    import MyModual from "./myModual";
 }
 ```
 
@@ -664,16 +666,16 @@ if (x === 2) {
 这样的设计，固然有利于编译器提高效率，但也导致无法在运行时加载模块。在语法上，条件加载就不可能实现。如果`import`命令要取代 Node 的`require`方法，这就形成了一个障碍。因为`require`是运行时加载模块，`import`命令无法取代`require`的动态加载功能。
 
 ```javascript
-const path = './' + fileName;
+const path = "./" + fileName;
 const myModual = require(path);
 ```
 
 上面的语句就是动态加载，`require`到底加载哪一个模块，只有运行时才知道。`import`命令做不到这一点。
 
-因此，有一个[提案](https://github.com/tc39/proposal-dynamic-import)，建议引入`import()`函数，完成动态加载。
+[ES2020 提案](https://github.com/tc39/proposal-dynamic-import) 引入`import()`函数，支持动态加载模块。
 
 ```javascript
-import(specifier)
+import(specifier);
 ```
 
 上面代码中，`import`函数的参数`specifier`，指定所要加载的模块的位置。`import`命令能够接受什么参数，`import()`函数就能接受什么参数，两者区别主要是后者为动态加载。
@@ -681,15 +683,15 @@ import(specifier)
 `import()`返回一个 Promise 对象。下面是一个例子。
 
 ```javascript
-const main = document.querySelector('main');
+const main = document.querySelector("main");
 
 import(`./section-modules/${someVariable}.js`)
-  .then(module => {
-    module.loadPageInto(main);
-  })
-  .catch(err => {
-    main.textContent = err.message;
-  });
+    .then((module) => {
+        module.loadPageInto(main);
+    })
+    .catch((err) => {
+        main.textContent = err.message;
+    });
 ```
 
 `import()`函数可以用在任何地方，不仅仅是模块，非模块的脚本也可以使用。它是运行时执行，也就是说，什么时候运行到这一句，就会加载指定的模块。另外，`import()`函数与所加载的模块没有静态连接关系，这点也是与`import`语句不相同。`import()`类似于 Node 的`require`方法，区别主要是前者是异步加载，后者是同步加载。
@@ -703,14 +705,14 @@ import(`./section-modules/${someVariable}.js`)
 `import()`可以在需要的时候，再加载某个模块。
 
 ```javascript
-button.addEventListener('click', event => {
-  import('./dialogBox.js')
-  .then(dialogBox => {
-    dialogBox.open();
-  })
-  .catch(error => {
-    /* Error handling */
-  })
+button.addEventListener("click", (event) => {
+    import("./dialogBox.js")
+        .then((dialogBox) => {
+            dialogBox.open();
+        })
+        .catch((error) => {
+            /* Error handling */
+        });
 });
 ```
 
@@ -746,9 +748,8 @@ import(f())
 `import()`加载模块成功以后，这个模块会作为一个对象，当作`then`方法的参数。因此，可以使用对象解构赋值的语法，获取输出接口。
 
 ```javascript
-import('./myModule.js')
-.then(({export1, export2}) => {
-  // ...·
+import("./myModule.js").then(({ export1, export2 }) => {
+    // ...·
 });
 ```
 
@@ -757,18 +758,16 @@ import('./myModule.js')
 如果模块有`default`输出接口，可以用参数直接获得。
 
 ```javascript
-import('./myModule.js')
-.then(myModule => {
-  console.log(myModule.default);
+import("./myModule.js").then((myModule) => {
+    console.log(myModule.default);
 });
 ```
 
 上面的代码也可以使用具名输入的形式。
 
 ```javascript
-import('./myModule.js')
-.then(({default: theDefault}) => {
-  console.log(theDefault);
+import("./myModule.js").then(({ default: theDefault }) => {
+    console.log(theDefault);
 });
 ```
 
@@ -789,13 +788,12 @@ Promise.all([
 
 ```javascript
 async function main() {
-  const myModule = await import('./myModule.js');
-  const {export1, export2} = await import('./myModule.js');
-  const [module1, module2, module3] =
-    await Promise.all([
-      import('./module1.js'),
-      import('./module2.js'),
-      import('./module3.js'),
+    const myModule = await import("./myModule.js");
+    const { export1, export2 } = await import("./myModule.js");
+    const [module1, module2, module3] = await Promise.all([
+        import("./module1.js"),
+        import("./module2.js"),
+        import("./module3.js"),
     ]);
 }
 main();

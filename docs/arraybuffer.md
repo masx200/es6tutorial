@@ -34,11 +34,11 @@
 
 很多浏览器操作的 API，用到了二进制数组操作二进制数据，下面是其中的几个。
 
-- File API
-- XMLHttpRequest
-- Fetch API
-- Canvas
-- WebSockets
+-   [Canvas](#canvas)
+-   [Fetch API](#fetch-api)
+-   [File API](#file-api)
+-   [WebSockets](#websocket)
+-   [XMLHttpRequest](#ajax)
 
 ## ArrayBuffer 对象
 
@@ -59,7 +59,7 @@ const buf = new ArrayBuffer(32);
 ```javascript
 const buf = new ArrayBuffer(32);
 const dataView = new DataView(buf);
-dataView.getUint8(0) // 0
+dataView.getUint8(0); // 0
 ```
 
 上面代码对一段 32 字节的内存，建立`DataView`视图，然后以不带符号的 8 位整数格式，从头读取 8 位二进制数据，结果得到 0，因为原始内存的`ArrayBuffer`对象，默认所有位都是 0。
@@ -72,9 +72,9 @@ const buffer = new ArrayBuffer(12);
 const x1 = new Int32Array(buffer);
 x1[0] = 1;
 const x2 = new Uint8Array(buffer);
-x2[0]  = 2;
+x2[0] = 2;
 
-x1[0] // 2
+x1[0]; // 2
 ```
 
 上面代码对同一段内存，分别建立两种视图：32 位带符号整数（`Int32Array`构造函数）和 8 位不带符号整数（`Uint8Array`构造函数）。由于两个视图对应的是同一段内存，一个视图修改底层内存，会影响到另一个视图。
@@ -82,11 +82,11 @@ x1[0] // 2
 `TypedArray`视图的构造函数，除了接受`ArrayBuffer`实例作为参数，还可以接受普通数组作为参数，直接分配内存生成底层的`ArrayBuffer`实例，并同时完成对这段内存的赋值。
 
 ```javascript
-const typedArray = new Uint8Array([0,1,2]);
-typedArray.length // 3
+const typedArray = new Uint8Array([0, 1, 2]);
+typedArray.length; // 3
 
 typedArray[0] = 5;
-typedArray // [5, 1, 2]
+typedArray; // [5, 1, 2]
 ```
 
 上面代码使用`TypedArray`视图的`Uint8Array`构造函数，新建一个不带符号的 8 位整数视图。可以看到，`Uint8Array`直接使用普通数组作为参数，对底层内存的赋值同时完成。
@@ -97,7 +97,7 @@ typedArray // [5, 1, 2]
 
 ```javascript
 const buffer = new ArrayBuffer(32);
-buffer.byteLength
+buffer.byteLength;
 // 32
 ```
 
@@ -105,9 +105,9 @@ buffer.byteLength
 
 ```javascript
 if (buffer.byteLength === n) {
-  // 成功
+    // 成功
 } else {
-  // 失败
+    // 失败
 }
 ```
 
@@ -132,10 +132,10 @@ const newBuffer = buffer.slice(0, 3);
 
 ```javascript
 const buffer = new ArrayBuffer(8);
-ArrayBuffer.isView(buffer) // false
+ArrayBuffer.isView(buffer); // false
 
 const v = new Int32Array(buffer);
-ArrayBuffer.isView(v) // true
+ArrayBuffer.isView(v); // true
 ```
 
 ## TypedArray 视图
@@ -146,22 +146,22 @@ ArrayBuffer.isView(v) // true
 
 目前，`TypedArray`视图一共包括 9 种类型，每一种视图都是一种构造函数。
 
-- **`Int8Array`**：8 位有符号整数，长度 1 个字节。
-- **`Uint8Array`**：8 位无符号整数，长度 1 个字节。
-- **`Uint8ClampedArray`**：8 位无符号整数，长度 1 个字节，溢出处理不同。
-- **`Int16Array`**：16 位有符号整数，长度 2 个字节。
-- **`Uint16Array`**：16 位无符号整数，长度 2 个字节。
-- **`Int32Array`**：32 位有符号整数，长度 4 个字节。
-- **`Uint32Array`**：32 位无符号整数，长度 4 个字节。
-- **`Float32Array`**：32 位浮点数，长度 4 个字节。
-- **`Float64Array`**：64 位浮点数，长度 8 个字节。
+-   **`Int8Array`**：8 位有符号整数，长度 1 个字节。
+-   **`Uint8Array`**：8 位无符号整数，长度 1 个字节。
+-   **`Uint8ClampedArray`**：8 位无符号整数，长度 1 个字节，溢出处理不同。
+-   **`Int16Array`**：16 位有符号整数，长度 2 个字节。
+-   **`Uint16Array`**：16 位无符号整数，长度 2 个字节。
+-   **`Int32Array`**：32 位有符号整数，长度 4 个字节。
+-   **`Uint32Array`**：32 位无符号整数，长度 4 个字节。
+-   **`Float32Array`**：32 位浮点数，长度 4 个字节。
+-   **`Float64Array`**：64 位浮点数，长度 8 个字节。
 
 这 9 个构造函数生成的数组，统称为`TypedArray`视图。它们很像普通数组，都有`length`属性，都能用方括号运算符（`[]`）获取单个元素，所有数组的方法，在它们上面都能使用。普通数组与 TypedArray 数组的差异主要在以下方面。
 
-- TypedArray 数组的所有成员，都是同一种类型。
-- TypedArray 数组的成员是连续的，不会有空位。
-- TypedArray 数组成员的默认值为 0。比如，`new Array(10)`返回一个普通数组，里面没有任何成员，只是 10 个空位；`new Uint8Array(10)`返回一个 TypedArray 数组，里面 10 个成员都是 0。
-- TypedArray 数组只是一层视图，本身不储存数据，它的数据都储存在底层的`ArrayBuffer`对象之中，要获取底层对象必须使用`buffer`属性。
+-   TypedArray 数组的所有成员，都是同一种类型。
+-   TypedArray 数组的成员是连续的，不会有空位。
+-   TypedArray 数组成员的默认值为 0。比如，`new Array(10)`返回一个普通数组，里面没有任何成员，只是 10 个空位；`new Uint8Array(10)`返回一个 TypedArray 数组，里面 10 个成员都是 0。
+-   TypedArray 数组只是一层视图，本身不储存数据，它的数据都储存在底层的`ArrayBuffer`对象之中，要获取底层对象必须使用`buffer`属性。
 
 ### 构造函数
 
@@ -191,9 +191,9 @@ const v3 = new Int16Array(b, 2, 2);
 
 视图的构造函数可以接受三个参数：
 
-- 第一个参数（必需）：视图对应的底层`ArrayBuffer`对象。
-- 第二个参数（可选）：视图开始的字节序号，默认从 0 开始。
-- 第三个参数（可选）：视图包含的数据个数，默认直到本段内存区域结束。
+-   第一个参数（必需）：视图对应的底层`ArrayBuffer`对象。
+-   第二个参数（可选）：视图开始的字节序号，默认从 0 开始。
+-   第三个参数（可选）：视图包含的数据个数，默认直到本段内存区域结束。
 
 因此，`v1`、`v2`和`v3`是重叠的：`v1[0]`是一个 32 位整数，指向字节 0 ～字节 3；`v2[0]`是一个 8 位无符号整数，指向字节 2；`v3[0]`是一个 16 位整数，指向字节 2 ～字节 3。只要任何一个视图对内存有所修改，就会在另外两个视图上反应出来。
 
@@ -237,11 +237,11 @@ const typedArray = new Int8Array(new Uint8Array(4));
 ```javascript
 const x = new Int8Array([1, 1]);
 const y = new Int8Array(x);
-x[0] // 1
-y[0] // 1
+x[0]; // 1
+y[0]; // 1
 
 x[0] = 2;
-y[0] // 1
+y[0]; // 1
 ```
 
 上面代码中，数组`y`是以数组`x`为模板而生成的，当`x`变动的时候，`y`并没有变动。
@@ -251,11 +251,11 @@ y[0] // 1
 ```javascript
 const x = new Int8Array([1, 1]);
 const y = new Int8Array(x.buffer);
-x[0] // 1
-y[0] // 1
+x[0]; // 1
+y[0]; // 1
 
 x[0] = 2;
-y[0] // 2
+y[0]; // 2
 ```
 
 **（4）TypedArray(arrayLikeObject)**
@@ -284,28 +284,28 @@ const normalArray = Array.prototype.slice.call(typedArray);
 
 普通数组的操作方法和属性，对 TypedArray 数组完全适用。
 
-- `TypedArray.prototype.copyWithin(target, start[, end = this.length])`
-- `TypedArray.prototype.entries()`
-- `TypedArray.prototype.every(callbackfn, thisArg?)`
-- `TypedArray.prototype.fill(value, start=0, end=this.length)`
-- `TypedArray.prototype.filter(callbackfn, thisArg?)`
-- `TypedArray.prototype.find(predicate, thisArg?)`
-- `TypedArray.prototype.findIndex(predicate, thisArg?)`
-- `TypedArray.prototype.forEach(callbackfn, thisArg?)`
-- `TypedArray.prototype.indexOf(searchElement, fromIndex=0)`
-- `TypedArray.prototype.join(separator)`
-- `TypedArray.prototype.keys()`
-- `TypedArray.prototype.lastIndexOf(searchElement, fromIndex?)`
-- `TypedArray.prototype.map(callbackfn, thisArg?)`
-- `TypedArray.prototype.reduce(callbackfn, initialValue?)`
-- `TypedArray.prototype.reduceRight(callbackfn, initialValue?)`
-- `TypedArray.prototype.reverse()`
-- `TypedArray.prototype.slice(start=0, end=this.length)`
-- `TypedArray.prototype.some(callbackfn, thisArg?)`
-- `TypedArray.prototype.sort(comparefn)`
-- `TypedArray.prototype.toLocaleString(reserved1?, reserved2?)`
-- `TypedArray.prototype.toString()`
-- `TypedArray.prototype.values()`
+-   `TypedArray.prototype.copyWithin(target, start[, end = this.length])`
+-   `TypedArray.prototype.entries()`
+-   `TypedArray.prototype.every(callbackfn, thisArg?)`
+-   `TypedArray.prototype.fill(value, start=0, end=this.length)`
+-   `TypedArray.prototype.filter(callbackfn, thisArg?)`
+-   `TypedArray.prototype.find(predicate, thisArg?)`
+-   `TypedArray.prototype.findIndex(predicate, thisArg?)`
+-   `TypedArray.prototype.forEach(callbackfn, thisArg?)`
+-   `TypedArray.prototype.indexOf(searchElement, fromIndex=0)`
+-   `TypedArray.prototype.join(separator)`
+-   `TypedArray.prototype.keys()`
+-   `TypedArray.prototype.lastIndexOf(searchElement, fromIndex?)`
+-   `TypedArray.prototype.map(callbackfn, thisArg?)`
+-   `TypedArray.prototype.reduce(callbackfn, initialValue?)`
+-   `TypedArray.prototype.reduceRight(callbackfn, initialValue?)`
+-   `TypedArray.prototype.reverse()`
+-   `TypedArray.prototype.slice(start=0, end=this.length)`
+-   `TypedArray.prototype.some(callbackfn, thisArg?)`
+-   `TypedArray.prototype.sort(comparefn)`
+-   `TypedArray.prototype.toLocaleString(reserved1?, reserved2?)`
+-   `TypedArray.prototype.toString()`
+-   `TypedArray.prototype.values()`
 
 上面所有方法的用法，请参阅数组方法的介绍，这里不再重复了。
 
@@ -313,20 +313,20 @@ const normalArray = Array.prototype.slice.call(typedArray);
 
 ```javascript
 function concatenate(resultConstructor, ...arrays) {
-  let totalLength = 0;
-  for (let arr of arrays) {
-    totalLength += arr.length;
-  }
-  let result = new resultConstructor(totalLength);
-  let offset = 0;
-  for (let arr of arrays) {
-    result.set(arr, offset);
-    offset += arr.length;
-  }
-  return result;
+    let totalLength = 0;
+    for (let arr of arrays) {
+        totalLength += arr.length;
+    }
+    let result = new resultConstructor(totalLength);
+    let offset = 0;
+    for (let arr of arrays) {
+        result.set(arr, offset);
+        offset += arr.length;
+    }
+    return result;
 }
 
-concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4))
+concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4));
 // Uint8Array [1, 2, 3, 4]
 ```
 
@@ -335,7 +335,7 @@ concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4))
 ```javascript
 let ui8 = Uint8Array.of(0, 1, 2);
 for (let byte of ui8) {
-  console.log(byte);
+    console.log(byte);
 }
 // 0
 // 1
@@ -351,7 +351,7 @@ const buffer = new ArrayBuffer(16);
 const int32View = new Int32Array(buffer);
 
 for (let i = 0; i < int32View.length; i++) {
-  int32View[i] = i * 2;
+    int32View[i] = i * 2;
 }
 ```
 
@@ -363,7 +363,7 @@ for (let i = 0; i < int32View.length; i++) {
 const int16View = new Int16Array(buffer);
 
 for (let i = 0; i < int16View.length; i++) {
-  console.log("Entry " + i + ": " + int16View[i]);
+    console.log("Entry " + i + ": " + int16View[i]);
 }
 // Entry 0: 0
 // Entry 1: 0
@@ -397,11 +397,11 @@ const uInt16View = new Uint16Array(buffer);
 // 计算机采用小端字节序
 // 所以头两个字节等于258
 if (uInt16View[0] === 258) {
-  console.log('OK'); // "OK"
+    console.log("OK"); // "OK"
 }
 
 // 赋值运算
-uInt16View[0] = 255;    // 字节变为[0xFF, 0x00, 0x03, 0x07]
+uInt16View[0] = 255; // 字节变为[0xFF, 0x00, 0x03, 0x07]
 uInt16View[0] = 0xff05; // 字节变为[0x05, 0xFF, 0x03, 0x07]
 uInt16View[1] = 0x0210; // 字节变为[0x05, 0xFF, 0x10, 0x02]
 ```
@@ -409,20 +409,25 @@ uInt16View[1] = 0x0210; // 字节变为[0x05, 0xFF, 0x10, 0x02]
 下面的函数可以用来判断，当前视图是小端字节序，还是大端字节序。
 
 ```javascript
-const BIG_ENDIAN = Symbol('BIG_ENDIAN');
-const LITTLE_ENDIAN = Symbol('LITTLE_ENDIAN');
+const BIG_ENDIAN = Symbol("BIG_ENDIAN");
+const LITTLE_ENDIAN = Symbol("LITTLE_ENDIAN");
 
 function getPlatformEndianness() {
-  let arr32 = Uint32Array.of(0x12345678);
-  let arr8 = new Uint8Array(arr32.buffer);
-  switch ((arr8[0]*0x1000000) + (arr8[1]*0x10000) + (arr8[2]*0x100) + (arr8[3])) {
-    case 0x12345678:
-      return BIG_ENDIAN;
-    case 0x78563412:
-      return LITTLE_ENDIAN;
-    default:
-      throw new Error('Unknown endianness');
-  }
+    let arr32 = Uint32Array.of(0x12345678);
+    let arr8 = new Uint8Array(arr32.buffer);
+    switch (
+        arr8[0] * 0x1000000 +
+        arr8[1] * 0x10000 +
+        arr8[2] * 0x100 +
+        arr8[3]
+    ) {
+        case 0x12345678:
+            return BIG_ENDIAN;
+        case 0x78563412:
+            return LITTLE_ENDIAN;
+        default:
+            throw new Error("Unknown endianness");
+    }
 }
 ```
 
@@ -433,51 +438,63 @@ function getPlatformEndianness() {
 每一种视图的构造函数，都有一个`BYTES_PER_ELEMENT`属性，表示这种数据类型占据的字节数。
 
 ```javascript
-Int8Array.BYTES_PER_ELEMENT // 1
-Uint8Array.BYTES_PER_ELEMENT // 1
-Uint8ClampedArray.BYTES_PER_ELEMENT // 1
-Int16Array.BYTES_PER_ELEMENT // 2
-Uint16Array.BYTES_PER_ELEMENT // 2
-Int32Array.BYTES_PER_ELEMENT // 4
-Uint32Array.BYTES_PER_ELEMENT // 4
-Float32Array.BYTES_PER_ELEMENT // 4
-Float64Array.BYTES_PER_ELEMENT // 8
+Int8Array.BYTES_PER_ELEMENT; // 1
+Uint8Array.BYTES_PER_ELEMENT; // 1
+Uint8ClampedArray.BYTES_PER_ELEMENT; // 1
+Int16Array.BYTES_PER_ELEMENT; // 2
+Uint16Array.BYTES_PER_ELEMENT; // 2
+Int32Array.BYTES_PER_ELEMENT; // 4
+Uint32Array.BYTES_PER_ELEMENT; // 4
+Float32Array.BYTES_PER_ELEMENT; // 4
+Float64Array.BYTES_PER_ELEMENT; // 8
 ```
 
 这个属性在`TypedArray`实例上也能获取，即有`TypedArray.prototype.BYTES_PER_ELEMENT`。
 
 ### ArrayBuffer 与字符串的互相转换
 
-`ArrayBuffer`转为字符串，或者字符串转为`ArrayBuffer`，有一个前提，即字符串的编码方法是确定的。假定字符串采用 UTF-16 编码（JavaScript 的内部编码方式），可以自己编写转换函数。
+`ArrayBuffer` 和字符串的相互转换，使用原生 `TextEncoder` 和 `TextDecoder` 方法。为了便于说明用法，下面的代码都按照 TypeScript 的用法，给出了类型签名。
 
 ```javascript
-// ArrayBuffer 转为字符串，参数为 ArrayBuffer 对象
-function ab2str(buf) {
-  // 注意，如果是大型二进制数组，为了避免溢出，
-  // 必须一个一个字符地转
-  if (buf && buf.byteLength < 1024) {
-    return String.fromCharCode.apply(null, new Uint16Array(buf));
-  }
-
-  const bufView = new Uint16Array(buf);
-  const len =  bufView.length;
-  const bstr = new Array(len);
-  for (let i = 0; i < len; i++) {
-    bstr[i] = String.fromCharCode.call(null, bufView[i]);
-  }
-  return bstr.join('');
+/**
+ * Convert ArrayBuffer/TypedArray to String via TextDecoder
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder
+ */
+function ab2str(
+    input:
+        | ArrayBuffer
+        | Uint8Array
+        | Int8Array
+        | Uint16Array
+        | Int16Array
+        | Uint32Array
+        | Int32Array,
+    outputEncoding: string = "utf8"
+): string {
+    const decoder = new TextDecoder(outputEncoding);
+    return decoder.decode(input);
 }
 
-// 字符串转为 ArrayBuffer 对象，参数为字符串
-function str2ab(str) {
-  const buf = new ArrayBuffer(str.length * 2); // 每个字符占用2个字节
-  const bufView = new Uint16Array(buf);
-  for (let i = 0, strLen = str.length; i < strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
-  return buf;
+/**
+ * Convert String to ArrayBuffer via TextEncoder
+ *
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/TextEncoder
+ */
+function str2ab(input: string): ArrayBuffer {
+    const view = str2Uint8Array(input);
+    return view.buffer;
+}
+
+/** Convert String to Uint8Array */
+function str2Uint8Array(input: string): Uint8Array {
+    const encoder = new TextEncoder();
+    const view = encoder.encode(input);
+    return view;
 }
 ```
+
+上面代码中，`ab2str()`的第二个参数`outputEncoding`给出了输出编码的编码，一般保持默认值（`utf-8`），其他可选值参见[官方文档](https://encoding.spec.whatwg.org)或 [Node.js 文档](https://nodejs.org/api/util.html#util_whatwg_supported_encodings)。
 
 ### 溢出
 
@@ -489,10 +506,10 @@ TypedArray 数组的溢出处理规则，简单来说，就是抛弃溢出的位
 const uint8 = new Uint8Array(1);
 
 uint8[0] = 256;
-uint8[0] // 0
+uint8[0]; // 0
 
 uint8[0] = -1;
-uint8[0] // 255
+uint8[0]; // 255
 ```
 
 上面代码中，`uint8`是一个 8 位视图，而 256 的二进制形式是一个 9 位的值`100000000`，这时就会发生溢出。根据规则，只会保留后 8 位，即`00000000`。`uint8`视图的解释规则是无符号的 8 位整数，所以`00000000`就是`0`。
@@ -501,14 +518,14 @@ uint8[0] // 255
 
 一个简单转换规则，可以这样表示。
 
-- 正向溢出（overflow）：当输入值大于当前数据类型的最大值，结果等于当前数据类型的最小值加上余值，再减去 1。
-- 负向溢出（underflow）：当输入值小于当前数据类型的最小值，结果等于当前数据类型的最大值减去余值的绝对值，再加上 1。
+-   正向溢出（overflow）：当输入值大于当前数据类型的最大值，结果等于当前数据类型的最小值加上余值，再减去 1。
+-   负向溢出（underflow）：当输入值小于当前数据类型的最小值，结果等于当前数据类型的最大值减去余值的绝对值，再加上 1。
 
 上面的“余值”就是模运算的结果，即 JavaScript 里面的`%`运算符的结果。
 
 ```javascript
-12 % 4 // 0
-12 % 5 // 2
+12 % 4; // 0
+12 % 5; // 2
 ```
 
 上面代码中，12 除以 4 是没有余值的，而除以 5 会得到余值 2。
@@ -519,10 +536,10 @@ uint8[0] // 255
 const int8 = new Int8Array(1);
 
 int8[0] = 128;
-int8[0] // -128
+int8[0]; // -128
 
 int8[0] = -129;
-int8[0] // 127
+int8[0]; // 127
 ```
 
 上面例子中，`int8`是一个带符号的 8 位整数视图，它的最大值是 127，最小值是-128。输入值为`128`时，相当于正向溢出`1`，根据“最小值加上余值（128 除以 127 的余值是 1），再减去 1”的规则，就会返回`-128`；输入值为`-129`时，相当于负向溢出`1`，根据“最大值减去余值的绝对值（-129 除以-128 的余值的绝对值是 1），再加上 1”的规则，就会返回`127`。
@@ -533,10 +550,10 @@ int8[0] // 127
 const uint8c = new Uint8ClampedArray(1);
 
 uint8c[0] = 256;
-uint8c[0] // 255
+uint8c[0]; // 255
 
 uint8c[0] = -1;
-uint8c[0] // 0
+uint8c[0]; // 0
 ```
 
 上面例子中，`uint8C`是一个`Uint8ClampedArray`视图，正向溢出时都返回 255，负向溢出都返回 0。
@@ -563,24 +580,24 @@ const v1 = new Int32Array(b);
 const v2 = new Uint8Array(b, 2);
 const v3 = new Int16Array(b, 2, 2);
 
-v1.byteLength // 8
-v2.byteLength // 6
-v3.byteLength // 4
+v1.byteLength; // 8
+v2.byteLength; // 6
+v3.byteLength; // 4
 
-v1.byteOffset // 0
-v2.byteOffset // 2
-v3.byteOffset // 2
+v1.byteOffset; // 0
+v2.byteOffset; // 2
+v3.byteOffset; // 2
 ```
 
 ### TypedArray.prototype.length
 
-`length`属性表示 TypedArray 数组含有多少个成员。注意将`byteLength`属性和`length`属性区分，前者是字节长度，后者是成员长度。
+`length`属性表示 `TypedArray` 数组含有多少个成员。注意将 `length` 属性和 `byteLength` 属性区分，前者是成员长度，后者是字节长度。
 
 ```javascript
 const a = new Int16Array(8);
 
-a.length // 8
-a.byteLength // 16
+a.length; // 8
+a.byteLength; // 16
 ```
 
 ### TypedArray.prototype.set()
@@ -602,7 +619,7 @@ b.set(a);
 const a = new Uint16Array(8);
 const b = new Uint16Array(10);
 
-b.set(a, 2)
+b.set(a, 2);
 ```
 
 上面代码的`b`数组比`a`数组多两个成员，所以从`b[2]`开始复制。
@@ -613,10 +630,10 @@ b.set(a, 2)
 
 ```javascript
 const a = new Uint16Array(8);
-const b = a.subarray(2,3);
+const b = a.subarray(2, 3);
 
-a.byteLength // 16
-b.byteLength // 2
+a.byteLength; // 16
+b.byteLength; // 2
 ```
 
 `subarray`方法的第一个参数是起始的成员序号，第二个参数是结束的成员序号（不含该成员），如果省略则包含剩余的全部成员。所以，上面代码的`a.subarray(2,3)`，意味着 b 只包含`a[2]`一个成员，字节长度为 2。
@@ -627,7 +644,7 @@ TypeArray 实例的`slice`方法，可以返回一个指定位置的新的`Typed
 
 ```javascript
 let ui8 = Uint8Array.of(0, 1, 2);
-ui8.slice(-1)
+ui8.slice(-1);
 // Uint8Array [ 2 ]
 ```
 
@@ -640,7 +657,7 @@ ui8.slice(-1)
 TypedArray 数组的所有构造函数，都有一个静态方法`of`，用于将参数转为一个`TypedArray`实例。
 
 ```javascript
-Float32Array.of(0.151, -8, 3.7)
+Float32Array.of(0.151, -8, 3.7);
 // Float32Array [ 0.151, -8, 3.7 ]
 ```
 
@@ -648,10 +665,10 @@ Float32Array.of(0.151, -8, 3.7)
 
 ```javascript
 // 方法一
-let tarr = new Uint8Array([1,2,3]);
+let tarr = new Uint8Array([1, 2, 3]);
 
 // 方法二
-let tarr = Uint8Array.of(1,2,3);
+let tarr = Uint8Array.of(1, 2, 3);
 
 // 方法三
 let tarr = new Uint8Array(3);
@@ -665,7 +682,7 @@ tarr[2] = 3;
 静态方法`from`接受一个可遍历的数据结构（比如数组）作为参数，返回一个基于这个结构的`TypedArray`实例。
 
 ```javascript
-Uint16Array.from([0, 1, 2])
+Uint16Array.from([0, 1, 2]);
 // Uint16Array [ 0, 1, 2 ]
 ```
 
@@ -673,16 +690,16 @@ Uint16Array.from([0, 1, 2])
 
 ```javascript
 const ui16 = Uint16Array.from(Uint8Array.of(0, 1, 2));
-ui16 instanceof Uint16Array // true
+ui16 instanceof Uint16Array; // true
 ```
 
 `from`方法还可以接受一个函数，作为第二个参数，用来对每个元素进行遍历，功能类似`map`方法。
 
 ```javascript
-Int8Array.of(127, 126, 125).map(x => 2 * x)
+Int8Array.of(127, 126, 125).map((x) => 2 * x);
 // Int8Array [ -2, -4, -6 ]
 
-Int16Array.from(Int8Array.of(127, 126, 125), x => 2 * x)
+Int16Array.from(Int8Array.of(127, 126, 125), (x) => 2 * x);
 // Int16Array [ 254, 252, 250 ]
 ```
 
@@ -702,9 +719,9 @@ const amountDueView = new Float32Array(buffer, 20, 1);
 
 上面代码将一个 24 字节长度的`ArrayBuffer`对象，分成三个部分：
 
-- 字节 0 到字节 3：1 个 32 位无符号整数
-- 字节 4 到字节 19：16 个 8 位整数
-- 字节 20 到字节 23：1 个 32 位浮点数
+-   字节 0 到字节 3：1 个 32 位无符号整数
+-   字节 4 到字节 19：16 个 8 位整数
+-   字节 20 到字节 23：1 个 32 位浮点数
 
 这种数据结构可以用如下的 C 语言描述：
 
@@ -725,7 +742,7 @@ struct someStruct {
 `DataView`视图本身也是构造函数，接受一个`ArrayBuffer`对象作为参数，生成视图。
 
 ```javascript
-DataView(ArrayBuffer buffer [, 字节起始位置 [, 长度]]);
+new DataView(ArrayBuffer buffer [, 字节起始位置 [, 长度]]);
 ```
 
 下面是一个例子。
@@ -737,20 +754,20 @@ const dv = new DataView(buffer);
 
 `DataView`实例有以下属性，含义与`TypedArray`实例的同名方法相同。
 
-- `DataView.prototype.buffer`：返回对应的 ArrayBuffer 对象
-- `DataView.prototype.byteLength`：返回占据的内存字节长度
-- `DataView.prototype.byteOffset`：返回当前视图从对应的 ArrayBuffer 对象的哪个字节开始
+-   `DataView.prototype.buffer`：返回对应的 ArrayBuffer 对象
+-   `DataView.prototype.byteLength`：返回占据的内存字节长度
+-   `DataView.prototype.byteOffset`：返回当前视图从对应的 ArrayBuffer 对象的哪个字节开始
 
 `DataView`实例提供 8 个方法读取内存。
 
-- **`getInt8`**：读取 1 个字节，返回一个 8 位整数。
-- **`getUint8`**：读取 1 个字节，返回一个无符号的 8 位整数。
-- **`getInt16`**：读取 2 个字节，返回一个 16 位整数。
-- **`getUint16`**：读取 2 个字节，返回一个无符号的 16 位整数。
-- **`getInt32`**：读取 4 个字节，返回一个 32 位整数。
-- **`getUint32`**：读取 4 个字节，返回一个无符号的 32 位整数。
-- **`getFloat32`**：读取 4 个字节，返回一个 32 位浮点数。
-- **`getFloat64`**：读取 8 个字节，返回一个 64 位浮点数。
+-   **`getInt8`**：读取 1 个字节，返回一个 8 位整数。
+-   **`getUint8`**：读取 1 个字节，返回一个无符号的 8 位整数。
+-   **`getInt16`**：读取 2 个字节，返回一个 16 位整数。
+-   **`getUint16`**：读取 2 个字节，返回一个无符号的 16 位整数。
+-   **`getInt32`**：读取 4 个字节，返回一个 32 位整数。
+-   **`getUint32`**：读取 4 个字节，返回一个无符号的 32 位整数。
+-   **`getFloat32`**：读取 4 个字节，返回一个 32 位浮点数。
+-   **`getFloat64`**：读取 8 个字节，返回一个 64 位浮点数。
 
 这一系列`get`方法的参数都是一个字节序号（不能是负数，否则会报错），表示从哪个字节开始读取。
 
@@ -785,14 +802,14 @@ const v3 = dv.getUint16(3);
 
 DataView 视图提供 8 个方法写入内存。
 
-- **`setInt8`**：写入 1 个字节的 8 位整数。
-- **`setUint8`**：写入 1 个字节的 8 位无符号整数。
-- **`setInt16`**：写入 2 个字节的 16 位整数。
-- **`setUint16`**：写入 2 个字节的 16 位无符号整数。
-- **`setInt32`**：写入 4 个字节的 32 位整数。
-- **`setUint32`**：写入 4 个字节的 32 位无符号整数。
-- **`setFloat32`**：写入 4 个字节的 32 位浮点数。
-- **`setFloat64`**：写入 8 个字节的 64 位浮点数。
+-   **`setInt8`**：写入 1 个字节的 8 位整数。
+-   **`setUint8`**：写入 1 个字节的 8 位无符号整数。
+-   **`setInt16`**：写入 2 个字节的 16 位整数。
+-   **`setUint16`**：写入 2 个字节的 16 位无符号整数。
+-   **`setInt32`**：写入 4 个字节的 32 位整数。
+-   **`setUint32`**：写入 4 个字节的 32 位无符号整数。
+-   **`setFloat32`**：写入 4 个字节的 32 位浮点数。
+-   **`setFloat64`**：写入 8 个字节的 64 位浮点数。
 
 这一系列`set`方法，接受两个参数，第一个参数是字节序号，表示从哪个字节开始写入，第二个参数为写入的数据。对于那些写入两个或两个以上字节的方法，需要指定第三个参数，`false`或者`undefined`表示使用大端字节序写入，`true`表示使用小端字节序写入。
 
@@ -810,10 +827,10 @@ dv.setFloat32(8, 2.5, true);
 如果不确定正在使用的计算机的字节序，可以采用下面的判断方式。
 
 ```javascript
-const littleEndian = (function() {
-  const buffer = new ArrayBuffer(2);
-  new DataView(buffer).setInt16(0, 256, true);
-  return new Int16Array(buffer)[0] === 256;
+const littleEndian = (function () {
+    const buffer = new ArrayBuffer(2);
+    new DataView(buffer).setInt16(0, 256, true);
+    return new Int16Array(buffer)[0] === 256;
 })();
 ```
 
@@ -829,12 +846,12 @@ const littleEndian = (function() {
 
 ```javascript
 let xhr = new XMLHttpRequest();
-xhr.open('GET', someUrl);
-xhr.responseType = 'arraybuffer';
+xhr.open("GET", someUrl);
+xhr.responseType = "arraybuffer";
 
 xhr.onload = function () {
-  let arrayBuffer = xhr.response;
-  // ···
+    let arrayBuffer = xhr.response;
+    // ···
 };
 
 xhr.send();
@@ -844,15 +861,15 @@ xhr.send();
 
 ```javascript
 xhr.onreadystatechange = function () {
-  if (req.readyState === 4 ) {
-    const arrayResponse = xhr.response;
-    const dataView = new DataView(arrayResponse);
-    const ints = new Uint32Array(dataView.byteLength / 4);
+    if (req.readyState === 4) {
+        const arrayResponse = xhr.response;
+        const dataView = new DataView(arrayResponse);
+        const ints = new Uint32Array(dataView.byteLength / 4);
 
-    xhrDiv.style.backgroundColor = "#00FF00";
-    xhrDiv.innerText = "Array is " + ints.length + "uints long";
-  }
-}
+        xhrDiv.style.backgroundColor = "#00FF00";
+        xhrDiv.innerText = "Array is " + ints.length + "uints long";
+    }
+};
 ```
 
 ### Canvas
@@ -860,8 +877,8 @@ xhr.onreadystatechange = function () {
 网页`Canvas`元素输出的二进制像素数据，就是 TypedArray 数组。
 
 ```javascript
-const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
 
 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 const uint8ClampedArray = imageData.data;
@@ -888,20 +905,20 @@ pixels[i] *= gamma;
 `WebSocket`可以通过`ArrayBuffer`，发送或接收二进制数据。
 
 ```javascript
-let socket = new WebSocket('ws://127.0.0.1:8081');
-socket.binaryType = 'arraybuffer';
+let socket = new WebSocket("ws://127.0.0.1:8081");
+socket.binaryType = "arraybuffer";
 
 // Wait until socket is open
-socket.addEventListener('open', function (event) {
-  // Send binary data
-  const typedArray = new Uint8Array(4);
-  socket.send(typedArray.buffer);
+socket.addEventListener("open", function (event) {
+    // Send binary data
+    const typedArray = new Uint8Array(4);
+    socket.send(typedArray.buffer);
 });
 
 // Receive binary data
-socket.addEventListener('message', function (event) {
-  const arrayBuffer = event.data;
-  // ···
+socket.addEventListener("message", function (event) {
+    const arrayBuffer = event.data;
+    // ···
 });
 ```
 
@@ -911,12 +928,12 @@ Fetch API 取回的数据，就是`ArrayBuffer`对象。
 
 ```javascript
 fetch(url)
-.then(function(response){
-  return response.arrayBuffer()
-})
-.then(function(arrayBuffer){
-  // ...
-});
+    .then(function (response) {
+        return response.arrayBuffer();
+    })
+    .then(function (arrayBuffer) {
+        // ...
+    });
 ```
 
 ### File API
@@ -924,13 +941,13 @@ fetch(url)
 如果知道一个文件的二进制数据类型，也可以将这个文件读取为`ArrayBuffer`对象。
 
 ```javascript
-const fileInput = document.getElementById('fileInput');
+const fileInput = document.getElementById("fileInput");
 const file = fileInput.files[0];
 const reader = new FileReader();
 reader.readAsArrayBuffer(file);
 reader.onload = function () {
-  const arrayBuffer = reader.result;
-  // ···
+    const arrayBuffer = reader.result;
+    // ···
 };
 ```
 
@@ -946,10 +963,10 @@ reader.readAsArrayBuffer(file);
 
 ```javascript
 function processimage(e) {
-  const buffer = e.target.result;
-  const datav = new DataView(buffer);
-  const bitmap = {};
-  // 具体的处理步骤
+    const buffer = e.target.result;
+    const datav = new DataView(buffer);
+    const bitmap = {};
+    // 具体的处理步骤
 }
 ```
 
@@ -996,17 +1013,17 @@ JavaScript 是单线程的，Web worker 引入了多线程：主线程用来与�
 
 ```javascript
 // 主线程
-const w = new Worker('myworker.js');
+const w = new Worker("myworker.js");
 ```
 
 上面代码中，主线程新建了一个 Worker 线程。该线程与主线程之间会有一个通信渠道，主线程通过`w.postMessage`向 Worker 线程发消息，同时通过`message`事件监听 Worker 线程的回应。
 
 ```javascript
 // 主线程
-w.postMessage('hi');
+w.postMessage("hi");
 w.onmessage = function (ev) {
-  console.log(ev.data);
-}
+    console.log(ev.data);
+};
 ```
 
 上面代码中，主线程先发一个消息`hi`，然后在监听到 Worker 线程的回应后，就将其打印出来。
@@ -1016,9 +1033,9 @@ Worker 线程也是通过监听`message`事件，来获取主线程发来的消�
 ```javascript
 // Worker 线程
 onmessage = function (ev) {
-  console.log(ev.data);
-  postMessage('ho');
-}
+    console.log(ev.data);
+    postMessage("ho");
+};
 ```
 
 线程之间的数据交换可以是各种格式，不仅仅是字符串，也可以是二进制数据。这种交换采用的是复制机制，即一个进程将需要分享的数据复制一份，通过`postMessage`方法交给另一个进程。如果数据量比较大，这种通信的效率显然比较低。很容易想到，这时可以留出一块内存区域，由主线程与 Worker 线程共享，两方都可以读写，那么就会大大提高效率，协作起来也会比较简单（不像`postMessage`那么麻烦）。
@@ -1045,13 +1062,13 @@ Worker 线程从事件的`data`属性上面取到数据。
 ```javascript
 // Worker 线程
 onmessage = function (ev) {
-  // 主线程共享的数据，就是 1KB 的共享内存
-  const sharedBuffer = ev.data;
+    // 主线程共享的数据，就是 1KB 的共享内存
+    const sharedBuffer = ev.data;
 
-  // 在共享内存上建立视图，方便读写
-  const sharedArray = new Int32Array(sharedBuffer);
+    // 在共享内存上建立视图，方便读写
+    const sharedArray = new Int32Array(sharedBuffer);
 
-  // ...
+    // ...
 };
 ```
 
@@ -1064,14 +1081,13 @@ onmessage = function (ev) {
 const sab = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 100000);
 
 // 建立 32 位整数视图
-const ia = new Int32Array(sab);  // ia.length == 100000
+const ia = new Int32Array(sab); // ia.length == 100000
 
 // 新建一个质数生成器
 const primes = new PrimeGenerator();
 
 // 将 10 万个质数，写入这段内存空间
-for ( let i=0 ; i < ia.length ; i++ )
-  ia[i] = primes.next();
+for (let i = 0; i < ia.length; i++) ia[i] = primes.next();
 
 // 向 Worker 线程发送这段共享内存
 w.postMessage(ia);
@@ -1083,9 +1099,9 @@ Worker 线程收到数据后的处理如下。
 // Worker 线程
 let ia;
 onmessage = function (ev) {
-  ia = ev.data;
-  console.log(ia.length); // 100000
-  console.log(ia[37]); // 输出 163，因为这是第38个质数
+    ia = ev.data;
+    console.log(ia.length); // 100000
+    console.log(ia[37]); // 输出 163，因为这是第38个质数
 };
 ```
 
@@ -1097,8 +1113,8 @@ onmessage = function (ev) {
 
 ```javascript
 // 主线程
-ia[42] = 314159;  // 原先的值 191
-ia[37] = 123456;  // 原先的值 163
+ia[42] = 314159; // 原先的值 191
+ia[37] = 123456; // 原先的值 163
 
 // Worker 线程
 console.log(ia[37]);
@@ -1118,7 +1134,7 @@ const sab = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 100000);
 const ia = new Int32Array(sab);
 
 for (let i = 0; i < ia.length; i++) {
-  ia[i] = primes.next(); // 将质数放入 ia
+    ia[i] = primes.next(); // 将质数放入 ia
 }
 
 // worker 线程
@@ -1136,41 +1152,41 @@ Atomics.add(ia, 112, 1); // 正确
 
 `store()`方法用来向共享内存写入数据，`load()`方法用来从共享内存读出数据。比起直接的读写操作，它们的好处是保证了读写操作的原子性。
 
-此外，它们还用来解决一个问题：多个线程使用共享内存的某个位置作为开关（flag），一旦该位置的值变了，就执行特定操作。这时，必须保证该位置的赋值操作，一定是在它前面的所有可能会改写内存的操作结束后执行；而该位置的取值操作，一定是在它后面所有可能会读取该位置的操作开始之前执行。`store`方法和`load`方法就能做到这一点，编译器不会为了优化，而打乱机器指令的执行顺序。
+此外，它们还用来解决一个问题：多个线程使用共享内存的某个位置作为开关（flag），一旦该位置的值变了，就执行特定操作。这时，必须保证该位置的赋值操作，一定是在它前面的所有可能会改写内存的操作结束后执行；而该位置的取值操作，一定是在它后面所有可能会读取该位置的操作开始之前执行。`store()`方法和`load()`方法就能做到这一点，编译器不会为了优化，而打乱机器指令的执行顺序。
 
 ```javascript
-Atomics.load(array, index)
-Atomics.store(array, index, value)
+Atomics.load(typedArray, index);
+Atomics.store(typedArray, index, value);
 ```
 
-`store`方法接受三个参数：SharedBuffer 的视图、位置索引和值，返回`sharedArray[index]`的值。`load`方法只接受两个参数：SharedBuffer 的视图和位置索引，也是返回`sharedArray[index]`的值。
+`store()`方法接受三个参数：`typedArray`对象（SharedArrayBuffer 的视图）、位置索引和值，返回`typedArray[index]`的值。`load()`方法只接受两个参数：`typedArray`对象（SharedArrayBuffer 的视图）和位置索引，也是返回`typedArray[index]`的值。
 
 ```javascript
 // 主线程 main.js
-ia[42] = 314159;  // 原先的值 191
-Atomics.store(ia, 37, 123456);  // 原先的值是 163
+ia[42] = 314159; // 原先的值 191
+Atomics.store(ia, 37, 123456); // 原先的值是 163
 
 // Worker 线程 worker.js
 while (Atomics.load(ia, 37) == 163);
-console.log(ia[37]);  // 123456
-console.log(ia[42]);  // 314159
+console.log(ia[37]); // 123456
+console.log(ia[42]); // 314159
 ```
 
-上面代码中，主线程的`Atomics.store`向 42 号位置的赋值，一定是早于 37 位置的赋值。只要 37 号位置等于 163，Worker 线程就不会终止循环，而对 37 号位置和 42 号位置的取值，一定是在`Atomics.load`操作之后。
+上面代码中，主线程的`Atomics.store()`向 42 号位置的赋值，一定是早于 37 位置的赋值。只要 37 号位置等于 163，Worker 线程就不会终止循环，而对 37 号位置和 42 号位置的取值，一定是在`Atomics.load()`操作之后。
 
 下面是另一个例子。
 
 ```javascript
 // 主线程
-const worker = new Worker('worker.js');
+const worker = new Worker("worker.js");
 const length = 10;
 const size = Int32Array.BYTES_PER_ELEMENT * length;
 // 新建一段共享内存
 const sharedBuffer = new SharedArrayBuffer(size);
 const sharedArray = new Int32Array(sharedBuffer);
 for (let i = 0; i < 10; i++) {
-  // 向共享内存写入 10 个整数
-  Atomics.store(sharedArray, i, 0);
+    // 向共享内存写入 10 个整数
+    Atomics.store(sharedArray, i, 0);
 }
 worker.postMessage(sharedBuffer);
 ```
@@ -1179,13 +1195,17 @@ worker.postMessage(sharedBuffer);
 
 ```javascript
 // worker.js
-self.addEventListener('message', (event) => {
-  const sharedArray = new Int32Array(event.data);
-  for (let i = 0; i < 10; i++) {
-    const arrayValue = Atomics.load(sharedArray, i);
-    console.log(`The item at array index ${i} is ${arrayValue}`);
-  }
-}, false);
+self.addEventListener(
+    "message",
+    (event) => {
+        const sharedArray = new Int32Array(event.data);
+        for (let i = 0; i < 10; i++) {
+            const arrayValue = Atomics.load(sharedArray, i);
+            console.log(`The item at array index ${i} is ${arrayValue}`);
+        }
+    },
+    false
+);
 ```
 
 **（2）Atomics.exchange()**
@@ -1194,35 +1214,49 @@ Worker 线程如果要写入数据，可以使用上面的`Atomics.store()`方�
 
 ```javascript
 // Worker 线程
-self.addEventListener('message', (event) => {
-  const sharedArray = new Int32Array(event.data);
-  for (let i = 0; i < 10; i++) {
-    if (i % 2 === 0) {
-      const storedValue = Atomics.store(sharedArray, i, 1);
-      console.log(`The item at array index ${i} is now ${storedValue}`);
-    } else {
-      const exchangedValue = Atomics.exchange(sharedArray, i, 2);
-      console.log(`The item at array index ${i} was ${exchangedValue}, now 2`);
-    }
-  }
-}, false);
+self.addEventListener(
+    "message",
+    (event) => {
+        const sharedArray = new Int32Array(event.data);
+        for (let i = 0; i < 10; i++) {
+            if (i % 2 === 0) {
+                const storedValue = Atomics.store(sharedArray, i, 1);
+                console.log(
+                    `The item at array index ${i} is now ${storedValue}`
+                );
+            } else {
+                const exchangedValue = Atomics.exchange(sharedArray, i, 2);
+                console.log(
+                    `The item at array index ${i} was ${exchangedValue}, now 2`
+                );
+            }
+        }
+    },
+    false
+);
 ```
 
 上面代码将共享内存的偶数位置的值改成`1`，奇数位置的值改成`2`。
 
-**（3）Atomics.wait()，Atomics.wake()**
+**（3）Atomics.wait()，Atomics.notify()**
 
-使用`while`循环等待主线程的通知，不是很高效，如果用在主线程，就会造成卡顿，`Atomics`对象提供了`wait()`和`wake()`两个方法用于等待通知。这两个方法相当于锁内存，即在一个线程进行操作时，让其他线程休眠（建立锁），等到操作结束，再唤醒那些休眠的线程（解除锁）。
+使用`while`循环等待主线程的通知，不是很高效，如果用在主线程，就会造成卡顿，`Atomics`对象提供了`wait()`和`notify()`两个方法用于等待通知。这两个方法相当于锁内存，即在一个线程进行操作时，让其他线程休眠（建立锁），等到操作结束，再唤醒那些休眠的线程（解除锁）。
+
+`Atomics.notify()`方法以前叫做`Atomics.wake()`，后来进行了改名。
 
 ```javascript
 // Worker 线程
-self.addEventListener('message', (event) => {
-  const sharedArray = new Int32Array(event.data);
-  const arrayIndex = 0;
-  const expectedStoredValue = 50;
-  Atomics.wait(sharedArray, arrayIndex, expectedStoredValue);
-  console.log(Atomics.load(sharedArray, arrayIndex));
-}, false);
+self.addEventListener(
+    "message",
+    (event) => {
+        const sharedArray = new Int32Array(event.data);
+        const arrayIndex = 0;
+        const expectedStoredValue = 50;
+        Atomics.wait(sharedArray, arrayIndex, expectedStoredValue);
+        console.log(Atomics.load(sharedArray, arrayIndex));
+    },
+    false
+);
 ```
 
 上面代码中，`Atomics.wait()`方法等同于告诉 Worker 线程，只要满足给定条件（`sharedArray`的`0`号位置等于`50`），就在这一行 Worker 线程进入休眠。
@@ -1235,56 +1269,56 @@ const newArrayValue = 100;
 Atomics.store(sharedArray, 0, newArrayValue);
 const arrayIndex = 0;
 const queuePos = 1;
-Atomics.wake(sharedArray, arrayIndex, queuePos);
+Atomics.notify(sharedArray, arrayIndex, queuePos);
 ```
 
-上面代码中，`sharedArray`的`0`号位置改为`100`，然后就执行`Atomics.wake()`方法，唤醒在`sharedArray`的`0`号位置休眠队列里的一个线程。
+上面代码中，`sharedArray`的`0`号位置改为`100`，然后就执行`Atomics.notify()`方法，唤醒在`sharedArray`的`0`号位置休眠队列里的一个线程。
 
 `Atomics.wait()`方法的使用格式如下。
 
 ```javascript
-Atomics.wait(sharedArray, index, value, timeout)
+Atomics.wait(sharedArray, index, value, timeout);
 ```
 
 它的四个参数含义如下。
 
-- sharedArray：共享内存的视图数组。
-- index：视图数据的位置（从0开始）。
-- value：该位置的预期值。一旦实际值等于预期值，就进入休眠。
-- timeout：整数，表示过了这个时间以后，就自动唤醒，单位毫秒。该参数可选，默认值是`Infinity`，即无限期的休眠，只有通过`Atomics.wake()`方法才能唤醒。
+-   sharedArray：共享内存的视图数组。
+-   index：视图数据的位置（从 0 开始）。
+-   value：该位置的预期值。一旦实际值等于预期值，就进入休眠。
+-   timeout：整数，表示过了这个时间以后，就自动唤醒，单位毫秒。该参数可选，默认值是`Infinity`，即无限期的休眠，只有通过`Atomics.notify()`方法才能唤醒。
 
-`Atomics.wait()`的返回值是一个字符串，共有三种可能的值。如果`sharedArray[index]`不等于`value`，就返回字符串`not-equal`，否则就进入休眠。如果`Atomics.wake()`方法唤醒，就返回字符串`ok`；如果因为超时唤醒，就返回字符串`timed-out`。
+`Atomics.wait()`的返回值是一个字符串，共有三种可能的值。如果`sharedArray[index]`不等于`value`，就返回字符串`not-equal`，否则就进入休眠。如果`Atomics.notify()`方法唤醒，就返回字符串`ok`；如果因为超时唤醒，就返回字符串`timed-out`。
 
-`Atomics.wake()`方法的使用格式如下。
+`Atomics.notify()`方法的使用格式如下。
 
 ```javascript
-Atomics.wake(sharedArray, index, count)
+Atomics.notify(sharedArray, index, count);
 ```
 
 它的三个参数含义如下。
 
-- sharedArray：共享内存的视图数组。
-- index：视图数据的位置（从0开始）。
-- count：需要唤醒的 Worker 线程的数量，默认为`Infinity`。
+-   sharedArray：共享内存的视图数组。
+-   index：视图数据的位置（从 0 开始）。
+-   count：需要唤醒的 Worker 线程的数量，默认为`Infinity`。
 
-`Atomics.wake()`方法一旦唤醒休眠的 Worker 线程，就会让它继续往下运行。
+`Atomics.notify()`方法一旦唤醒休眠的 Worker 线程，就会让它继续往下运行。
 
 请看一个例子。
 
 ```javascript
 // 主线程
-console.log(ia[37]);  // 163
+console.log(ia[37]); // 163
 Atomics.store(ia, 37, 123456);
-Atomics.wake(ia, 37, 1);
+Atomics.notify(ia, 37, 1);
 
 // Worker 线程
 Atomics.wait(ia, 37, 163);
-console.log(ia[37]);  // 123456
+console.log(ia[37]); // 123456
 ```
 
-上面代码中，视图数组`ia`的第 37 号位置，原来的值是`163`。Worker 线程使用`Atomics.wait()`方法，指定只要`ia[37]`等于`163`，就进入休眠状态。主线程使用`Atomics.store()`方法，将`123456`写入`ia[37]`，然后使用`Atomics.wake()`方法唤醒 Worker 线程。
+上面代码中，视图数组`ia`的第 37 号位置，原来的值是`163`。Worker 线程使用`Atomics.wait()`方法，指定只要`ia[37]`等于`163`，就进入休眠状态。主线程使用`Atomics.store()`方法，将`123456`写入`ia[37]`，然后使用`Atomics.notify()`方法唤醒 Worker 线程。
 
-另外，基于`wait`和`wake`这两个方法的锁内存实现，可以看 Lars T Hansen 的 [js-lock-and-condition](https://github.com/lars-t-hansen/js-lock-and-condition) 这个库。
+另外，基于`wait`和`notify`这两个方法的锁内存实现，可以看 Lars T Hansen 的 [js-lock-and-condition](https://github.com/lars-t-hansen/js-lock-and-condition) 这个库。
 
 注意，浏览器的主线程不宜设置休眠，这会导致用户失去响应。而且，主线程实际上会拒绝进入休眠。
 
@@ -1293,31 +1327,31 @@ console.log(ia[37]);  // 123456
 共享内存上面的某些运算是不能被打断的，即不能在运算过程中，让其他线程改写内存上面的值。Atomics 对象提供了一些运算方法，防止数据被改写。
 
 ```javascript
-Atomics.add(sharedArray, index, value)
+Atomics.add(sharedArray, index, value);
 ```
 
 `Atomics.add`用于将`value`加到`sharedArray[index]`，返回`sharedArray[index]`旧的值。
 
 ```javascript
-Atomics.sub(sharedArray, index, value)
+Atomics.sub(sharedArray, index, value);
 ```
 
 `Atomics.sub`用于将`value`从`sharedArray[index]`减去，返回`sharedArray[index]`旧的值。
 
 ```javascript
-Atomics.and(sharedArray, index, value)
+Atomics.and(sharedArray, index, value);
 ```
 
 `Atomics.and`用于将`value`与`sharedArray[index]`进行位运算`and`，放入`sharedArray[index]`，并返回旧的值。
 
 ```javascript
-Atomics.or(sharedArray, index, value)
+Atomics.or(sharedArray, index, value);
 ```
 
 `Atomics.or`用于将`value`与`sharedArray[index]`进行位运算`or`，放入`sharedArray[index]`，并返回旧的值。
 
 ```javascript
-Atomics.xor(sharedArray, index, value)
+Atomics.xor(sharedArray, index, value);
 ```
 
 `Atomic.xor`用于将`vaule`与`sharedArray[index]`进行位运算`xor`，放入`sharedArray[index]`，并返回旧的值。
@@ -1326,7 +1360,7 @@ Atomics.xor(sharedArray, index, value)
 
 `Atomics`对象还有以下方法。
 
-- `Atomics.compareExchange(sharedArray, index, oldval, newval)`：如果`sharedArray[index]`等于`oldval`，就写入`newval`，返回`oldval`。
-- `Atomics.isLockFree(size)`：返回一个布尔值，表示`Atomics`对象是否可以处理某个`size`的内存锁定。如果返回`false`，应用程序就需要自己来实现锁定。
+-   `Atomics.compareExchange(sharedArray, index, oldval, newval)`：如果`sharedArray[index]`等于`oldval`，就写入`newval`，返回`oldval`。
+-   `Atomics.isLockFree(size)`：返回一个布尔值，表示`Atomics`对象是否可以处理某个`size`的内存锁定。如果返回`false`，应用程序就需要自己来实现锁定。
 
 `Atomics.compareExchange`的一个用途是，从 SharedArrayBuffer 读取一个值，然后对该值进行某个操作，操作结束以后，检查一下 SharedArrayBuffer 里面原来那个值是否发生变化（即被其他线程改写过）。如果没有改写过，就将它写回原来的位置，否则读取新的值，再重头进行一次操作。
