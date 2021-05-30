@@ -167,7 +167,7 @@ $("#result").append(`
 
 ```javascript
 // 普通字符串
-`In JavaScript '\n' is a line-feed.`// 多行字符串
+`In JavaScript '\n' is a line-feed.` // 多行字符串
 `In JavaScript this is
  not legal.`;
 
@@ -234,8 +234,9 @@ function authorize(user, action) {
 let x = 1;
 let y = 2;
 
-`${x} + ${y} = ${x + y}`// "1 + 2 = 3"
-
+`${x} + ${y} = ${
+    x + y
+}` // "1 + 2 = 3"
 `${x} + ${y * 2} = ${x + y * 2}`;
 // "1 + 4 = 5"
 

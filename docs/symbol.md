@@ -70,7 +70,7 @@ Symbol 值不能与其他类型的值进行运算，会报错。
 let sym = Symbol("My symbol");
 
 "your symbol is " +
-    sym// TypeError: can't convert symbol to string
+    sym // TypeError: can't convert symbol to string
     `your symbol is ${sym}`;
 // TypeError: can't convert symbol to string
 ```
