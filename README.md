@@ -36,7 +36,7 @@ http://github.com/ruanyf/es6tutorial/
 
 详细的法律条文请参见[创意共享](http://creativecommons.org/licenses/by-nc/4.0/)网站。
 
-# [ECMAScript 6 入门]()
+# ECMAScript 6 入门
 
 作者：[阮一峰](http://www.ruanyifeng.com)
 
